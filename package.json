@@ -1,0 +1,54 @@
+{
+  "name": "openworldfactory",
+  "version": "1.0.0",
+  "description": "The Open Source Worldbuilding Editor",
+  "main": "src/entry.js",
+  "author": "FlyingPiMonster <flyingpimonster@gmail.com> (https://github.com/flyingpimonster)",
+  "scripts": {
+    "compile-sass": "node-sass --output-style=compressed src/styles/theme_dark.sass src/styles/css/theme_dark.css; node-sass --output-style=compressed src/styles/theme_light.sass src/styles/css/theme_light.css",
+    "compile-icons": "./scripts/compile-icons.js",
+    "compile-docs": "./scripts/compile-docs.js",
+    "compile-web": "webpack --config webpack/webpack.config.js -p",
+    "compile-all": "npm run compile-sass; npm run compile-icons; npm run compile-web",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "dist-mac": "electron-builder --mac",
+    "dist-linux": "electron-builder --x64 --ia32 --linux rpm deb",
+    "dist-all": "electron-builder --win --mac --linux --x64 --ia32",
+    "update-server": "http-server -p 7702 -o"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "electron": "^1.6.11",
+    "electron-builder": "^19.20.1",
+    "node-sass": "^4.5.3",
+    "webpack": "^3.5.5"
+  },
+  "dependencies": {
+    "jszip": "^3.1.3",
+    "markdown-it": "^8.3.2",
+    "markdown-it-container": "^2.0.0",
+    "markdown-it-emoji": "^1.4.0",
+    "uuid": "^3.1.0",
+    "yargs": "^8.0.2"
+  },
+  "build": {
+    "appId": "net.flyingpimonster.openworldfactory",
+    "productName": "OpenWorldFactory",
+    "fileAssociations": {
+      "ext": "owf",
+      "name": "OpenWorldFactory project"
+    },
+    "linux": {
+      "category": "Office",
+      "desktop": {
+        "StartupNotify": "true"
+      }
+    }
+  },
+  "optionalDependencies": {}
+}

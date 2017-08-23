@@ -1,0 +1,41 @@
+// This stylesheet defines how the page should look when printed. It hides
+// UI elements like the menu bar and tree view, sets everything to black and
+// white, and adjusts margins.
+
+.print-only
+    display: none
+
+@media print
+    body
+        color: black
+        background-color: white
+        font-family: "Cantarell", "NotoEmoji", "Helvetica"
+
+    .markdown
+        .spoiler
+            *
+                opacity: 1
+
+    .main-menubar, .treeview, .tabrow
+        display: none
+
+    .print-only
+        display: initial
+
+    .editing
+        .edit-visible
+            display: none !important
+        .edit-invisible
+            display: initial !important
+        .button.edit-visible
+            display: none !important
+        .flexbox-column.edit-visible
+            display: none !important
+        .inline.edit-visible
+            display: none !important
+
+    .tab-wrapper
+        margin: 0
+        .tab-container
+            margin: 0
+            overflow-y: visible

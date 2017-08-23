@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="62.451244mm"
+   height="113.20276mm"
+   viewBox="0 0 62.451244 113.20276"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92+devel unknown"
+   sodipodi:docname="help.svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-341.58216"
+     inkscape:cy="491.05369"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     inkscape:document-rotation="0"
+     showgrid="false"
+     inkscape:window-width="1366"
+     inkscape:window-height="731"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-18.288246,-165.55519)">
+    <g
+       aria-label="?"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:158.10441589px;font-family:Cantarell;-inkscape-font-specification:'Cantarell, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:3.95263624"
+       id="text12">
+      <path
+         d="m 48.802398,165.55519 c -13.280771,0 -20.869783,2.84588 -30.514152,7.1147 l 4.268819,11.38352 c 8.537639,-3.95261 13.59698,-6.32418 25.296707,-6.32418 12.015935,0 19.921156,4.90124 19.921156,16.60097 0,4.11071 -1.581044,7.74711 -3.95261,10.9092 -2.371566,3.16209 -5.849864,6.9566 -10.592996,11.54162 -4.426924,4.11072 -6.956594,6.79849 -8.853847,9.01196 -4.743133,6.32417 -7.272804,14.86181 -7.272804,25.1386 h 13.438876 c 0,-11.38352 2.52967,-17.23338 8.853847,-23.24135 7.430908,-7.1147 12.806458,-11.69973 17.075277,-18.65632 2.529671,-4.11072 4.268819,-9.48627 4.268819,-15.81044 0,-18.02391 -13.755084,-27.66828 -31.937092,-27.66828 z m -5.059341,113.20276 c 4.901237,0 8.063325,-3.16208 8.063325,-8.06332 0,-4.90124 -3.162088,-8.06333 -8.063325,-8.06333 -4.901237,0 -8.063325,3.16209 -8.063325,8.06333 0,4.90124 3.162088,8.06332 8.063325,8.06332 z"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:158.10441589px;font-family:Cantarell;-inkscape-font-specification:'Cantarell, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:3.95263624"
+         id="path9" />
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>OpenWorldFactory</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <a id="back">&lt; Back</a>
+        <script type="text/javascript">
+            const utils = require('../utils.js')
+
+            document.getElementById("back").addEventListener("click", event => {
+                event.preventDefault()
+                history.back()
+            })
+
+            var docPage = utils.queryParams().docPage
+            if(docPage) {
+                require("./index.js")(document.body, docPage)
+            }
+        </script>
+    </body>
+</html>

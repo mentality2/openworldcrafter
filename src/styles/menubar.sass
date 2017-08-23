@@ -1,0 +1,66 @@
+.searchbar-top
+    position: relative
+    display: inline-block
+    cursor: default
+    background-color: $background
+
+    .searchresults
+        margin-top: 3px
+        display: none
+        position: absolute
+        z-index: 1
+        background-color: $background
+        border: 1px solid $outline
+        max-height: 80vh
+        overflow-y: auto
+
+        &.shown
+            display: block
+
+.logo
+    float: right
+    font-weight: bold
+
+.main-menubar
+    .menubar-top
+        position: relative
+        display: inline-block
+        cursor: default
+        background-color: $background
+
+        .menubar-top-btn
+            &.menubar-top-btn-noarrow
+                margin-right: 0
+                &::after
+                    content: none
+            border-bottom: 3px solid $background
+            margin-right: 1em
+            font-weight: bold
+
+            &::after
+                content: " \0025BC"
+
+        &:hover
+            .menubar-top-content
+                display: block
+            .menubar-top-btn
+                border-bottom-color: $accent
+
+        .menubar-top-content
+            margin-top: 3px
+            display: none
+            position: absolute
+            z-index: 1
+            background-color: $background
+            border: 1px solid $outline
+            min-width: 100%
+
+            .menubar-top-content-link
+                &:hover
+                    background-color: $accent
+
+                border: none
+                display: block
+                color: $foreground
+                text-decoration: none
+                margin: 3px

@@ -1,0 +1,20 @@
+.markdown
+    img
+        display: block
+        max-width: 100%
+        width: auto
+        height: auto
+    blockquote
+        padding-left: 1em
+        margin-left: 1em
+        border-left: 3px solid $foreground
+    .spoiler
+        *
+            opacity: 0
+            transition-duration: 300ms
+        &:hover *
+            opacity: 1
+
+.embedded-video
+    height: 480px
+    max-width: 100%

@@ -1,0 +1,8 @@
+{
+    "icon": "docs/logos/icon.png",
+    "categories": ["Productivity"],
+    "dest": "dist/installers/",
+    "name": "openworldfactory",
+    "productName": "OpenWorldFactory",
+    "genericName": "OpenWorldFactory"
+}

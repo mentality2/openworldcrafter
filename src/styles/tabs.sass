@@ -1,0 +1,37 @@
+.tab-wrapper
+    margin-top: .8em
+    margin-bottom: 6px
+
+    // to make room for the split pane gutter to the left
+    margin-left: .5em
+
+    padding-right: .5em
+
+    display: flex
+    flex-flow: column
+
+    .tabrow
+        .tabrow-button
+            border-bottom: 3px solid $background
+            margin-right: 1em
+            cursor: default
+        .tabrow-button-selected
+            border-bottom-color: $accent
+
+    .tab-container
+        flex: 1 1 auto
+        display: flex
+        flex-flow: column
+        max-height: 100%
+        overflow-y: auto
+        .tab
+            flex: 1 1 auto
+            height: 100%
+            display: none
+            &>*
+                margin-bottom: 1em
+            &>*:last-child
+                margin-bottom: 0
+        .tab-visible
+            display: flex
+            flex-flow: column

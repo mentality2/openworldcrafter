@@ -1,0 +1,29 @@
+language: node_js
+node_js: "lts/*"
+
+sudo: false
+
+branches:
+    only:
+        - master
+
+cache:
+    directories:
+        - electron
+        - node_modules
+
+script:
+    - yarn run dist-linux
+
+deploy:
+  provider: releases
+  file: "dist/*"
+  file_glob: true
+  skip_cleanup: true
+  on:
+    tags: true
+
+addons:
+    apt:
+        packages:
+            - rpm
