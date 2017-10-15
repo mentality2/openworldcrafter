@@ -1,7 +1,7 @@
 {
   "name": "openworldfactory",
-  "version": "1.0.0",
-  "description": "The Open Source Worldbuilding Editor",
+  "version": "0.0.5",
+  "description": "The Notepad for Authors",
   "main": "src/entry.js",
   "author": "FlyingPiMonster <flyingpimonster@gmail.com> (https://github.com/flyingpimonster)",
   "scripts": {

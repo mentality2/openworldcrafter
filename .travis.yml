@@ -13,7 +13,7 @@ cache:
         - node_modules
 
 script:
-    - yarn run dist-all
+    - yarn run dist-linux
 
 deploy:
   provider: releases
