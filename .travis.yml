@@ -17,7 +17,7 @@ addons:
       - sourceline: 'ppa:ubuntu-wine/ppa'
     packages:
     - rpm
-    - wine2.0
+    - wine
 deploy:
   provider: releases
   api_key:
