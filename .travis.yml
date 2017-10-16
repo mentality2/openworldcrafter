@@ -10,7 +10,7 @@ cache:
   - electron
   - node_modules
 script:
-- yarn run dist-linux-mac
+- yarn run dist-all
 addons:
   apt:
     packages:

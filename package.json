@@ -1,6 +1,6 @@
 {
   "name": "openworldfactory",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "The Notepad for Authors",
   "main": "src/entry.js",
   "author": "FlyingPiMonster <flyingpimonster@gmail.com> (https://github.com/flyingpimonster)",
@@ -16,7 +16,7 @@
     "dist-linux": "electron-builder --x64 --ia32 --linux rpm deb",
     "dist-linux-mac": "electron-builder --x64 --ia32 --linux rpm deb --mac tar.gz",
     "dist-windows": "electron-builder --win nsis",
-    "dist-all": "electron-builder --win --mac --linux --x64 --ia32",
+    "dist-all": "electron-builder --x64 --ia32 --win nsis --mac tar.gz --linux rpm deb",
     "update-server": "http-server -p 7702 -o"
   },
   "license": "MIT",
