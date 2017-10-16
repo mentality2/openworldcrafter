@@ -18,7 +18,10 @@ addons:
     packages:
     - rpm
     - wine1.8
-    - build-essential
+    - glib
+    - glibc
+before_install:
+  - ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.24
 deploy:
   provider: releases
   api_key:
