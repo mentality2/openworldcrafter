@@ -1,6 +1,6 @@
 {
   "name": "openworldfactory",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "The Notepad for Authors",
   "main": "src/entry.js",
   "author": "FlyingPiMonster <flyingpimonster@gmail.com> (https://github.com/flyingpimonster)",
@@ -12,8 +12,9 @@
     "compile-all": "npm run compile-sass; npm run compile-icons; npm run compile-web",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "dist-mac": "electron-builder --mac",
+    "dist-mac": "electron-builder --mac dmg",
     "dist-linux": "electron-builder --x64 --ia32 --linux rpm deb",
+    "dist-linux-mac": "electron-builder --x64 --ia32 --linux rpm deb --mac dmg",
     "dist-all": "electron-builder --win --mac --linux --x64 --ia32",
     "update-server": "http-server -p 7702 -o"
   },
