@@ -13,9 +13,11 @@ script:
 - yarn run dist-all
 addons:
   apt:
+    sources:
+      - sourceline: 'ppa:ubuntu-wine/ppa'
     packages:
     - rpm
-    - wine
+    - wine2.0
 deploy:
   provider: releases
   api_key:
