@@ -18,7 +18,7 @@ addons:
     packages:
     - rpm
     - wine1.8
-    - glibc:ia32
+    - glibc:i686
 deploy:
   provider: releases
   api_key:
