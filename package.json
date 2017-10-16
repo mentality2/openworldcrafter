@@ -1,6 +1,6 @@
 {
   "name": "openworldfactory",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "The Notepad for Authors",
   "main": "src/entry.js",
   "author": "FlyingPiMonster <flyingpimonster@gmail.com> (https://github.com/flyingpimonster)",
@@ -48,6 +48,9 @@
       "desktop": {
         "StartupNotify": "true"
       }
+    },
+    "mac": {
+      "category": "public.app-category.productivity"
     }
   },
   "optionalDependencies": {}
