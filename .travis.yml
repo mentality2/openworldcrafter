@@ -18,6 +18,7 @@ addons:
     packages:
     - rpm
     - wine1.8
+    - build-essential
 deploy:
   provider: releases
   api_key:
