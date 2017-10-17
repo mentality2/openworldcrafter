@@ -17,7 +17,11 @@ script:
 - yarn run dist-all
 before_install:
 - ls /usr/lib/x86_64-linux-gnu
-- sudo apt-add-repository ppa:ubuntu-wine/ppa
+# add wine repo
+- wget https://dl.winehq.org/wine-builds/Release.key
+- sudo apt-key add Release.key
+- sudo apt-add-repository 'https://dl.winehq.org/wine-builds/ubuntu/'
+
 - sudo apt-get install rpm wine1.8
 #  - sudo rm /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 #  - sudo ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.24 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
