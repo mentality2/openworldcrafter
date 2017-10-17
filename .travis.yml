@@ -18,9 +18,11 @@ addons:
   apt:
     sources:
       - sourceline: 'ppa:ubuntu-wine/ppa'
+      - sourceline: 'ppa:ubuntu-toolchain-r/test'
     packages:
-    - rpm
-    - wine1.8
+      - rpm
+      - wine1.8
+      - libstdc++6
 before_install:
   - ls /usr/lib/x86_64-linux-gnu
   - sudo rm /usr/lib/x86_64-linux-gnu/libstdc++.so.6
