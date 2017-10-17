@@ -16,7 +16,6 @@ cache:
 script:
 - yarn run dist-all
 before_install:
-- ls /usr/lib/x86_64-linux-gnu
 # add wine repo
 - wget https://dl.winehq.org/wine-builds/Release.key
 - sudo apt-key add Release.key
@@ -24,6 +23,7 @@ before_install:
 - sudo apt-add-repository 'ppa:ubuntu-toolchain-r/test' -y
 - sudo apt-get update
 - sudo apt-get install rpm winehq-devel libstdc++6 gcc-4.9 g++-4.9
+- ls /usr/lib/x86_64-linux-gnu
 #  - sudo rm /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 #  - sudo ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.24 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 deploy:
