@@ -23,6 +23,7 @@ addons:
       - rpm
       - wine1.8
       - gcc-4.9
+      - g++-4.9
       - libstdc++6
 before_install:
   - ls /usr/lib/x86_64-linux-gnu
