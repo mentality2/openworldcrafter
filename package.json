@@ -1,6 +1,6 @@
 {
   "name": "openworldfactory",
-  "version": "0.0.37",
+  "version": "0.0.38",
   "description": "The Notepad for Authors",
   "main": "src/entry.js",
   "author": "FlyingPiMonster <flyingpimonster@gmail.com> (https://github.com/flyingpimonster)",
