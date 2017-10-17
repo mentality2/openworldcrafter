@@ -18,11 +18,11 @@ script:
 addons:
   apt:
     sources:
-      - sourceline: 'ppa:ubuntu-wine/ppa'
+      - sourceline: 'ppa:wine/wine-builds'
       - sourceline: 'ppa:ubuntu-toolchain-r/test'
     packages:
       - rpm
-      - wine1.8
+      - wine-devel
       - gcc-4.9
       - g++-4.9
       - libstdc++6
