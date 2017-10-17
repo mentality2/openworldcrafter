@@ -18,14 +18,10 @@ script:
 addons:
   apt:
     sources:
-      - sourceline: 'ppa:wine/wine-builds'
-      - sourceline: 'ppa:ubuntu-toolchain-r/test'
+      - sourceline: 'ppa:ubuntu-wine/ppa'
     packages:
       - rpm
-      - wine-devel
-      - gcc-4.9
-      - g++-4.9
-      - libstdc++6
+      - wine1.8
 before_install:
   - ls /usr/lib/x86_64-linux-gnu
 #  - sudo rm /usr/lib/x86_64-linux-gnu/libstdc++.so.6
