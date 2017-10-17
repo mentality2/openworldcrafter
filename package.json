@@ -1,6 +1,10 @@
 {
   "name": "openworldfactory",
-  "version": "0.1.0",
+  "version": "0.1.1",
+  "updateInfo": {
+    "url": "https://openworldfactory.github.io",
+    "message": "v0.1.1 adds an update notification mechanism"
+  },
   "description": "The Notepad for Authors",
   "main": "src/entry.js",
   "author": "FlyingPiMonster <flyingpimonster@gmail.com> (https://github.com/flyingpimonster)",

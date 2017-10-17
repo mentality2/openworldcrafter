@@ -12,6 +12,8 @@ const path = require('path')
 const docviewer = require('../docviewer')
 const disk = require('../api/disk.js')
 const electron = require('electron')
+const update = require('./update')
+const thispackage = require("../../package.json")
 
 function createPage(el) {
     theme.setTheme()
@@ -84,13 +86,40 @@ function createPage(el) {
     main.appendChild(toolbar)
     main.appendChild(recentList)
 
-    var docs = dom.div("", ["column", "float-right"])
-    docviewer(docs, "welcome.md", true)
+    var docsContainer = dom.div("", ["column", "float-right"])
 
+    var updateMessage = dom.div(undefined, ["highlighted-message", "invisible", "margin-bottom"])
+    docsContainer.appendChild(updateMessage)
+    if(process.env.NODE_ENV === "development") {
+        // no need to check for updates, but we'll put an extra devmode notice
+        updateMessage.appendChild(dom.div("Development Mode Notice", "bold"))
+        updateMessage.appendChild(dom.div("You are running openworldfactory in development mode."))
+        updateMessage.classList.remove("invisible")
+    } else {
+        // gets the latest package.json from github
+        update(pkg => {
+            if(pkg.version !== thispackage.version) {
+                updateMessage.appendChild(dom.button("download", "Go to Download", () => {
+                    if(pkg.updateInfo && pkg.updateInfo.url) {
+                        $owf.showWebpage(pkg.updateInfo.url)
+                    } else {
+                        $owf.showWebpage("https://openworldfactory.github.io")
+                    }
+                }, ["float-right"]))
+                    updateMessage.appendChild(dom.div("Update to v" + pkg.version, "bold"))
+                    updateMessage.appendChild(dom.div(pkg.updateInfo ? pkg.updateInfo.message : "An update is available."))
+                updateMessage.classList.remove("invisible")
+            }
+        })
+    }
+
+    var docs = dom.div()
+    docsContainer.appendChild(docs)
+    docviewer(docs, "welcome.md", true)
 
     var container = dom.div()
     container.appendChild(main)
-    container.appendChild(docs)
+    container.appendChild(docsContainer)
     el.appendChild(container)
 }
 
