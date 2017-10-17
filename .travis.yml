@@ -7,23 +7,18 @@ sudo: required
 dist: xenial
 branches:
   only:
-    - master
-    - /^v\d+(\.\d+)+$/
+  - master
+  - /^v\d+(\.\d+)+$/
 cache:
   directories:
   - electron
   - node_modules
 script:
 - yarn run dist-all
-addons:
-  apt:
-    sources:
-    - sourceline: 'ppa:ubuntu-wine/ppa'
-    packages:
-    - rpm
-    - wine1.8
 before_install:
 - ls /usr/lib/x86_64-linux-gnu
+- sudo apt-add-repository ppa:ubuntu-wine/ppa
+- sudo apt-get install rpm wine1.8
 #  - sudo rm /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 #  - sudo ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.24 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 deploy:
