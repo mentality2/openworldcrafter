@@ -1,3 +1,6 @@
+# If the Windows build stops working, check the ln command under before_install
+# and make sure the version number didn't change
+
 language: node_js
 node_js: lts/*
 sudo: false
@@ -20,7 +23,7 @@ addons:
     - wine1.8
 before_install:
   - ls /usr/lib/x86_64-linux-gnu
-  - ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.24
+  - ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19
 deploy:
   provider: releases
   api_key:
