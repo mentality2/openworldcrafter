@@ -21,7 +21,7 @@ before_install:
 - wget https://dl.winehq.org/wine-builds/Release.key
 - sudo apt-key add Release.key
 - sudo apt-add-repository 'https://dl.winehq.org/wine-builds/ubuntu/'
-
+- sudo apt-get update
 - sudo apt-get install rpm wine-devel
 #  - sudo rm /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 #  - sudo ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.24 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
