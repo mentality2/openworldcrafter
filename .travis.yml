@@ -26,7 +26,7 @@ addons:
 before_install:
   - ls /usr/lib/x86_64-linux-gnu
   - sudo rm /usr/lib/x86_64-linux-gnu/libstdc++.so.6
-  - sudo ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+  - sudo ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.24 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 deploy:
   provider: releases
   api_key:
