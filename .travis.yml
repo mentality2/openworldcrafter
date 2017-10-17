@@ -23,7 +23,8 @@ addons:
     - wine1.8
 before_install:
   - ls /usr/lib/x86_64-linux-gnu
-  - ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6 /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19
+  - rm /usr/lib/x86_64-linux-gnu/libstdc++.so.6
+  - ln /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 /usr/lib/x86_64-linux-gnu/libstdc++.so.6
 deploy:
   provider: releases
   api_key:
