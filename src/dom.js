@@ -79,8 +79,8 @@ function p(contents, classes) {
     return element("p", contents, classes)
 }
 
-function hr() {
-    return element("hr")
+function hr(classes) {
+    return element("hr", undefined, classes)
 }
 function br() {
     return element("br")
