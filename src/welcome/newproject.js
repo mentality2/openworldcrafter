@@ -53,3 +53,15 @@ module.exports = function() {
 
     return newProjectModal
 }
+
+module.exports.remakeTestProject = function() {
+    var name = "TEST PROJECT"
+    var desc = "Transient project for testing purposes. Click 'Remake test.owf' on the welcome page to reset this project. You must be in dev mode to do this."
+
+    var proj = createProject(name, desc)
+    proj.$store = new diskApi("test.owf", proj, () => {
+        proj.save()
+        $owf.addRecentProject(name, "test.owf", desc)
+        $owf.viewProject(proj)
+    })
+}

@@ -47,6 +47,13 @@ function createPage(el) {
     })
     toolbar.appendChild(newProject)
 
+    if(process.env.NODE_ENV === "development") {
+        var newProject = dom.button(undefined, "Remake test.owf", () => {
+            newproject.remakeTestProject()
+        })
+        toolbar.appendChild(newProject)
+    }
+
     var newProjectModal = newproject()
     main.appendChild(newProjectModal.wrapper)
 
