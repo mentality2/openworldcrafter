@@ -36,14 +36,34 @@ function stringContainsWords(string, words) {
     return count
 }
 
+function searchTags(list, searchFor, map) {
+    for(var tag of searchFor) {
+        var tagUuid = map[tag]
+        if(list.includes(tagUuid)) return true
+    }
+    return false
+}
+
 function search(project, term) {
     if(!term) return []
     var words = term.split(" ")
+
+    var tags = []
+    for(var i in words) {
+        if(words[i].startsWith("#")) {
+            words[i] = words[i].substring(1)
+            tags.push(words[i])
+        }
+    }
 
     var results = []
 
     for(var id in project.$allObjects) {
         var obj = project.$allObjects[id]
+
+        if(tags.length) {
+            if(!searchTags(obj.tags, tags, project.$tagMap)) continue
+        }
 
         var relevance = 0
         if(obj.name) relevance += stringContainsWords(obj.name, words)
