@@ -7,7 +7,7 @@ const utils = require('../utils.js')
 function createEventTab(object, ref) {
     var el = dom.span()
 
-    common.nameEditor(object, el)
+    common.nameEditor(object, el, ref)
 
     var date = dom.div(null, "edit-invisible")
     el.appendChild(date)

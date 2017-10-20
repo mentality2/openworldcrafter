@@ -6,6 +6,7 @@ const note = require('./note.js')
 const folder = require('./folder.js')
 const timeline = require('./timeline.js')
 const event = require('./event.js')
+const tags = require('./tags.js')
 
 function attachmentsTab(tabview, object) {
     if(!(object.attachments && object.attachments.length) && !object.isEditable()) return
@@ -36,6 +37,12 @@ function createTabset(tabview, object, ref) {
             break
         case "event":
             tabview.addTab(name, event(object, ref))
+            break
+        case "tagfolder":
+            tabview.addTab(name, tags.createTagMainTab(object, ref))
+            break
+        case "tag":
+            tabview.addTab(name, tags.createTagTab(object, ref))
             break
     }
 

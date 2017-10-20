@@ -31,7 +31,7 @@ function createEventBlurb(eventObject, calendar, ref) {
 function createTimelineTab(object, ref) {
     var el = dom.span()
 
-    common.nameEditor(object, el)
+    common.nameEditor(object, el, ref)
 
     var editToolbar = dom.div(undefined, "edit-visible")
     var newEvent = dom.button("add", "New Event", () => {

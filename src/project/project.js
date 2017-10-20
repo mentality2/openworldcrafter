@@ -23,6 +23,7 @@ class ProjectObject {
         this.civilization = serial.civilization
         this.notes = serial.notes
         this.metadata = serial.metadata || {}
+        this.tags = serial.tags || []
 
         this.subobjects = []
 
@@ -77,6 +78,21 @@ class ProjectObject {
     save(force) {
         this.$project.save(force)
     }
+
+    addTag(tag) {
+        var tag = this.$project.getTagByName(tag)
+        if(!this.tags.includes(tag.id)) {
+            this.markDirty()
+            this.tags.push(tag.id)
+        }
+    }
+    removeTag(tagID) {
+        var index = this.tags.indexOf(tagID)
+        if(index !== -1) {
+            this.markDirty()
+            this.tags.splice(index, 1)
+        }
+    }
 }
 
 class ProjectInfo {
@@ -100,7 +116,7 @@ class ProjectInfo {
 }
 
 class Project {
-    constructor(serial, store) {
+    constructor(serial, store) { try {
         console.log("Loading project from JSON", serial)
         this.info = new ProjectInfo(serial.info)
         this.$store = store
@@ -112,10 +128,17 @@ class Project {
         this.assets = serial.assets || {}
         this.options = serial.options
 
+        this.tags = []
+        this.$tagMap = {}
+        for(var tagObj of serial.tags || []) {
+            this.tags.push(new ProjectObject(tagObj, this, null))
+            this.$tagMap[tagObj.name] = tagObj.id
+        }
+
         this.$_dirty = false
 
         this.$saveListener = () => {}
-    }
+    } catch(e) { console.log(e) } }
 
     getObjectById(id) {
         return this.$allObjects[id]
@@ -183,6 +206,32 @@ class Project {
     }
     isDirty() {
         return this.$_dirty
+    }
+
+    getAllTags() {
+        return this.tags
+    }
+
+    getTagByName(name) {
+        if(this.$tagMap[name]) return this.$allObjects[this.$tagMap[name]]
+
+        this.markDirty()
+
+        var newTag = new ProjectObject({
+            type: "tag", name
+        }, this, null)
+        this.tags.push(newTag)
+        this.$tagMap[name] = newTag.id
+        return newTag
+    }
+
+    getObjectsByTag(tagId) {
+        var objList = []
+        for(var id in this.$allObjects) {
+            var obj = this.$allObjects[id]
+            if(obj.tags.includes(tagId)) objList.push(obj)
+        }
+        return objList
     }
 }
 

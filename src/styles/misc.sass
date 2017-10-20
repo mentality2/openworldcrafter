@@ -20,6 +20,23 @@ hr
     border-top: 1px solid $outline
     border-bottom: none
 
+.tag-wrapper
+    position: relative
+    display: inline-block
+    cursor: default
+    background-color: $background
+
+    .tag-description
+        display: none
+        position: absolute
+        z-index: 1
+        background-color: $background
+        border: 1px solid $outline
+        min-width: 10em
+    &:hover
+        .tag-description
+            display: block
+
 .highlighted-message
     border: 3px solid $accent
     border-radius: 3px
@@ -145,7 +162,15 @@ label
     *
         vertical-align: middle
 
-.button, input[type=submit]:not(.nobutton), button
+.nobutton
+    background-color: $background
+    color: $foreground
+    font: inherit
+    line-height: 20px
+    border: none
+    cursor: pointer
+
+.button:not(.nobutton), input[type=submit]:not(.nobutton), button:not(.nobutton), .tag-button
     box-shadow: 0 0 3px 0 $outline
     box-sizing: border-box
     border-radius: 3px

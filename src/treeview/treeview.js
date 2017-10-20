@@ -27,13 +27,18 @@ class TreeView {
             this._newObjectModal = newobject(this)
 
             this._addButton = dom.button("add", null, event => {
-                this._newObjectModal.show()
                 event.stopPropagation()
+                if(this._addButton.classList.contains("button-disabled")) return
+
+                this._newObjectModal.show()
             })
 
             this._dom.appendChild(this._newObjectModal.wrapper)
 
-            var remove = dom.button("remove", null, event => {
+            this._removeButton = dom.button("remove", null, event => {
+                event.stopPropagation()
+                if(this._removeButton.classList.contains("button-disabled")) return
+
                 if(this._selected) {
                     var deleteObject = this._selected.obj
 
@@ -43,11 +48,10 @@ class TreeView {
 
                     confirmDelete.wrapper.classList.add("modal-visible")
                 }
-                event.stopPropagation()
-            })
+            }, "button-disabled")
 
             this._toolbar.appendChild(this._addButton)
-            this._toolbar.appendChild(remove)
+            this._toolbar.appendChild(this._removeButton)
 
             var confirmDelete = dom.modal("Confirm Delete")
             var confirmDeleteText = dom.div(`Are you sure you want to delete this item and anything in it?`)
@@ -55,7 +59,7 @@ class TreeView {
             var actions = dom.div("", "modal-actions")
             var cancelAction = dom.span("Cancel", "button")
             cancelAction.addEventListener("click", event => {
-                confirmDelete.show()
+                confirmDelete.hide()
                 event.stopPropagation()
             })
             var deleteAction = dom.span("Delete", "button")
@@ -134,6 +138,12 @@ class TreeView {
         } else {
             this._addButton.classList.add("button-disabled")
         }
+
+        if(this._selected && this._selected.obj.$parent) {
+            this._removeButton.classList.remove("button-disabled")
+        } else {
+            this._removeButton.classList.add("button-disabled")
+        }
     }
 
     addChild(parentEl, obj) {
@@ -202,6 +212,19 @@ class TreeView {
         if(children) for(var i in children) {
             this.addChild(this._container, children[i])
         }
+
+        this._container.appendChild(dom.hr("margin-left"))
+
+        // tags
+        this.addChild(this._container, {
+            // this is a constant UUID for the tag phantom parent object
+            id: "919819c8-c77e-40e8-9a43-c621391a8282",
+            name: "Tags",
+            subobjects: this._root.$project.tags,
+            type: "tagfolder",
+            $project: this._root.$project,
+            isEditable: () => false
+        })
     }
 }
 

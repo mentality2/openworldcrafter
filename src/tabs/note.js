@@ -6,7 +6,7 @@ const common = require('./common.js')
 function createNoteTab(object, ref) {
     var el = dom.div()
 
-    common.nameEditor(object, el)
+    common.nameEditor(object, el, ref)
     common.notes(object, el, ref)
 
     return el
