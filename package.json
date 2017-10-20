@@ -1,9 +1,9 @@
 {
   "name": "openworldfactory",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "updateInfo": {
     "url": "https://openworldfactory.github.io",
-    "message": "v0.1.1 adds an update notification mechanism"
+    "message": "v1.0.0 adds tags for organizing and grouping pages"
   },
   "description": "The Notepad for Authors",
   "main": "src/entry.js",
