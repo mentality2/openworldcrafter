@@ -1,6 +1,7 @@
 node_modules
 npm-debug.log
 .travis.yml
+test.owf
 
 .DS_Store
 desktop.ini
