@@ -7,3 +7,6 @@
 - [Markdown Formatting](markdown_formatting.md)
 - [Timelines and Events](timelines_and_events.md)
 - [Attachments](attachments.md)
+
+## Organization
+- [Tags](organization/tags.md)
