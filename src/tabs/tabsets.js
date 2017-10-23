@@ -5,6 +5,7 @@ const character = require('./character.js')
 const note = require('./note.js')
 const folder = require('./folder.js')
 const timeline = require('./timeline.js')
+const relationships = require('./relationships')
 const event = require('./event.js')
 const tags = require('./tags.js')
 
@@ -27,6 +28,7 @@ function createTabset(tabview, object, ref) {
             break
         case "character":
             tabview.addTab(name, character(object, ref))
+            tabview.addTab("Relationships", relationships(object, ref))
             break
         case "note":
             tabview.addTab(name, note(object, ref))

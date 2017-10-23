@@ -24,6 +24,7 @@ class ProjectObject {
         this.notes = serial.notes
         this.metadata = serial.metadata || {}
         this.tags = serial.tags || []
+        this.relationships = serial.relationships || {}
 
         this.subobjects = []
 
@@ -92,6 +93,38 @@ class ProjectObject {
             this.markDirty()
             this.tags.splice(index, 1)
         }
+        this.markDirty()
+    }
+
+    addRelationship(role1, role2, character2) {
+        var relUuid = uuid()
+        var relationship = []
+
+        relationship.push({ role: role1, id: this.id })
+        relationship.push({ role: role2, id: character2 })
+
+        var otherChar = this.$project.getObjectById(character2)
+        if(!otherChar) return
+
+        this.relationships[relUuid] = relationship
+        otherChar.relationships[relUuid] = relationship
+
+        this.markDirty()
+    }
+    removeRelationship(relID) {
+        var rel = this.relationships[relID]
+        if(!rel) return
+
+        for(var obj of rel) {
+            if(obj.id !== this.id) {
+                var otherObject = this.$project.getObjectById(obj.id)
+                if(otherObject) delete otherObject.relationships[relID]
+            }
+        }
+
+        delete this.relationships[relID]
+
+        this.markDirty()
     }
 }
 
@@ -101,6 +134,7 @@ class ProjectInfo {
         this.description = serial.description
         this.uuid = serial.uuid || uuid()
         this.saveUuid = serial.saveUuid || uuid()
+        this.saveVersion = require("../../package.json").version
 
         this.authors = []
         if(serial.authors) {

@@ -4,8 +4,8 @@ const dom = require('../dom.js')
 const markdown = require('../markdown')
 const markdowntoolbar = require('./markdowntoolbar')
 
-function createObjectBlurb(eventObject, ref) {
-    var el = dom.div(undefined, "margin-left")
+function createObjectBlurb(eventObject, ref, suffix) {
+    var el = dom.div(undefined, "margin-bottom")
 
     var heading = dom.div()
 
@@ -14,6 +14,11 @@ function createObjectBlurb(eventObject, ref) {
         ref.goToPage(eventObject)
     })
     heading.appendChild(link)
+
+    if(suffix) {
+        if(typeof suffix === "string") heading.appendChild(dom.span(suffix))
+        else heading.appendChild(suffix)
+    }
 
     el.appendChild(heading)
 

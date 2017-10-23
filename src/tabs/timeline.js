@@ -50,7 +50,9 @@ function createTimelineTab(object, ref) {
     )
 
     for(var id of sorted) {
-        el.appendChild(createEventBlurb(object.subobjects[id], object.metadata.months, ref))
+        var blurbSuffix = object.subobjects[id].metadata.time ? utils.formatTime(object.subobjects[id].metadata.time, object.metadata.months) : undefined
+        var blurb = common.createObjectBlurb(object.subobjects[id], ref, blurbSuffix)
+        el.appendChild(blurb)
     }
 
     return el

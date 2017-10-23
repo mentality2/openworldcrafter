@@ -44,7 +44,7 @@ function searchTags(list, searchFor, map) {
     return false
 }
 
-function search(project, term) {
+function search(project, term, filter) {
     if(!term) return []
     var words = term.split(" ")
 
@@ -60,6 +60,8 @@ function search(project, term) {
 
     for(var id in project.$allObjects) {
         var obj = project.$allObjects[id]
+
+        if(filter && !filter(obj)) continue
 
         if(tags.length) {
             if(!searchTags(obj.tags, tags, project.$tagMap)) continue
@@ -121,7 +123,7 @@ function createSearchResultBox(result, closeResultBox, cb) {
     return box
 }
 
-function createSearchBar(project, cb) {
+function createSearchBar(project, cb, filter) {
     var el = dom.span(undefined, "searchbar-top")
 
     var textbox = dom.inputText("", "Search Project", "searchbar-box")
@@ -133,7 +135,7 @@ function createSearchBar(project, cb) {
     function research() {
         utils.removeAllChildren(resultBox)
 
-        var results = search(project, textbox.value)
+        var results = search(project, textbox.value, filter)
         if(!results.length) {
             if(textbox.value) resultBox.appendChild(dom.span("No results found."))
             else resultBox.appendChild(dom.span("Start typing to search."))
