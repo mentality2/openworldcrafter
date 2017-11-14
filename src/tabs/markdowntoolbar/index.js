@@ -84,7 +84,7 @@ function createMarkdownToolbar(editorArea, editCb, object) {
         setLinePrefix(editorArea, "1.")
         edit()
     })
-    var ulist = dom.button("nlist", undefined, () => {
+    var ulist = dom.button("ulist", undefined, () => {
         setLinePrefix(editorArea, "-")
         edit()
     })
