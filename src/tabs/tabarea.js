@@ -106,8 +106,7 @@ class TabArea {
         var index = this._tabs.length
 
         // create button for tabrow
-        var btn = dom.span(name)
-        btn.classList.add("tabrow-button")
+        var btn = dom.span(name, "tabrow-button")
         btn.onclick = () => {
             this.selectTab(index)
         }

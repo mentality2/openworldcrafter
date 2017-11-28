@@ -104,11 +104,7 @@ function tr_headers(row) {
 function table(headers, rows) {
     var t = element("table")
 
-    var headerRow = element("tr")
-    for(var header of headers) {
-        headerRow.appendChild(element("th", header))
-    }
-    t.appendChild(headerRow)
+    t.appendChild(tr_headers(headers))
 
     if(rows) {
         for(var row of rows) {

@@ -18,6 +18,11 @@ class Author {
 class ProjectObject {
     constructor(serial, project, parent) {
         this.id = serial.id || project.newId()
+
+        project.$allObjects[this.id] = this
+        this.$project = project
+        this.$parent = parent
+
         this.type = serial.type
         this.name = serial.name || "Untitled Object"
         this.civilization = serial.civilization
@@ -25,6 +30,11 @@ class ProjectObject {
         this.metadata = serial.metadata || {}
         this.tags = serial.tags || []
         this.relationships = serial.relationships || {}
+
+        this.properties = serial.properties || {}
+        for(var property in this.properties) {
+            if(!this.$project.$propertyList.includes(property)) this.$project.$propertyList.push(property)
+        }
 
         this.subobjects = []
 
@@ -36,10 +46,6 @@ class ProjectObject {
 
         // this.properties = serial.properties || {}
         this.attachments = serial.attachments || []
-
-        project.$allObjects[this.id] = this
-        this.$project = project
-        this.$parent = parent
 
         if(this.type === "timeline" && !this.metadata.months) {
             this.metadata.months = utils.defaultCalendar.months
@@ -126,6 +132,11 @@ class ProjectObject {
 
         this.markDirty()
     }
+
+    addProperty(key, val) {
+        this.properties[key] = val
+        if(!this.$project.$propertyList.includes(key)) this.$project.$propertyList.push(key)
+    }
 }
 
 class ProjectInfo {
@@ -156,6 +167,8 @@ class Project {
         this.$store = store
 
         this.$allObjects = {}
+        // list of all properties used on objects
+        this.$propertyList = []
 
         this.projroot = new ProjectObject(serial.projroot, this, null)
 
@@ -172,6 +185,8 @@ class Project {
         this.$_dirty = false
 
         this.$saveListener = () => {}
+
+        console.log("properties", this.$propertyList);
     } catch(e) { console.log(e) } }
 
     getObjectById(id) {

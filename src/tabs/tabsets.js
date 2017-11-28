@@ -8,6 +8,7 @@ const timeline = require('./timeline.js')
 const relationships = require('./relationships')
 const event = require('./event.js')
 const tags = require('./tags.js')
+const charactersheet = require('./charactersheet')
 
 function attachmentsTab(tabview, object) {
     if(!(object.attachments && object.attachments.length) && !object.isEditable()) return
@@ -28,6 +29,7 @@ function createTabset(tabview, object, ref) {
             break
         case "character":
             tabview.addTab(name, character(object, ref))
+            tabview.addTab("Character Sheet", charactersheet(object, ref))
             tabview.addTab("Relationships", relationships(object, ref))
             break
         case "note":

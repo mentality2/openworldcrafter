@@ -18,6 +18,10 @@ function createWindow(page) {
         show: false,
         width: 1000,
         height: 675,
+
+        // prevent opening on secondary display in dev mode because that is annoying.
+        x: 0, y: 0,
+
         webPreferences: {
             // disable devtools except in dev environments
             devTools: process.env.NODE_ENV === "development",
