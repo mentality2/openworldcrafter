@@ -223,6 +223,19 @@ class TreeView {
             subobjects: this._root.$project.tags,
             type: "tagfolder",
             $project: this._root.$project,
+            metadata: {},
+            isEditable: () => false
+        })
+
+        // snippets
+        this.addChild(this._container, {
+            // this is a constant UUID for the tag phantom parent object
+            id: "ecff73ff-2899-4077-9902-435d044c2b01",
+            name: "Snippets",
+            subobjects: [],
+            type: "snippets",
+            $project: this._root.$project,
+            metadata: {},
             isEditable: () => false
         })
     }

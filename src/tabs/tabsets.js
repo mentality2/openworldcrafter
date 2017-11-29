@@ -9,6 +9,7 @@ const relationships = require('./relationships')
 const event = require('./event.js')
 const tags = require('./tags.js')
 const charactersheet = require('./charactersheet')
+const snippets = require('./snippets')
 
 function attachmentsTab(tabview, object) {
     if(!(object.attachments && object.attachments.length) && !object.isEditable()) return
@@ -42,11 +43,16 @@ function createTabset(tabview, object, ref) {
         case "event":
             tabview.addTab(name, event(object, ref))
             break
+
         case "tagfolder":
             tabview.addTab(name, tags.createTagMainTab(object, ref))
             break
         case "tag":
             tabview.addTab(name, tags.createTagTab(object, ref))
+            break
+        case "snippets":
+            tabview.addTabFunc(name, () => snippets.createSnippetsTab(object, ref))
+            tabview.addTabFunc("Trash", () => snippets.createSnippetsTrashTab(object, ref))
             break
     }
 

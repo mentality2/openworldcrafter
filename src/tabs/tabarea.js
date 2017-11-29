@@ -67,7 +67,7 @@ class TabArea {
 
     clearTabs() {
         for(var i in this._tabs) {
-            this._tabs[i].el.remove()
+            if(this._tabs[i].el) this._tabs[i].el.remove()
             this._tabs[i].btn.remove()
         }
 
@@ -79,15 +79,21 @@ class TabArea {
         // hide previous tab
         if(this._tabs[this._selectedIndex]) {
             var prevTab = this._tabs[this._selectedIndex]
-            prevTab.el.classList.remove("tab-visible")
+            if(prevTab.el) prevTab.el.remove()
             prevTab.btn.classList.remove("tabrow-button-selected")
         }
 
         // set selected tab index
         this._selectedIndex = index
 
-        // make new tab visible
         var tab = this._tabs[index]
+
+        // generate content
+        tab.el = tab.contentFunction()
+        tab.el.classList.add("tab")
+        this._container.appendChild(tab.el)
+
+        // make new tab visible
         tab.el.classList.add("tab-visible")
         tab.btn.classList.add("tabrow-button-selected")
 
@@ -97,6 +103,10 @@ class TabArea {
     }
 
     addTab(name, content) {
+        this.addTabFunc(name, () => content)
+    }
+
+    addTabFunc(name, contentFunction) {
         var selected = false
         if(this._tabs.length === 0) {
             // first tab, should be selected
@@ -112,13 +122,9 @@ class TabArea {
         }
         this._tabrow.appendChild(btn)
 
-        // set up content element
-        content.classList.add("tab")
-        this._container.appendChild(content)
-
         // add tab info to list
         this._tabs.push({
-            name, el: content, btn
+            name, contentFunction, btn
         })
 
         if(selected) this.selectTab(0)

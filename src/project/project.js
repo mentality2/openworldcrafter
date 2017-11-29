@@ -182,11 +182,11 @@ class Project {
             this.$tagMap[tagObj.name] = tagObj.id
         }
 
+        this.snippets = serial.snippets || []
+
         this.$_dirty = false
 
         this.$saveListener = () => {}
-
-        console.log("properties", this.$propertyList);
     } catch(e) { console.log(e) } }
 
     getObjectById(id) {
@@ -281,6 +281,24 @@ class Project {
             if(obj.tags.includes(tagId)) objList.push(obj)
         }
         return objList
+    }
+
+    addSnippet(text) {
+        var snippet = {
+            text, id: uuid()
+        }
+        this.snippets.push(snippet)
+        return snippet
+    }
+
+    removeSnippet(snippet) {
+        for(var i in this.snippets) {
+            if(this.snippets[i].id === snippet.id) {
+                this.snippets.splice(i, 1)
+                // we don't want any concurrent modification issues
+                break
+            }
+        }
     }
 }
 

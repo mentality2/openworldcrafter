@@ -371,6 +371,21 @@ select
     text-align: left
     cursor: pointer
 
+.snippet
+    position: relative
+    margin-bottom: 1em
+
+    .snippetdeletetools
+        position: absolute
+        right: 0
+
+        .copytoclipboard
+            margin-right: 1em
+            transition-duration: 150ms
+            background-color: $background
+            &.initial
+                opacity: 0
+
 img:not(.svg)
     display: block
     max-width: 75vw
