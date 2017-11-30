@@ -12,6 +12,7 @@ const rightArrow = "\u25B6"
 class TreeView {
     constructor(domobj, rootobj, ref, opts) {
         this._dom = domobj
+        this._ref = ref
 
         this._dom.addEventListener("click", event => {
             this.setSelected()
@@ -214,30 +215,8 @@ class TreeView {
         }
 
         this._container.appendChild(dom.hr("margin-left"))
-
-        // tags
-        this.addChild(this._container, {
-            // this is a constant UUID for the tag phantom parent object
-            id: "919819c8-c77e-40e8-9a43-c621391a8282",
-            name: "Tags",
-            subobjects: this._root.$project.tags,
-            type: "tagfolder",
-            $project: this._root.$project,
-            metadata: {},
-            isEditable: () => false
-        })
-
-        // snippets
-        this.addChild(this._container, {
-            // this is a constant UUID for the tag phantom parent object
-            id: "ecff73ff-2899-4077-9902-435d044c2b01",
-            name: "Snippets",
-            subobjects: [],
-            type: "snippets",
-            $project: this._root.$project,
-            metadata: {},
-            isEditable: () => false
-        })
+        this.addChild(this._container, this._root.$project.$virtualObjects.tags)
+        this.addChild(this._container, this._root.$project.$virtualObjects.snippets)
     }
 }
 

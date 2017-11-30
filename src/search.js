@@ -3,6 +3,18 @@
 const dom = require('./dom')
 const utils = require('./utils')
 
+function createSummaryFromSnippets(text, ranges) {
+    var summary = ""
+    for(var snippet of ranges) {
+        summary += text.substring(snippet[0], snippet[1]) + (text.length > snippet[1] ? "\u2026" : "")
+    }
+    return summary
+}
+
+function createSummary(text, words) {
+    return createSummaryFromSnippets(text, mergeRanges(getWordRanges(text, words)))
+}
+
 function mergeRanges(ranges) {
     if(!ranges.length) return []
 
@@ -72,7 +84,15 @@ function search(project, term, filter) {
         if(obj.notes) relevance += stringContainsWords(obj.notes, words)
 
         if(relevance > 0) results.push({
-            relevance, obj, snippets: mergeRanges(getWordRanges(obj.notes, words))
+            relevance, obj, summary: createSummary(obj.notes, words)
+        })
+    }
+
+    // now search snippets
+    for(var snippet of project.snippets) {
+        var relevance = stringContainsWords(snippet.text, words)
+        if(relevance > 0) results.push({
+            relevance, obj: project.$virtualObjects.snippets, summary: createSummary(snippet.text, words)
         })
     }
 
@@ -113,12 +133,7 @@ function createSearchResultBox(result, closeResultBox, cb) {
         cb(result.obj)
     })
 
-    var summary = ""
-    for(var snippet of result.snippets) {
-        summary += result.obj.notes.substring(snippet[0], snippet[1]) + "\u2026"
-    }
-
-    box.appendChild(dom.div(summary))
+    box.appendChild(dom.div(result.summary))
 
     return box
 }

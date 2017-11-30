@@ -160,6 +160,34 @@ class ProjectInfo {
     }
 }
 
+class ProjectVirtualObjects {
+    constructor(project) {
+        // tags
+        this.tags = {
+            // this is a constant UUID for the tag phantom parent object
+            id: "919819c8-c77e-40e8-9a43-c621391a8282",
+            name: "Tags",
+            subobjects: project.tags,
+            type: "tagfolder",
+            $project: project,
+            metadata: {},
+            isEditable: () => false
+        }
+
+        // snippets
+        this.snippets = {
+            // this is a constant UUID for the tag phantom parent object
+            id: "ecff73ff-2899-4077-9902-435d044c2b01",
+            name: "Snippets",
+            subobjects: [],
+            type: "snippets",
+            $project: project,
+            metadata: {},
+            isEditable: () => false
+        }
+    }
+}
+
 class Project {
     constructor(serial, store) { try {
         console.log("Loading project from JSON", serial)
@@ -183,6 +211,8 @@ class Project {
         }
 
         this.snippets = serial.snippets || []
+
+        this.$virtualObjects = new ProjectVirtualObjects(this)
 
         this.$_dirty = false
 
