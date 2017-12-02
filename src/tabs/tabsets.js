@@ -30,7 +30,7 @@ function createTabset(tabview, object, ref) {
             break
         case "character":
             tabview.addTab(name, character(object, ref))
-            tabview.addTab("Character Sheet", charactersheet(object, ref))
+            tabview.addTab("Character Sheet", charactersheet.createCharacterSheetTab(object, ref))
             tabview.addTab("Relationships", relationships(object, ref))
             break
         case "note":
@@ -53,6 +53,9 @@ function createTabset(tabview, object, ref) {
         case "snippets":
             tabview.addTabFunc(name, () => snippets.createSnippetsTab(object, ref))
             tabview.addTabFunc("Trash", () => snippets.createSnippetsTrashTab(object, ref))
+            break
+        case "characterchart":
+            tabview.addTab(name, charactersheet.createCharacterChartTab(object, ref))
             break
     }
 

@@ -1,0 +1,18 @@
+.spreadsheet
+    border-collapse: collapse
+    .spreadsheet-row
+        .spreadsheet-cell
+            border: 1px solid $background
+            *
+                width: 100%
+
+.editing
+    .spreadsheet
+        .spreadsheet-row
+            .spreadsheet-cell
+                border: 1px dotted $outline
+                &.focused
+                    border: 1px solid $outline
+                    *
+                        // to get rid of that ugly orange outline
+                        outline: none

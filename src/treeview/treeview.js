@@ -215,8 +215,11 @@ class TreeView {
         }
 
         this._container.appendChild(dom.hr("margin-left"))
+
+        // virtual objects
         this.addChild(this._container, this._root.$project.$virtualObjects.tags)
         this.addChild(this._container, this._root.$project.$virtualObjects.snippets)
+        this.addChild(this._container, this._root.$project.$virtualObjects.characterChart)
     }
 }
 

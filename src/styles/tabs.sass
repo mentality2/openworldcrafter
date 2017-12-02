@@ -10,7 +10,13 @@
     display: flex
     flex-flow: column
 
+    // prevents wide content from making the tab wrapper bigger than the screen
+    // and forces it to scroll by itself
+    overflow: hidden
+
     .tabrow
+        // to prevent the top of the edit button from being clipped
+        padding: 3px
         .tabrow-button
             border-bottom: 3px solid $background
             margin-right: 1em

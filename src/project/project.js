@@ -162,28 +162,41 @@ class ProjectInfo {
 
 class ProjectVirtualObjects {
     constructor(project) {
+        function no() { return false }
         // tags
         this.tags = {
-            // this is a constant UUID for the tag phantom parent object
+            // magic uuid
             id: "919819c8-c77e-40e8-9a43-c621391a8282",
             name: "Tags",
             subobjects: project.tags,
             type: "tagfolder",
             $project: project,
             metadata: {},
-            isEditable: () => false
+            isEditable: no
         }
 
         // snippets
         this.snippets = {
-            // this is a constant UUID for the tag phantom parent object
+            // magic uuid
             id: "ecff73ff-2899-4077-9902-435d044c2b01",
             name: "Snippets",
             subobjects: [],
             type: "snippets",
             $project: project,
             metadata: {},
-            isEditable: () => false
+            isEditable: no
+        }
+
+        // character sheet
+        this.characterChart = {
+            // magic uuid
+            id: "43ef5cb2-9f56-4cb2-87e1-16d55d46acc9",
+            name: "Character Chart",
+            subobjects: [],
+            type: "characterchart",
+            $project: project,
+            metadata: {},
+            isEditable: no
         }
     }
 }

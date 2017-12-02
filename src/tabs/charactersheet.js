@@ -4,6 +4,91 @@ const dom = require('../dom.js')
 const common = require('./common.js')
 const utils = require('../utils.js')
 
+function createCharacterChartTab(object, ref) {
+    var el = dom.div()
+    var project = object.$project
+
+    var table = dom.element("table", undefined, "spreadsheet")
+
+    // collect the data we need
+    // sort the list of property names by how often those properties are used
+    var keyFreq = {}
+    for(var id in project.$allObjects) {
+        var obj = project.$allObjects[id]
+        for(var key in obj.properties) {
+            if(keyFreq[key]) keyFreq[key] ++
+            else keyFreq[key] = 1
+        }
+    }
+    var properties = Object.keys(keyFreq).sort((a, b) => keyFreq[b] - keyFreq[a])
+
+    // now that we have a list of properties, create the header row
+    var headers = dom.tr_headers(properties, "spreadsheet-row", "spreadsheet-cell")
+    headers.insertBefore(dom.element("th", "Name", "spreadsheet-cell"), headers.firstChild)
+    table.appendChild(headers)
+
+    // now all the objects, in alphabetical order
+    var objectOrder = Object.keys(project.$allObjects).sort((a, b) => project.$allObjects[a].name.localeCompare(project.$allObjects[b].name))
+    for(var id of objectOrder) {
+        let obj = project.$allObjects[id]
+
+        // don't include objects that don't have properties
+        if(Object.keys(obj.properties).length) {
+            var row = dom.element("tr", undefined, "spreadsheet-row")
+
+            // object name with link
+            var name = dom.element("td", undefined, "spreadsheet-cell")
+            var link = dom.element("a", obj.name, ["bold", "cursor-pointer", "margin-right"])
+            link.addEventListener("click", event => {
+                ref.goToPage(obj)
+            })
+            name.appendChild(link)
+            row.appendChild(name)
+
+            for(let prop of properties) {
+                // if it's undefined then the dom method will create an empty cell
+                // no need to worry about that here
+                let cell = dom.element("td", undefined, "spreadsheet-cell")
+
+                let nonEditCell = dom.span(obj.properties[prop], "edit-invisible")
+                cell.appendChild(nonEditCell)
+
+                if(project.isEditable()) {
+                    let editCell = dom.span(obj.properties[prop], "edit-visible")
+                    editCell.contentEditable = true
+
+                    // for styling purposes
+                    editCell.addEventListener("focus", ev => cell.classList.add("focused"))
+                    editCell.addEventListener("blur", ev => cell.classList.remove("focused"))
+
+                    editCell.addEventListener("keypress", ev => {
+                        // this must be in a keypress event instead of keyup in order to fire in time
+                        if(ev.keyCode === 13) {
+                            ev.preventDefault()
+                            editCell.blur()
+                        }
+                    })
+                    editCell.addEventListener("keyup", ev => {
+                        obj.addProperty(prop, editCell.innerHTML)
+                        nonEditCell.textContent = editCell.textContent
+                        obj.markDirty()
+                    })
+                    cell.appendChild(editCell)
+                }
+
+                row.appendChild(cell)
+            }
+            table.appendChild(row)
+        }
+    }
+
+    var tableWrapper = dom.element("div", undefined, "spreadsheet-wrapper")
+    tableWrapper.appendChild(table)
+    el.appendChild(tableWrapper)
+
+    return el
+}
+
 function createRow(key, values, object) {
     var row = dom.element("tr")
 
@@ -139,6 +224,12 @@ function createNewPropertyModal(object, cb) {
 function createCharacterSheetTab(object, ref) {
     var el = dom.div()
 
+    var characterChartLink = dom.element("a", "View Character Chart", ["bold", "cursor-pointer", "margin-right"])
+    characterChartLink.addEventListener("click", event => {
+        ref.goToPage(object.$project.$virtualObjects.characterChart)
+    })
+    el.appendChild(characterChartLink)
+
     var rows = {}
 
     var table = dom.element("table")
@@ -178,4 +269,4 @@ function createCharacterSheetTab(object, ref) {
     return el
 }
 
-module.exports = createCharacterSheetTab
+module.exports = { createCharacterSheetTab, createCharacterChartTab }

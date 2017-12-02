@@ -93,10 +93,10 @@ function tr(row) {
     }
     return r
 }
-function tr_headers(row) {
-    var r = element("tr")
+function tr_headers(row, classes, thClasses) {
+    var r = element("tr", undefined, classes)
     for(var data of row) {
-        r.appendChild(element("th", data))
+        r.appendChild(element("th", data, thClasses))
     }
     return r
 }
