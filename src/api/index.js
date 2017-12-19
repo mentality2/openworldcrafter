@@ -2,7 +2,6 @@
 
 class IProjectStore {
     constructor(file, proj, readycb) {
-        throw "Not Implemented: new IProjectStore()"
     }
 
     /*
@@ -65,3 +64,5 @@ class IProjectStore {
         throw "Not Implemented: save"
     }
 }
+
+module.exports = IProjectStore

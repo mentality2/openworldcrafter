@@ -1,6 +1,5 @@
 "use strict"
 
-const common = require("./common.js")
 const electron = require('electron')
 const path = require('path')
 const disk = require("../api/disk.js")
@@ -19,59 +18,17 @@ class DesktopEnvironment extends require("./index") {
         this.styleDir = path.join(__dirname, "../styles/css/")
         this.showLogoInCorner = true
 
-        var projectListData = JSON.parse(localStorage["openworldfactory.recentFiles"] || [])
-        this._projectList = new common.ProjectList(projectListData, save => {
-            localStorage.setItem("openworldfactory.recentFiles", JSON.stringify(save))
-        })
+        this.availableAPIs = [disk.DiskApiDescription]
     }
 
     getProjectList(cb) {
-        cb(this._projectList)
+        console.trace("[DEPRECATION] Use api.getProjectList() instead")
+        this.availableAPIs[0].getProjectList(cb)
     }
 
     getSaveMethods() {
-        return [{
-            buttonText: "Save",
-            createProject: (name, desc) => {
-                electron.remote.dialog.showSaveDialog({
-                    title: "Save Project",
-                    defaultPath: name + ".owf"
-                }, filename => {
-                    var proj = project.createProject(name, desc)
-                    proj.$store = new disk(filename, proj, () => {
-                        proj.save()
-                        $owf.getProjectList(list => list.addProjectEntry(name, filename, desc))
-                        $owf.viewProject(proj)
-                    })
-                })
-            }
-        }]
-    }
-
-    /*
-        Takes a project file location as a parameter, loads the project, and then
-        calls viewProject
-    */
-    openProject(location, onerr) {
-        if(typeof location === "string") {
-            var diskapi = new disk(location, undefined, proj => {
-                this._projectList.addProject({
-                    name: proj.info.name,
-                    location,
-                    desc: proj.info.description
-                })
-
-                $owf.viewProject(proj)
-            }, err => {
-                if(err === "project version mismatch, please update OpenWorldFactory") {
-                    $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
-                } else {
-                    console.log(err)
-                    this._projectList.removeProject(location)
-                    onerr(err)
-                }
-            })
-        }
+        console.trace("[DEPRECATION] Use this.availableAPIs instead")
+        return this.availableAPIs
     }
 
     /*
@@ -192,7 +149,7 @@ class DesktopEnvironment extends require("./index") {
         var proj = project.createProject(name, desc)
         proj.$store = new disk("test.owf", proj, () => {
             proj.save()
-            this._projectList.addProjectEntry(name, "test.owf", desc)
+            this.availableAPIs[0].getProjectList(list => list.addProjectEntry(name, "test.owf", desc))
             this.viewProject(proj)
         })
     }

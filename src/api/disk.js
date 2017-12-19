@@ -6,15 +6,18 @@ const project = require('../project')
 const uuid = require('uuid/v4')
 const path = require('path')
 const electron = require('electron')
+const projectlist = require('./projectlist.js')
 
 const noop = () => {}
 
-class DiskProjectStore {
+class DiskProjectStore extends require("./") {
     /*
      * If project is defined, a new project file will be created. If it is null,
      * the existing project in the file will be loaded.
      */
     constructor(file, proj, readycb, errcb) {
+        super()
+
         this._file = file
         this.editable = true
 
@@ -132,3 +135,55 @@ class DiskProjectStore {
 }
 
 module.exports = DiskProjectStore
+
+class DiskApiDescription extends require("./apidescription.js") {
+    constructor() {
+        super()
+
+        this.buttonText = "Save to Computer"
+
+        var projectListData = JSON.parse(localStorage["openworldfactory.recentFiles"] || [])
+        this._projectList = new projectlist.ProjectList(projectListData, save => {
+            localStorage.setItem("openworldfactory.recentFiles", JSON.stringify(save))
+        })
+    }
+
+    createProject(name, desc) {
+        electron.remote.dialog.showSaveDialog({
+            title: "Save Project",
+            defaultPath: name + ".owf"
+        }, filename => {
+            var proj = project.createProject(name, desc)
+            proj.$store = new DiskProjectStore(filename, proj, () => {
+                proj.save()
+                this._projectList.addProjectEntry(name, filename, desc)
+                $owf.viewProject(proj)
+            })
+        })
+    }
+
+    openProject(location, onerr) {
+        var diskapi = new DiskProjectStore(location, undefined, proj => {
+            this._projectList.addProject({
+                name: proj.info.name,
+                location,
+                desc: proj.info.description
+            })
+
+            $owf.viewProject(proj)
+        }, err => {
+            if(err === "project version mismatch, please update OpenWorldFactory") {
+                $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
+            } else {
+                this._projectList.removeProject(location)
+                onerr(err)
+            }
+        })
+    }
+
+    getProjectList(cb) {
+        cb(this._projectList)
+    }
+}
+
+module.exports.DiskApiDescription = new DiskApiDescription()

@@ -1,6 +1,5 @@
 "use strict"
 
-require("./common.js")
 const api = require('../api/api')
 const dom = require('../dom')
 

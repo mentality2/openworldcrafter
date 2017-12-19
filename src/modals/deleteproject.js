@@ -2,7 +2,7 @@
 
 const dom = require('../dom')
 
-function createDeleteProjectModal(projectLocation, projectName) {
+function createDeleteProjectModal(api, projectLocation, projectName) {
     var el = dom.modal("Delete Project", true)
 
     var warning = dom.div()
@@ -12,7 +12,6 @@ function createDeleteProjectModal(projectLocation, projectName) {
 
     var name = dom.inputText("", "Project Name")
     name.addEventListener("input", ev => {
-        console.log("change", ev);
         if(name.value === projectName) del.classList.remove("button-disabled")
         else del.classList.add("button-disabled")
     })
@@ -23,8 +22,12 @@ function createDeleteProjectModal(projectLocation, projectName) {
     })
     var del = dom.button("delete", "Delete", () => {
         if(name.value === projectName) {
-            $owf.deleteProject(projectLocation, name.value)
-            el.hide()
+            api.getProjectList(list => {
+                list.removeProject(projectLocation, cb => {
+                    api.deleteProject(projectLocation, name.value)
+                    el.hide()
+                })
+            })
         }
     }, ["button-dangerous", "button-disabled"])
     actions.appendChild(cancel)

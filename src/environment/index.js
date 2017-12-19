@@ -1,7 +1,5 @@
 "use strict"
 
-require("./common.js")
-
 class Environment {
     constructor() {
         /*
@@ -24,6 +22,35 @@ class Environment {
     */
     getProjectList(cb) {
         throw "Not Implemented: getProjectList"
+    }
+
+    /*
+        Gets all projects from all available APIs, sorted ascending by last access date.
+    */
+    aggregateProjectLists(cb) {
+        var lists = []
+        for(let api of this.availableAPIs) {
+            api.getProjectList(list => {
+                // tag everything with which API it came from
+                for(var item of list.projects) {
+                    // use a function so it doesn't get saved to JSON
+                    item.$getApi = () => api
+                }
+
+                lists.push(list.projects)
+                if(lists.length === this.availableAPIs.length) cb(aggregate())
+            })
+        }
+
+        function aggregate() {
+            // combine all the separate lists
+            var listAll = []
+            for(var list of lists) listAll = listAll.concat(list)
+
+            // now sort them by timestamp. later should come first, hence b - a
+            listAll.sort((a, b) => b.timestamp - a.timestamp)
+            return listAll
+        }
     }
 
     /*

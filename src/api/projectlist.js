@@ -1,22 +1,15 @@
 "use strict"
 
-// Prevent changing URL by drag and drop
-window.addEventListener("dragover", e => {
-    if(e) e.preventDefault()
-}, false)
-window.addEventListener("drop", e => {
-    if(e) e.preventDefault()
-}, false)
-
 function elipsize(str, len) {
     if(str.length > len) return str.substr(0, len - 1) + "\u2026"
     else return str
 }
 
 class ProjectList {
-    constructor(data, save) {
+    constructor(data, save, api) {
         this.projects = data
         this._save = save
+        this._api = api
     }
 
     addProjectEntry(name, location, desc, cb) {
@@ -25,6 +18,8 @@ class ProjectList {
 
     addProject(file, cb) {
         file.desc = elipsize(file.desc || "", 200)
+        file.timestamp = new Date().getTime()
+
         // avoid duplicate entries by removing the previous one, if any
         for(var i = 0; i < this.projects.length;) {
             if(this.projects[i].location === file.location) {

@@ -3,6 +3,7 @@
 const project = require('../project')
 const uuid = require('uuid/v4')
 const fs = require('./fileplugin')
+const projectlist = require('./projectlist.js')
 
 const noop = () => {}
 
@@ -13,12 +14,14 @@ function getProjectDirectory(id) {
 /*
  * For saving projects on the mobile app
  */
-class AppProjectStore {
+class AppProjectStore extends require("./") {
     /*
      * If project is defined, a new project file will be created. If it is null,
      * the existing project in the file will be loaded.
      */
     constructor(id, proj, readycb, errcb) {
+        super()
+
         this._id = id
         this._dir = getProjectDirectory(id)
         this.editable = true
@@ -102,7 +105,7 @@ class AppProjectStore {
     }
 
     changeName() {
-        $owf.getProjectList(list => {
+        module.exports.AppApiDescription.getProjectList(list => {
             list.addProjectEntry(this._project.info.name, this._id, this._project.info.description)
         })
     }
@@ -110,46 +113,85 @@ class AppProjectStore {
 
 module.exports = AppProjectStore
 
-function deleteProject(location, name, cb) {
-    var dir = getProjectDirectory(location)
+class AppApiDescription extends require("./apidescription.js") {
+    constructor() {
+        super()
 
-    fs.readFile(dir + "project.json", (err, contents) => {
-        if(err) {
-            cb(err)
-            return
-        }
+        this.buttonText = "Save to Device"
+        this.buttonIcon = "phone"
+    }
 
-        var project = JSON.parse(contents)
-        if(project.info.name !== name) {
-            cb("project name does not match")
-            return
-        }
+    deleteProject(location, name, cb) {
+        var dir = getProjectDirectory(location)
 
-        fs.deleteDirectory(dir)
-    })
-}
+        fs.readFile(dir + "project.json", (err, contents) => {
+            if(err) {
+                cb(err)
+                return
+            }
 
-function createProject(name, desc) {
-    var proj = project.createProject(name, desc)
+            var project = JSON.parse(contents)
+            if(project.info.name !== name) {
+                cb("project name does not match")
+                return
+            }
 
-    proj.$store = new OnlineProjectStore(proj.info.uuid, proj, () => {
-        proj.save()
-        $owf.getProjectList(list => list.addProjectEntry(name, proj.info.uuid, desc))
-        $owf.viewProject(proj)
-    })
-}
+            fs.deleteDirectory(dir)
+        })
+    }
 
-function shareProject(id, cb) {
-    fs.makeZipFile(getProjectDirectory(id), (err, zip) => {
-        if(err) cb(err)
+    createProject(name, desc) {
+        var proj = project.createProject(name, desc)
+
+        proj.$store = new AppProjectStore(proj.info.uuid, proj, () => {
+            proj.save()
+            this.getProjectList(list => list.addProjectEntry(name, proj.info.uuid, desc))
+            $owf.viewProject(proj)
+        })
+    }
+
+    openProject(location, onerr) {
+        var appapi = new AppProjectStore(location, undefined, proj => {
+            this.getProjectList(list => list.addProjectEntry(proj.info.name, location, proj.info.description))
+            $owf.viewProject(proj)
+        }, err => {
+            if(err === "project version mismatch, please update OpenWorldFactory") {
+                $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
+            } else {
+                console.log(err)
+                onerr(err)
+            }
+        })
+    }
+
+    shareProject(id, cb) {
+        fs.makeZipFile(getProjectDirectory(id), (err, zip) => {
+            if(err) cb(err)
+            else {
+                fs.writeFileBlobExternal(id + ".owf", zip, cb)
+            }
+        })
+    }
+
+    getProjectList(cb) {
+        if(this._projectList) cb(this._projectList)
         else {
-            fs.writeFileBlobExternal(id + ".owf", zip, cb)
+            fs.readFile("projectlist.json", (err, data) => {
+                // if the file isn't found, just ignore the situation. we'll create a blank array.
+                if(err && err.code !== FileError.NOT_FOUND_ERR) {
+                    this.handleError("Error", "Error loading project list", err)
+                } else {
+                    this._projectList = new projectlist.ProjectList(JSON.parse(data || "[]"), (data, cb) => {
+                        fs.writeFileJSON("projectlist.json", data, (err, success) => {
+                            if(err) console.log("write file error", err)
+                        })
+                    })
+
+                    cb(this._projectList)
+                }
+            })
         }
-    })
+    }
 }
 
-module.exports.apiDescription = {
-    buttonText: "Save to Device",
-    buttonIcon: "phone",
-    deleteProject, shareProject, createProject, shareProject
-}
+module.exports.AppApiDescription = new AppApiDescription()

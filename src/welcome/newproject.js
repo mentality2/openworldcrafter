@@ -22,8 +22,8 @@ module.exports = function() {
 
     actionBar.appendChild(cancel)
 
-    var boringButton = $owf.getSaveMethods().length === 1
-    for(var method of $owf.getSaveMethods()) {
+    var boringButton = $owf.availableAPIs.length === 1
+    for(var method of $owf.availableAPIs) {
         var button = dom.button(boringButton ? undefined : method.buttonIcon, boringButton ? "Save" : method.buttonText, () => {
             newProjectModal.wrapper.classList.remove("modal-visible")
             method.createProject(name.value, desc.value)

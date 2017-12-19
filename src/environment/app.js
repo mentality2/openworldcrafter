@@ -1,6 +1,5 @@
 "use strict"
 
-const common = require("./common.js")
 const api = require('../api/app')
 const dom = require('../dom')
 const fs = require('../api/fileplugin')
@@ -17,50 +16,18 @@ class AppEnvironment extends require("./index") {
         */
         this.iframeTag = "iframe"
         this.styleDir = "res/styles/"
+
+        this.availableAPIs = [api.AppApiDescription]
     }
 
     getProjectList(cb) {
-        if(this._projectList) cb(this._projectList)
-        else {
-            fs.readFile("projectlist.json", (err, data) => {
-                // if the file isn't found, just ignore the situation. we'll create a blank array.
-                if(err && err.code !== FileError.NOT_FOUND_ERR) {
-                    // TODO: something
-                    this.handleError("Error", "Error loading project list", err)
-                } else {
-                    this._projectList = new common.ProjectList(JSON.parse(data || "[]"), (data, cb) => {
-                        fs.writeFileJSON("projectlist.json", data, (err, success) => {
-                            if(err) console.log("write file error", err)
-                        })
-                    })
-
-                    cb(this._projectList)
-                }
-            })
-        }
+        console.trace("[DEPRECATION] Use api.apiDescription.projectList instead")
+        this.availableAPIs[0].getProjectList(cb)
     }
 
     getSaveMethods() {
-        return [api.apiDescription]
-    }
-
-    /*
-        Takes a project file location as a parameter, loads the project, and
-        then calls viewProject
-    */
-    openProject(location, onerr) {
-        this.projectID = location
-        var appapi = new api(location, undefined, proj => {
-            this.getProjectList(list => list.addProjectEntry(proj.info.name, location, proj.info.description))
-            this.viewProject(proj)
-        }, err => {
-            if(err === "project version mismatch, please update OpenWorldFactory") {
-                $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
-            } else {
-                console.log(err)
-                onerr(err)
-            }
-        })
+        console.trace("[DEPRECATION] Use $owf.availableAPIs instead")
+        return this.availableAPIs
     }
 
     /*
@@ -72,17 +39,6 @@ class AppEnvironment extends require("./index") {
 
         document.body.innerHTML = ""
         require("../editor")(document.body, project)
-    }
-
-    deleteProject(location, name) {
-        this.getProjectList(list => {
-            list.removeProject(location, () => {
-                api.apiDescription.deleteProject(location, name, err => {
-                    if(err === "project name does not match") this.handleError("Error", "That is not the name of the project.", err)
-                    else this.handleError("Error", "Could not delete project", err)
-                })
-            })
-        })
     }
 
     showWelcome() {

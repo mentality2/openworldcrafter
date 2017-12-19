@@ -8,6 +8,14 @@ const deleteproject = require('../modals/deleteproject')
 const thispackage = require("../../package.json")
 
 function createPage(el) {
+    // Prevent changing URL by drag and drop
+    window.addEventListener("dragover", e => {
+        if(e) e.preventDefault()
+    }, false)
+    window.addEventListener("drop", e => {
+        if(e) e.preventDefault()
+    }, false)
+
     // change this back from editor settings
     document.documentElement.style.overflow = "initial"
     document.body.style.overflow = "initial"
@@ -44,29 +52,31 @@ function createPage(el) {
 
     // Recent files
     var recentList = dom.element("ul", undefined, "margin-right")
-    $owf.getProjectList(list => {
-        if(list.projects.length === 0) {
+    $owf.aggregateProjectLists(list => {
+        if(list.length === 0) {
             recentList.appendChild(dom.span("No recent files"))
         }
 
-        for(let file of list.projects) {
+        for(let file of list) {
+            var item = dom.element("li")
+
             var name = dom.element("a", file.name, "project-title")
             name.addEventListener("click", event => {
-                $owf.openProject(file.location, err => {
+                file.$getApi().openProject(file.location, err => {
                     $owf.handleError("Error Opening Project", err)
                 })
             })
-
-            var item = dom.element("li")
             item.appendChild(name)
 
             var more = dom.span(undefined, ["menu", "float-right", "menu-extends-left"])
             var moreIcon = dom.icon("more", "menu-button")
             var moreMenu = dom.div(undefined, "menu-content")
+            var menuEmpty = true
 
-            if($owf.deleteProject) {
+            if(file.$getApi().deleteProject) {
+                menuEmpty = false
                 var deleteButton = dom.button(undefined, "Delete", () => {
-                    var deleteModal = deleteproject(file.location, file.name)
+                    var deleteModal = deleteproject(file.$getApi(), file.location, file.name)
                     deleteModal.addToContainer()
                     deleteModal.show()
                     // $owf.getSaveMethods()[0].shareProject(file.location, console.log)
@@ -74,14 +84,24 @@ function createPage(el) {
 
                 moreMenu.appendChild(deleteButton)
             }
-            moreMenu.appendChild(dom.div("Hello world!"))
 
             more.appendChild(moreIcon)
             more.appendChild(moreMenu)
 
-            item.appendChild(more)
+            if(!menuEmpty) item.appendChild(more)
 
-            if(file.desc) item.appendChild(dom.div(file.desc, "project-description"))
+            if($owf.availableAPIs.length > 1) {
+                if(file.$getApi().buttonIcon) {
+                    var iconWrapper = dom.span(undefined, "float-right")
+                    var icon = dom.icon(file.$getApi().buttonIcon)
+                    iconWrapper.appendChild(icon)
+                    item.appendChild(iconWrapper)
+                }
+            }
+
+            if(file.desc) {
+                item.appendChild(dom.div(file.desc, ["project-description", ($owf.availableAPIs.length > 1) ? "margin-left" : "noop"]))
+            }
 
             recentList.appendChild(item)
         }
