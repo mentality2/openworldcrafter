@@ -350,9 +350,10 @@ class Project {
     }
 }
 
-function createProject(name, description) {
+function createProject(name, description, id) {
     var serial = JSON.parse(JSON.stringify(require("./default.json")))
     serial.info.name = name
+    serial.info.uuid = id
     serial.info.description = description
     var proj = new Project(serial)
     return proj

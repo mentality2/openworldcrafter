@@ -2,7 +2,7 @@
 
 const dom = require('./dom')
 const utils = require('./utils')
-const magicUuids = require('./magic-uuids.json')
+const magicuuids = require('./magicuuids.json')
 
 function createSummaryFromSnippets(text, ranges) {
     var summary = ""

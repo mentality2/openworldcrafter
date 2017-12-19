@@ -4,6 +4,7 @@ const api = require('../api/app')
 const dom = require('../dom')
 const fs = require('../api/fileplugin')
 const project = require('../project')
+const magicuuids = require('../magicuuids')
 
 class AppEnvironment extends require("./index") {
     constructor() {
@@ -78,10 +79,10 @@ class AppEnvironment extends require("./index") {
         var name = "TEST PROJECT"
         var desc = "Transient project for testing purposes. Click 'Remake test.owf' on the welcome page to reset this project. You must be in dev mode to do this."
 
-        var proj = project.createProject(name, desc)
-        proj.$store = new api("5ff3bbc3-8a69-4b83-bc03-78379f6b0dbb", proj, () => {
+        var proj = project.createProject(name, desc, magicuuids.test_project)
+        proj.$store = new api(magicuuids.test_project, proj, () => {
             proj.save()
-            this._projectList.addProjectEntry(name, "5ff3bbc3-8a69-4b83-bc03-78379f6b0dbb", desc)
+            this._projectList.addProjectEntry(name, magicuuids.test_project, desc)
             this.viewProject(proj)
         })
     }

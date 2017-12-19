@@ -6,6 +6,7 @@ const disk = require("../api/disk.js")
 const https = require('https')
 const project = require('../project')
 const dom = require('../dom')
+const magicuuids = require('../magicuuids')
 
 class DesktopEnvironment extends require("./index") {
     constructor() {
@@ -146,7 +147,7 @@ class DesktopEnvironment extends require("./index") {
         var name = "TEST PROJECT"
         var desc = "Transient project for testing purposes. Click 'Remake test.owf' on the welcome page to reset this project. You must be in dev mode to do this."
 
-        var proj = project.createProject(name, desc)
+        var proj = project.createProject(name, desc, magicuuids.test_project)
         proj.$store = new disk("test.owf", proj, () => {
             proj.save()
             this.availableAPIs[0].getProjectList(list => list.addProjectEntry(name, "test.owf", desc))
