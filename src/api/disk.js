@@ -46,10 +46,19 @@ class DiskProjectStore {
                     })
                 })
                 .catch(e => {
-                    errcb("This project file seems to be corrupt.")
+                    if(e === "project version mismatch, please update OpenWorldFactory") {
+                        $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
+                    } else {
+                        errcb("This project file seems to be corrupt.")
+                        console.log(e)
+                    }
                 })
             })
         }
+    }
+
+    getLocationString() {
+        return "Saved to " + this._file
     }
 
     getProjectFile(cb) {
@@ -118,7 +127,7 @@ class DiskProjectStore {
     }
 
     changeName() {
-        $owf.addRecentProject(this._project.info.name, this._file, this._project.info.description)
+        $owf.getProjectList(list => list.addProjectEntry(this._project.info.name, this._file, this._project.info.description))
     }
 }
 

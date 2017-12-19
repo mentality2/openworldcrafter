@@ -67,6 +67,7 @@ class OnlineProjectStore {
     }
 
     getAsset(name, cb) {
+        throw "Not Implemented"
     }
 
     getAssetUrl(name, cb) {
@@ -83,7 +84,15 @@ class OnlineProjectStore {
         })
     }
 
+    changeName() {
+        // we don't actually have to do anything here b/c the server handles
+        // recent files
+    }
+
     save(cb, update) {
+        // no need to do anything here because files are saved in their own
+        // respective functions. the disk api uses this to flush the zip file to
+        // the disk, which doesn't apply here
     }
 
     getSharingSettings(cb) {

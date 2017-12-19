@@ -15,6 +15,10 @@ class WebEnviroment extends require("./index") {
         this.styleDir = "/dist/styles/"
     }
 
+    getProjectList(cb) {
+
+    }
+
     /*
         Takes a project file location as a parameter, loads the project, and then
         calls viewProject
@@ -40,7 +44,7 @@ class WebEnviroment extends require("./index") {
         Open a new window with a documentation page
     */
     showDocs(page) {
-        window.open(page.replace(/\.md$/, ".htm"), "_blank")
+        window.open("/dist/docs/" + page.replace(/\.md$/, ".htm"), "_blank")
     }
 
     /*

@@ -101,14 +101,14 @@ function createEventTab(object, ref) {
         var hourMinEdit = dom.span()
 
         var hour = dom.input("number", utils.getDateField(object.metadata.time, "hour"), () => {
-            object.metadata.time = utils.setDateField(object.metadata.time, "hour", hour.value)
+            object.metadata.time = utils.setDateField(object.metadata.time, "hour", parseInt(hour.value))
             object.markDirty()
             updateDateText()
         }, "no-margin-right")
         hour.min = 0
         hour.max = 23
         var min = dom.input("number", utils.getDateField(object.metadata.time, "minute"), () => {
-            object.metadata.time = utils.setDateField(object.metadata.time, "minute", min.value)
+            object.metadata.time = utils.setDateField(object.metadata.time, "minute", parseInt(min.value))
             object.markDirty()
             updateDateText()
         })

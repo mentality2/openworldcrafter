@@ -1,7 +1,8 @@
 {
     "info": {
         "name": "default",
-        "description": ""
+        "description": "",
+        "saveVersion": "2.0.0"
     },
     "projroot": {
         "id": "a1b2ca7e-9878-4750-8c93-f049050c2f00",

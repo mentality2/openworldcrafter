@@ -1,8 +1,9 @@
 "use strict"
 
-const menubar = require('./menubar.js')
-const theme = require('./theme.js')
-const dom = require('./dom.js')
+const menubar = require('./menubar-desktop.js')
+const mobileMenubar = require('./menubar-mobile.js')
+const theme = require('../theme.js')
+const dom = require('../dom.js')
 
 /**
  * Callbacks is an object containing several callbacks for various menu
@@ -10,11 +11,13 @@ const dom = require('./dom.js')
  */
 function createMainMenubar(project, callbacks, ref) {
     var el = dom.div(undefined, "main-menubar")
-    var menu = new menubar(project, el)
+    var menu = new ($owf.mobile? mobileMenubar : menubar)(project, el, ref, callbacks)
 
     menu.addTopMenu("project", project.info.name)
     // menu.addMenuItem("project", "Save", project.save())
-    menu.addMenuItem("project", "Print", callbacks.print)
+    // printing does not work on mobile
+    menu.addMenuItem("project", "My Projects", () => { project.save(); $owf.showWelcome() })
+    if(!$owf.mobile) menu.addMenuItem("project", "Print", callbacks.print)
     menu.addMenuItem("project", "Project Info...", callbacks.projectInfo)
 
     // menu.addTopMenu("media", "Media")
@@ -29,6 +32,11 @@ function createMainMenubar(project, callbacks, ref) {
     // menu.addMenuLink("help", "About", "https://example.com")
     // menu.addMenuLink("help", "Tutorials", "https://example.com")
     menu.addMenuItem("help", "Documentation", () => $owf.showDocs("userdocs/index.md"))
+
+    if(process.env.NODE_ENV === "development") {
+        menu.addTopMenu("dev", "Developer")
+        menu.addMenuItem("dev", "Reload Stylesheets", () => theme.reload())
+    }
 
     menu.addSearchBar(project, ref)
 

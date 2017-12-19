@@ -34,7 +34,7 @@ class TreeView {
                 this._newObjectModal.show()
             })
 
-            this._dom.appendChild(this._newObjectModal.wrapper)
+            this._newObjectModal.addToContainer()
 
             this._removeButton = dom.button("remove", null, event => {
                 event.stopPropagation()
@@ -81,7 +81,7 @@ class TreeView {
             confirmDelete.modal.appendChild(confirmDeleteText)
             confirmDelete.modal.appendChild(actions)
 
-            this._dom.appendChild(confirmDelete.wrapper)
+            confirmDelete.addToContainer()
         }
 
         this._root = rootobj
@@ -99,6 +99,7 @@ class TreeView {
         this._expandedNodes = {}
 
         this.refresh()
+        if($owf.mobile) this.reveal()
     }
 
     setSelectListener(func) {
@@ -127,6 +128,8 @@ class TreeView {
             }
 
             row.classList.add("treeview-item-selected")
+
+            this.conceal()
         } else {
             this._selected = null
         }
@@ -220,6 +223,21 @@ class TreeView {
         this.addChild(this._container, this._root.$project.$virtualObjects.tags)
         this.addChild(this._container, this._root.$project.$virtualObjects.snippets)
         this.addChild(this._container, this._root.$project.$virtualObjects.characterChart)
+    }
+
+    // for mobile
+    reveal() {
+        this._dom.classList.add("treeview-shown")
+        document.body.classList.add("treeview-is-open")
+        this._revealed = true
+    }
+    conceal() {
+        this._dom.classList.remove("treeview-shown")
+        document.body.classList.remove("treeview-is-open")
+        this._revealed = false
+    }
+    isRevealed() {
+        return this._revealed
     }
 }
 

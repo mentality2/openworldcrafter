@@ -1,6 +1,6 @@
 {
   "name": "openworldfactory",
-  "version": "2.0.1",
+  "version": "2.1.3",
   "updateInfo": {
     "url": "https://openworldfactory.github.io",
     "message": "v2.0.0 adds character relationships"
@@ -13,6 +13,8 @@
     "compile-icons": "./scripts/compile-icons.js",
     "compile-docs": "./scripts/compile-docs.js",
     "compile-web": "webpack --config webpack/webpack.config.js -p",
+    "compile-app-prod": "webpack --config webpack/app.webpack.config.js -p",
+    "compile-app": "webpack --config webpack/app.webpack.config.js --define process.env.NODE_ENV=\\\"development\\\"",
     "compile-all": "npm run compile-sass; npm run compile-icons; npm run compile-web",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",

@@ -2,6 +2,7 @@
 
 const utils = require('../utils.js')
 const uuid = require('uuid/v4')
+const thispackage = require("../../package.json")
 
 class Author {
     constructor(author) {
@@ -145,7 +146,7 @@ class ProjectInfo {
         this.description = serial.description
         this.uuid = serial.uuid || uuid()
         this.saveUuid = serial.saveUuid || uuid()
-        this.saveVersion = require("../../package.json").version
+        this.saveVersion = thispackage.version
 
         this.authors = []
         if(serial.authors) {
@@ -202,8 +203,12 @@ class ProjectVirtualObjects {
 }
 
 class Project {
-    constructor(serial, store) { try {
+    constructor(serial, store) {
         console.log("Loading project from JSON", serial)
+        if(utils.compareVersions(serial.info.saveVersion, thispackage.version) > 0) {
+            throw "project version mismatch, please update OpenWorldFactory"
+        }
+
         this.info = new ProjectInfo(serial.info)
         this.$store = store
 
@@ -230,7 +235,7 @@ class Project {
         this.$_dirty = false
 
         this.$saveListener = () => {}
-    } catch(e) { console.log(e) } }
+    }
 
     getObjectById(id) {
         return this.$allObjects[id]
@@ -345,9 +350,18 @@ class Project {
     }
 }
 
+function createProject(name, description) {
+    var serial = JSON.parse(JSON.stringify(require("./default.json")))
+    serial.info.name = name
+    serial.info.description = description
+    var proj = new Project(serial)
+    return proj
+}
+
 module.exports = {
     Project,
     ProjectObject,
     ProjectInfo,
-    Author
+    Author,
+    createProject
 }

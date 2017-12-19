@@ -11,6 +11,7 @@ function createSnippetsTab(object, ref, trash) {
     if(!trash) {
         // note that this is NOT edit-visible, for ease of use
         var newSnippetDiv = dom.div()
+        var makeFirefoxWorkDiv = dom.div()
 
         var newSnippet = dom.element("textarea")
         newSnippet.rows = 6
@@ -37,7 +38,10 @@ function createSnippetsTab(object, ref, trash) {
         newSnippetDiv.appendChild(newSnippet)
         newSnippetDiv.appendChild(addSnippet)
 
-        el.appendChild(newSnippetDiv)
+        // for some reason, the snippets run into the "add snippet" button if
+        // there's not an extra div here (required for firefox)
+        makeFirefoxWorkDiv.appendChild(newSnippetDiv)
+        el.appendChild(makeFirefoxWorkDiv)
     }
 
     var contents = dom.div()

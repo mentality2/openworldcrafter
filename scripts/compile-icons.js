@@ -15,7 +15,7 @@ var list = fs.readdirSync(dir)
 var object = {}
 
 for(var file of list) {
-    object[file.match(/^\w+(?=\.svg$)/)[0]] = fs.readFileSync(path.join(dir, file), "utf8")
+    object[file.match(/^\w+(?=\.svg$)/)[0]] = fs.readFileSync(path.join(dir, file), "utf8").trim()
 }
 
 fs.writeFileSync(path.join(dir, "..", "index.json"), JSON.stringify(object))

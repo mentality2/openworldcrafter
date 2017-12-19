@@ -1,0 +1,192 @@
+.mobile-visible
+    display: none
+
+.treeview-is-open
+    .treeview-button
+        background-color: $accent
+
+    // hide the tab bar when the tree view is open, otherwise the edit button is
+    // visible in the corner and it looks ugly
+    .tabrow
+        visibility: hidden
+
+.mobile
+    .mobile-invisible
+        display: none
+    .mobile-visible
+        display: unset !important
+
+    .mobile-tab-title
+        display: unset !important
+        font-size: 1.2em
+
+    // make scrolling smooth. Interestingly, both Android and iOS use webkit.
+    -webkit-overflow-scrolling: touch
+
+    &.keyboard-is-open
+        .tab-wrapper
+            padding-bottom: 0
+            .tabrow
+                display: none
+
+    .attachments
+        display: block
+        div
+            // to override the normal display: table-row
+            display: inline-block
+            padding: 1em
+            @media all and (orientation: portrait)
+                width: 100%
+            @media all and (orientation: landscape)
+                width: 50%
+            .thumbnail
+                width: 100%
+                height: auto
+                max-width: unset
+                max-height: unset
+
+    .modal
+        border-radius: 0
+        @media all and (orientation: portrait)
+            width: 100%
+            // because on desktop, it's 600px, way too large
+            min-width: unset
+        @media all and (orientation: landscape)
+            height: 100%
+            // make sure there is a decent margin on each side
+            min-width: 75%
+            .modal-actions
+                // to put it at the bottom
+                margin-top: auto
+
+    // for making sure textboxes don't shrink too small, etc
+    .min-height-50-vh
+        min-height: 50vh
+
+    .tab-wrapper
+        margin-top: .2em
+        margin-bottom: 0
+        padding-bottom: 2.75em
+        position: relative
+
+        .tabrow
+            position: absolute
+            bottom: 0
+            font-size: 1.5em
+            width: 100%
+
+            display: flex
+
+            // make the bottom bar more compact
+            .edit-button
+                margin-left: auto
+                .button-text
+                    display: none
+
+            .tabrow-button
+                border: 0
+                border-top: 3px solid $background
+                margin-right: .5em
+                padding: 0 3px
+                cursor: default
+
+                &:first-child
+                    // stuff to make text ellipsize
+                    display: block
+                    min-width: 0
+                    white-space: nowrap
+                    text-overflow: ellipsis
+                    overflow: hidden
+            .tabrow-button-selected
+                border-top-color: $accent
+
+    .treeview
+        position: absolute
+
+        // make sure it shows up over everything else
+        z-index: 1
+
+        top: 0
+        bottom: 0
+        left: -100%
+        right: 100%
+        max-width: unset
+        min-width: unset
+
+        transition: left 150ms, right 150ms
+
+        &.treeview-shown
+            left: 0
+            right: 0
+
+    .main-menubar
+        font-size:  1.5em
+        text-overflow: ellipsis
+        display: flex
+
+        .treeview-button
+            padding: 0
+            margin: 1px 6px
+            margin-right: 12px
+            border-radius: 3px
+
+        // so the position: absolute searchbar has a 3px padding on the sides
+        position: relative
+
+        .menubar-top
+            // pushes the search button all the way to the left.
+            // use this instead of flex-grow or the arrow will be positioned
+            // wrong
+            margin-right: auto
+            min-width: 0
+        .menubar-top-content
+            max-width: 100%
+            max-height: 80vh
+            overflow-y: auto
+            z-index: 2
+            *
+                text-overflow: ellipsis
+                overflow-x: hidden
+            .menubar-top-header
+                font-size: .667em
+                display: block
+        .menubar-top-btn
+            overflow: hidden
+            min-width: 4em
+            text-overflow: ellipsis
+            white-space: nowrap
+            &::after
+                // the arrow hides in the margin
+                position: absolute
+                right: 0
+        .menubar-top .menubar-top-content > div
+            span
+                padding-left: 3px
+            div *
+                padding-left: 9px
+
+        .searchbar-button
+            float: right
+        .searchbar-top
+            position: absolute
+            width: 100%
+            left: 110%
+            right: 210%
+            transition: left 150ms, right 150ms
+
+            // put it above the tree view
+            z-index: 2
+
+            &.searchbar-shown
+                left: 0
+                right: 100%
+
+            .leavesearch
+                position: absolute
+                top: 50%
+                transform: translateY(-50%)
+                right: 6px
+
+            input
+                width: 100%
+                font-size: 1em

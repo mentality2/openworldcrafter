@@ -1,42 +1,12 @@
 "use strict"
 
-require("./common.js")
-
+const common = require("./common.js")
 const electron = require('electron')
 const path = require('path')
 const disk = require("../api/disk.js")
-
-function elipsize(str, len) {
-    if(str.length > len) return str.substr(0, len - 1) + "\u2026"
-    else return str
-}
-
-function removeRecentFile(location) {
-    var recentFiles = JSON.parse(localStorage.getItem("openworldfactory.recentFiles"))
-    recentFiles = recentFiles || []
-
-    for(var i = 0; i < recentFiles.length;) {
-        if(recentFiles[i].location === location) {
-            recentFiles.splice(i, 1)
-        } else i ++
-    }
-
-    localStorage.setItem("openworldfactory.recentFiles", JSON.stringify(recentFiles))
-}
-
-function addRecentFile(file) {
-    var recentFiles = JSON.parse(localStorage.getItem("openworldfactory.recentFiles"))
-    recentFiles = recentFiles || []
-
-    for(var i = 0; i < recentFiles.length;) {
-        if(recentFiles[i].location === file.location) {
-            recentFiles.splice(i, 1)
-        } else i ++
-    }
-
-    recentFiles.unshift(file)
-    localStorage.setItem("openworldfactory.recentFiles", JSON.stringify(recentFiles))
-}
+const https = require('https')
+const project = require('../project')
+const dom = require('../dom')
 
 class DesktopEnvironment extends require("./index") {
     constructor() {
@@ -48,6 +18,34 @@ class DesktopEnvironment extends require("./index") {
         this.iframeTag = "webview"
         this.styleDir = path.join(__dirname, "../styles/css/")
         this.showLogoInCorner = true
+
+        var projectListData = JSON.parse(localStorage["openworldfactory.recentFiles"] || [])
+        this._projectList = new common.ProjectList(projectListData, save => {
+            localStorage.setItem("openworldfactory.recentFiles", JSON.stringify(save))
+        })
+    }
+
+    getProjectList(cb) {
+        cb(this._projectList)
+    }
+
+    getSaveMethods() {
+        return [{
+            buttonText: "Save",
+            createProject: (name, desc) => {
+                electron.remote.dialog.showSaveDialog({
+                    title: "Save Project",
+                    defaultPath: name + ".owf"
+                }, filename => {
+                    var proj = project.createProject(name, desc)
+                    proj.$store = new disk(filename, proj, () => {
+                        proj.save()
+                        $owf.getProjectList(list => list.addProjectEntry(name, filename, desc))
+                        $owf.viewProject(proj)
+                    })
+                })
+            }
+        }]
     }
 
     /*
@@ -56,13 +54,22 @@ class DesktopEnvironment extends require("./index") {
     */
     openProject(location, onerr) {
         if(typeof location === "string") {
-            var diskapi = new disk(location, null, proj => {
-                this.addRecentProject(proj.info.name, location, proj.info.description)
+            var diskapi = new disk(location, undefined, proj => {
+                this._projectList.addProject({
+                    name: proj.info.name,
+                    location,
+                    desc: proj.info.description
+                })
+
                 $owf.viewProject(proj)
             }, err => {
-                console.log(err)
-                removeRecentFile(location)
-                onerr(err)
+                if(err === "project version mismatch, please update OpenWorldFactory") {
+                    $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
+                } else {
+                    console.log(err)
+                    this._projectList.removeProject(location)
+                    onerr(err)
+                }
             })
         }
     }
@@ -78,12 +85,20 @@ class DesktopEnvironment extends require("./index") {
         require("../editor")(document.body, project)
     }
 
+    /* Convenience for getProjectList(list => list.addProject()) */
     addRecentProject(name, location, desc) {
-        addRecentFile({
+        console.trace("DEPRECATED: addRecentProject")
+        this.getProjectList(list => list.addProject({
             name,
             location,
-            desc: elipsize(desc, 200)
-        })
+            desc: desc
+        }))
+    }
+
+    /* Convenience for getProjectList(list => list.addProject()) */
+    removeRecentProject(project) {
+        console.trace("DEPRECATED: removeRecentProject")
+        this.getProjectList(list => list.removeProject(project))
     }
 
     /*
@@ -112,6 +127,89 @@ class DesktopEnvironment extends require("./index") {
     */
     showExitConfirmation() {
         return true
+    }
+
+    handleError(title, error, debug) {
+        // TODO: Modal error message
+        if(!this._desktop_error_modal) {
+            var modal = dom.modal("")
+            modal.id = "desktop-error-modal"
+
+            var text = dom.div()
+            text.id = "desktop-error-modal-text"
+
+            var actions = dom.div(undefined, "modal-actions")
+            var ok = dom.button(undefined, "Ok", () => {
+                modal.hide()
+            })
+            actions.appendChild(ok)
+
+            modal.modal.appendChild(text)
+            modal.modal.appendChild(actions)
+
+            modal.addToContainer()
+
+            this._desktop_error_modal = modal
+            this._desktop_error_modal_text = text
+        } else var modal = this._desktop_error_modal
+
+        this._desktop_error_modal_text.textContent = error
+        modal.setTitle(title)
+        modal.show()
+
+        console.log("Error!", title, error, debug)
+    }
+
+    /** DESKTOP SPECIFIC STUFF **/
+
+    checkUpdate(cb) {
+        https.get('https://raw.githubusercontent.com/openworldfactory/openworldfactory/master/package.json', (res) => {
+            if(res.statusCode !== 200) {
+                console.log("Cannot check for updates; fetching package.json returned " + res.statusCode)
+                res.resume()
+                return
+            }
+
+            res.setEncoding('utf8')
+            let rawData = ''
+            res.on('data', chunk => rawData += chunk)
+            res.on('end', () => {
+                try {
+                    cb(JSON.parse(rawData))
+                } catch (e) {
+                    console.log("Cannot check for updates", e.message)
+                }
+            })
+        }).on('error', e => {
+            console.error("Cannot check for updates", e.message)
+        })
+    }
+
+    remakeTestProject() {
+        var name = "TEST PROJECT"
+        var desc = "Transient project for testing purposes. Click 'Remake test.owf' on the welcome page to reset this project. You must be in dev mode to do this."
+
+        var proj = project.createProject(name, desc)
+        proj.$store = new disk("test.owf", proj, () => {
+            proj.save()
+            this._projectList.addProjectEntry(name, "test.owf", desc)
+            this.viewProject(proj)
+        })
+    }
+
+    showOpenDialog() {
+        try {
+            electron.remote.dialog.showOpenDialog({
+                title: "Open Project",
+                properties: ["openFile"]
+            }, filenames => {
+                this.openProject(filenames[0], err => {
+                    this.handleError("Error Opening Project", err)
+                })
+            })
+        } catch(e) {
+            this.handleError("Error Opening Project", e)
+        }
     }
 }
 

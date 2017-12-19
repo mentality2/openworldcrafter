@@ -18,7 +18,7 @@ function attachmentsTab(tabview, object) {
     if(object.attachments) {
         count = object.attachments.length
     }
-    tabview.addTab(`Attachments (${count})`, attachments(object))
+    tabview.addTab(`Attachments (${count})`, attachments(object), "link")
 }
 
 function createTabset(tabview, object, ref) {
@@ -30,15 +30,15 @@ function createTabset(tabview, object, ref) {
             break
         case "character":
             tabview.addTab(name, character(object, ref))
-            tabview.addTab("Character Sheet", charactersheet.createCharacterSheetTab(object, ref))
-            tabview.addTab("Relationships", relationships(object, ref))
+            tabview.addTab("Character Sheet", charactersheet.createCharacterSheetTab(object, ref), "clipboard")
+            tabview.addTab("Relationships", relationships(object, ref), "heart")
             break
         case "note":
             tabview.addTab(name, note(object, ref))
             break
         case "timeline":
             tabview.addTab(name, timeline.createTimelineTab(object, ref))
-            tabview.addTab("Calendar", timeline.createCalendarTab(object, ref))
+            tabview.addTab("Calendar", timeline.createCalendarTab(object, ref), "calendar")
             break
         case "event":
             tabview.addTab(name, event(object, ref))

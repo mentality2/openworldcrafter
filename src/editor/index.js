@@ -1,7 +1,7 @@
 "use strict"
 
 const theme = require('../theme.js')
-const menu = require('../menu.js')
+const menu = require('../menu')
 const api = require('../api')
 const project = require('../project')
 const treeview = require('../treeview')
@@ -33,7 +33,19 @@ class Editable {
 }
 
 function createPage(el, proj) {
+    // required for firefox/android to prevent page from scrolling
+    // on android, this prevents the page from scrolling horizontally due to the
+    // search bar. this is also why <html> is hidden along with <body>
+    document.documentElement.style.overflow = "hidden"
+    document.body.style.overflow = "hidden"
+
     var ref = {}
+
+    var mainModalContainer = dom.div()
+    mainModalContainer.id = "main-modal-container"
+    el.appendChild(mainModalContainer)
+
+    if($owf.mobile) document.body.classList.add("mobile")
 
     ref.changeProjectName = () => {
         ref.changeProjectNameInMenu()
@@ -68,6 +80,7 @@ function createPage(el, proj) {
         projectInfo: projectInfo.show,
         print: () => window.print(),
         // share: (sharingModal ? sharingModal.show : undefined)
+        toggleTreeView: () => tree.obj.isRevealed() ? tree.obj.conceal() : tree.obj.reveal()
     }, ref)
 
     document.body.appendChild(projectInfo.wrapper)
@@ -103,6 +116,10 @@ function createPage(el, proj) {
 
         tree.obj.refresh()
     }
+
+    document.addEventListener("pause", () => proj.save())
+    window.addEventListener("native.keyboardhide", e => document.body.classList.remove("keyboard-is-open"))
+    window.addEventListener("native.keyboardshow", e => document.body.classList.add("keyboard-is-open"))
 
     var tree = treeview.createProjectFolderView(proj, ref)
 

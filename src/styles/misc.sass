@@ -30,6 +30,11 @@
 
 .mainpanel
     flex: 1 1 auto
+    position: relative
+
+    // required on firefox. makes sure the panel scrolls rather than the entire
+    // page
+    height: 100%
 
 .settings-section
     margin-top: 1em
@@ -87,7 +92,7 @@
     border: 1px solid $background
     color: $foreground
     font: inherit
-    line-height: 20px
+    line-height: 1em
 
     &.button-dangerous
         box-shadow: 0 0 3px 0 $error
@@ -97,6 +102,11 @@
         box-shadow: none
         border: 1px dashed $outline
         cursor: default
+
+    &.button-disabled.button-dangerous
+        box-shadow: 0 0 3px 0 $error
+        border: 1px solid $error
+        background-color: unset
 
 .dropzone
     width: 100%

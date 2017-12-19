@@ -2,6 +2,28 @@
 
 const byteSuffix = ["bytes", "kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb"]
 
+function compareVersions(v1, v2) {
+    var v1p = v1.split(".")
+    var v2p = v2.split(".")
+
+    if(v1p.length !== 3 || v2p.length !== 3) throw "these are not version numbers!"
+
+    if(parseInt(v1p[0]) < parseInt(v2p[0])) return -1
+    if(parseInt(v1p[0]) > parseInt(v2p[0])) return  1
+
+    if(parseInt(v1p[1]) < parseInt(v2p[1])) return -1
+    if(parseInt(v1p[1]) > parseInt(v2p[1])) return  1
+
+    if(parseInt(v1p[2]) < parseInt(v2p[2])) return -1
+    if(parseInt(v1p[2]) > parseInt(v2p[2])) return  1
+
+    return 0
+}
+
+function clamp(val, min, max) {
+    return Math.max(min, Math.min(val, max))
+}
+
 function removeAllChildren(domElement) {
     while(domElement.firstChild) {
         domElement.lastChild.remove()
@@ -99,10 +121,10 @@ function setDateField(date, field, val) {
             fields[0] = val
             break
         case "hour":
-            fields[3] = val
+            fields[3] = clamp(val, 0, 23)
             break
         case "minute":
-            fields[4] = val
+            fields[4] = clamp(val, 0, 59)
             break
         case "timeofday":
             fields[3] = val
@@ -169,7 +191,11 @@ function compareDates(d1, d2) {
 
 const acceptableSubobjects = {
     "folder": [
-        "folder",
+        "note",
+        "character",
+        "timeline"
+    ],
+    "note": [
         "note",
         "character",
         "timeline"
@@ -187,5 +213,6 @@ module.exports = {
     timesOfDay,
     queryParams,
     compareDates,
-    acceptableSubobjects
+    acceptableSubobjects,
+    compareVersions
 }

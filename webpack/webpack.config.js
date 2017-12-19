@@ -27,10 +27,6 @@ module.exports = [
                 {
                     from: "./src/styles/noto_emoji",
                     to: "noto_emoji"
-                },
-                {
-                    from: "./resources/icons/plain",
-                    to: "icons"
                 }
             ])
         ]

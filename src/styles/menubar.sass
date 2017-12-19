@@ -13,6 +13,7 @@
         border: 1px solid $outline
         max-height: 80vh
         overflow-y: auto
+        width: 100%
 
         &.shown
             display: block
@@ -27,6 +28,9 @@
         display: inline-block
         cursor: default
         background-color: $background
+
+        .menubar-top-header
+            font-weight: bold
 
         .menubar-top-btn
             &.menubar-top-btn-noarrow
@@ -64,3 +68,35 @@
                 color: $foreground
                 text-decoration: none
                 margin: 3px
+
+// for non-menubar menus
+.menu
+    position: relative
+    display: inline-block
+    cursor: default
+    background-color: $background
+
+    .menu-content
+        display: none
+        position: absolute
+        z-index: 1
+        background-color: $background
+        border: 1px solid $outline
+        min-width: 100%
+
+    &.menu-extends-left .menu-content
+        right: 0
+
+    .menu-content > *
+        &:hover
+            background-color: $accent
+
+        border: none
+        display: block
+        color: $foreground
+        text-decoration: none
+        margin: 3px
+
+    &:hover
+        .menu-content
+            display: block

@@ -8,19 +8,20 @@ function createProjectSettingsModal(project, ref) {
     var el = dom.modal("Project Info")
 
     var nameBar = dom.div()
-    nameBar.appendChild(dom.span("Name: "))
     var name = dom.span(project.info.name, "edit-invisible")
     var nameEdit = dom.inputText(project.info.name, undefined, ["edit-visible", "inline"])
     nameBar.appendChild(name)
     nameBar.appendChild(nameEdit)
     el.modal.appendChild(nameBar)
 
-    el.modal.appendChild(dom.span("Description: "))
-
     var desc = dom.div(project.info.description, "edit-invisible")
     var descEdit = dom.element("textarea", project.info.description, ["edit-visible", "textarea-fullwidth"])
     el.modal.appendChild(desc)
     el.modal.appendChild(descEdit)
+
+    if(project.$store.getLocationString()) {
+        el.modal.appendChild(dom.div(project.$store.getLocationString(), "edit-invisible"))
+    }
 
     if(project.isEditable()) {
         var actions = dom.div(null, "modal-actions")
@@ -61,10 +62,10 @@ function createProjectSettingsModal(project, ref) {
     function applyChanges() {
         if(nameEdit.value) {
             name.textContent = project.info.name = nameEdit.value
-            ref.changeProjectName()
         }
         desc.textContent = project.info.description = descEdit.value
 
+        ref.changeProjectName()
         project.save(true)
     }
 

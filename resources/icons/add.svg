@@ -14,7 +14,7 @@
    viewBox="0 0 93.16523 93.16523"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92+devel unknown"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
    sodipodi:docname="add.svg">
   <defs
      id="defs2" />
@@ -45,7 +45,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -54,20 +54,10 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-60.278339,-50.701263)">
-    <rect
+    <path
        style="fill:#000000;stroke:#000000;stroke-width:0"
-       id="rect4267"
-       width="93.16523"
-       height="18.633045"
-       x="60.278339"
-       y="87.967354" />
-    <rect
-       style="fill:#000000;stroke:#000000;stroke-width:0"
-       id="rect4267-3"
-       width="93.16523"
-       height="18.633045"
-       x="50.701263"
-       y="-116.17747"
-       transform="rotate(90)" />
+       d="M 140.84766 0 L 140.84766 140.84766 L 0 140.84766 L 0 211.27148 L 140.84766 211.27148 L 140.84766 352.12109 L 211.27148 352.12109 L 211.27148 211.27148 L 352.12109 211.27148 L 352.12109 140.84766 L 211.27148 140.84766 L 211.27148 0 L 140.84766 0 z "
+       transform="matrix(0.26458333,0,0,0.26458333,60.278339,50.701263)"
+       id="rect4267" />
   </g>
 </svg>

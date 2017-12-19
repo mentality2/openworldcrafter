@@ -14,6 +14,8 @@ const md = new markdownit()
 md.use(require("markdown-it-emoji"))
 md.use(require("markdown-it-container"), "spoiler", require("../src/markdown").spoilerArgs)
 
+const style_path = process.argv[2] || "styles"
+
 function plugin(md, options) {
     var oldLink = md.renderer.rules.link_open || function(tokens, idx, options, env, self) {
         return self.renderToken(tokens, idx, options);
@@ -31,7 +33,7 @@ md.use(plugin)
 
 var rootdir = path.join(__dirname, "..", "docs")
 
-function compileDirectory(dir) {
+function compileDirectory(dir, dots) {
     var list = fs.readdirSync(path.join(rootdir, dir))
 
     try {
@@ -40,7 +42,7 @@ function compileDirectory(dir) {
 
     for(var file of list) {
         if(fs.statSync(path.join(rootdir, dir, file)).isDirectory()) {
-            compileDirectory(path.join(dir, file))
+            compileDirectory(path.join(dir, file), dots + "../")
         } else {
             if(/\.md$/.test(file)) {
                 var newPath = path.join(rootdir, "..", "dist", "docs", dir, file.replace(/\.md$/, ".htm"))
@@ -53,11 +55,11 @@ function compileDirectory(dir) {
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <link rel="stylesheet" href="/dist/styles/theme_light.css" id="mainStylesheet" />
+        <link rel="stylesheet" href="${dots}${style_path}/theme_light.css" id="mainStylesheet" />
     </head>
     <body>
         <script>
-            document.getElementById("mainStylesheet").href = "/dist/styles/" + (localStorage["openworldfactory.preferences.theme"] || "theme_light") + ".css"
+            document.getElementById("mainStylesheet").href = "${dots}${style_path}/" + (localStorage["openworldfactory.preferences.theme"] || "theme_light") + ".css"
         </script>
         <div class="markdown">` + md.render(contents) + `</div>
     </body>
@@ -72,4 +74,4 @@ function compileDirectory(dir) {
     }
 }
 
-compileDirectory(".")
+compileDirectory(".", "../")

@@ -7,6 +7,11 @@ const themes = {
     theme_light: "theme_light.css"
 }
 
+const statusbar = {
+    theme_dark: "#ccc",
+    theme_light: "#333"
+}
+
 function setTheme(name) {
     if(name) {
         // use given theme
@@ -14,6 +19,12 @@ function setTheme(name) {
     } else {
         // use default theme in localstorage, or default
         changeTheme(localStorage["openworldfactory.preferences.theme"] || "theme_dark")
+    }
+}
+
+function reload() {
+    if(document.getElementById("mainStylesheet")) {
+        document.getElementById("mainStylesheet").href = document.getElementById("mainStylesheet").href + "a"
     }
 }
 
@@ -28,12 +39,18 @@ function changeTheme(name) {
         document.head.appendChild(link)
     }
 
-    if(themes[name]) document.getElementById("mainStylesheet").href = $owf.styleDir + themes[name]
+    // ?rl=a is so that the stylesheet can easily be reloaded by adding a char to the url
+    if(themes[name]) document.getElementById("mainStylesheet").href = $owf.styleDir + themes[name] + "?rl=a"
+
+    // if StatusBar is defined, use it to set the status bar to the foreground color
+    if(typeof StatusBar !== "undefined") {
+        StatusBar.backgroundColorByHexString(statusbar[name] || statusbar.theme_light)
+    }
 
     // set preference
     localStorage["openworldfactory.preferences.theme"] = name
 }
 
 module.exports = {
-    setTheme, changeTheme
+    setTheme, changeTheme, reload
 }

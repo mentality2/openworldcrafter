@@ -58,7 +58,7 @@ function notes(object, el, ref) {
 
     if(object.isEditable()) {
         var editorArea = dom.div(undefined, ["edit-visible", "flexbox-column", "flex-grow"])
-        var notesText = dom.element("textarea", object.notes || "", "flex-grow")
+        var notesText = dom.element("textarea", object.notes || "", ["flex-grow", "min-height-50-vh"])
 
         function onEdit() {
             if(notesText.value) {
@@ -122,7 +122,7 @@ function tags(object, el, ref) {
     }
 
     if(object.isEditable()) {
-        var newTagWrapper = dom.span(undefined, ["edit-visible", "inline", "margin-left"])
+        var newTagWrapper = dom.span(undefined, ["edit-visible", "inline"])
         var newTag = dom.inputText(undefined, "Add Tag")
 
         newTag.addEventListener("keyup", e => {

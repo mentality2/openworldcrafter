@@ -4,9 +4,7 @@ const icons = require('../resources/icons')
 
 // DOM editing helpers
 
-function element(type, contents, classes) {
-    var el = document.createElement(type)
-    if(contents) el.textContent = contents
+function applyClasses(el, classes) {
     if(classes) {
         if(typeof classes === "string") {
             el.classList.add(classes)
@@ -14,11 +12,18 @@ function element(type, contents, classes) {
             for(var cl of classes) el.classList.add(cl)
         }
     }
+}
+
+function element(type, contents, classes) {
+    var el = document.createElement(type)
+    if(contents) el.textContent = contents
+
+    applyClasses(el, classes)
 
     return el
 }
 
-function modal(title) {
+function modal(title, removeOnClose) {
     var wrapper = div("", "modal-wrapper")
     var el = div("", "modal")
 
@@ -30,6 +35,7 @@ function modal(title) {
     var overlay = div("", "modal-overlay")
     overlay.onclick = event => {
         wrapper.classList.remove("modal-visible")
+        if(removeOnClose) wrapper.remove()
     }
 
     wrapper.addEventListener("click", event => event.stopPropagation())
@@ -46,6 +52,18 @@ function modal(title) {
         },
         setTitle: function(newTitle) {
             titleEl.textContent = newTitle
+        },
+        addToContainer: function() {
+            if(!document.getElementById("main-modal-container")) {
+                var container = div()
+                container.id = "main-modal-container"
+                document.body.appendChild(container)
+            }
+
+            document.getElementById("main-modal-container").appendChild(wrapper)
+        },
+        appendChild: function(element) {
+            el.appendChild(element)
         }
     }
 }
@@ -135,16 +153,13 @@ function propertyTable(object) {
     return t
 }
 
-// WARNING: Text is NOT sanitized!
-function button(icon, text, listener, classes) {
-    var b = element("button", null, classes)
+function button(iconName, text, listener, classes) {
+    var b = element("button", undefined, classes)
     b.classList.add("button")
 
-    if(icon && text) {
-        b.innerHTML = icons[icon] + " " + text
-    }
-    else if(icon) b.innerHTML = icons[icon]
-    else b.textContent = text
+    // only add a margin if there's also text
+    if(iconName) b.appendChild(icon(iconName, text ? "margin-right-3px": undefined))
+    if(text) b.appendChild(span(text, ["button-text"]))
 
     b.addEventListener("click", listener)
 
@@ -161,7 +176,22 @@ function input(type, value, onchange, classes) {
     return i
 }
 
+function icon(name, classes) {
+    return svg(icons[name], classes)
+}
+
+function svg(code, classes) {
+    var wrapper = div()
+    wrapper.innerHTML = code
+
+    var el = wrapper.querySelector("svg")
+    if(!el) return svg("<svg></svg>", classes)
+
+    applyClasses(el, classes)
+    return el
+}
+
 module.exports = {
     input, button, element, span, div, h1, h2, h3, h4, h5, h6, table, hr, br, p,
-    tr, tr_headers, propertyTable, modal, inputText
+    tr, tr_headers, propertyTable, modal, inputText, icon, svg, applyClasses
 }

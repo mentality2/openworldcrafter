@@ -2,7 +2,6 @@
 
 const dom = require('../dom.js')
 const icons = require('../../resources/icons')
-
 function noop() {}
 
 class TabArea {
@@ -13,17 +12,13 @@ class TabArea {
         this._domobj = domobj
         domobj.classList.add("tab-wrapper")
 
-        this._printNameHeader = dom.h1(undefined, "print-only")
-        this._printName = ""
-        this._domobj.appendChild(this._printNameHeader)
-
         var tabrow = dom.div()
         tabrow.classList.add("tabrow")
         this._domobj.appendChild(tabrow)
         this._tabrow = tabrow
 
         if(project && project.isEditable()) {
-            var edit = dom.button("edit", "Edit", () => {
+            this._edit = dom.button("edit", "Edit", () => {
                 this._domobj.classList.add("editing")
             }, ["button", "edit-invisible", "edit-button"])
 
@@ -32,7 +27,7 @@ class TabArea {
                 this._domobj.classList.remove("editing")
             }, ["button", "edit-visible", "edit-button"])
 
-            this._tabrow.appendChild(edit)
+            this._tabrow.appendChild(this._edit)
             this._tabrow.appendChild(save)
         }
 
@@ -40,6 +35,12 @@ class TabArea {
         container.classList.add("tab-container")
         this._domobj.appendChild(container)
         this._container = container
+
+        // also used on mobile to show the tab title because the actual tab bar
+        // only uses icons
+        this._printNameHeader = dom.h1(undefined, ["print-only", "mobile-tab-title"])
+        this._printName = ""
+        this._container.appendChild(this._printNameHeader)
 
         this._tabs = []
 
@@ -50,7 +51,7 @@ class TabArea {
         var header = this._printName
         if(this._tabs[this._selectedIndex]) {
             if(this._tabs[this._selectedIndex].name !== this._printName) {
-                header += " | " + this._tabs[this._selectedIndex].name
+                header += " \u25B6 " + this._tabs[this._selectedIndex].name
             }
         }
         this._printNameHeader.textContent = header
@@ -102,11 +103,11 @@ class TabArea {
         this._selectListener(index)
     }
 
-    addTab(name, content) {
-        this.addTabFunc(name, () => content)
+    addTab(name, content, icon) {
+        this.addTabFunc(name, () => content, icon)
     }
 
-    addTabFunc(name, contentFunction) {
+    addTabFunc(name, contentFunction, icon) {
         var selected = false
         if(this._tabs.length === 0) {
             // first tab, should be selected
@@ -116,11 +117,18 @@ class TabArea {
         var index = this._tabs.length
 
         // create button for tabrow
-        var btn = dom.span(name, "tabrow-button")
+        var btn = dom.span(undefined, "tabrow-button")
+
+        btn.appendChild(dom.span(name))
+        if(icon) {
+            btn.firstChild.classList.add("mobile-invisible")
+            btn.insertBefore(dom.icon(icon, "mobile-visible"), btn.firstChild)
+        }
+
         btn.onclick = () => {
             this.selectTab(index)
         }
-        this._tabrow.appendChild(btn)
+        this._tabrow.insertBefore(btn, this._edit)
 
         // add tab info to list
         this._tabs.push({

@@ -1,6 +1,1 @@
-<svg width="93.165mm" height="93.165mm" version="1.1" viewBox="0 0 93.16523 93.16523" xmlns="http://www.w3.org/2000/svg">
-<g transform="translate(-60.278 -50.701)" stroke-width="0">
-<rect x="60.278" y="87.967" width="93.165" height="18.633"/>
-<rect transform="rotate(90)" x="50.701" y="-116.18" width="93.165" height="18.633"/>
-</g>
-</svg>
+<svg width="93.165mm" height="93.165mm" version="1.1" viewBox="0 0 93.16523 93.16523" xmlns="http://www.w3.org/2000/svg"><g transform="translate(-60.278 -50.701)"><path transform="matrix(.26458 0 0 .26458 60.278 50.701)" d="m140.85 0v140.85h-140.85v70.424h140.85v140.85h70.424v-140.85h140.85v-70.424h-140.85v-140.85h-70.424z" stroke-width="0"/></g></svg>

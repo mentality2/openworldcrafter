@@ -2,6 +2,7 @@
 
 const dom = require('./dom')
 const utils = require('./utils')
+const magicUuids = require('./magic-uuids.json')
 
 function createSummaryFromSnippets(text, ranges) {
     var summary = ""
@@ -71,6 +72,9 @@ function search(project, term, filter) {
     var results = []
 
     for(var id in project.$allObjects) {
+        // don't show project root in the search results
+        if(id === magicUuids.project_root) continue
+
         var obj = project.$allObjects[id]
 
         if(filter && !filter(obj)) continue
