@@ -73,7 +73,7 @@ function search(project, term, filter) {
 
     for(var id in project.$allObjects) {
         // don't show project root in the search results
-        if(id === magicUuids.project_root) continue
+        if(id === magicuuids.project_root) continue
 
         var obj = project.$allObjects[id]
 
