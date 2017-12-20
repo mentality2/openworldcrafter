@@ -32,12 +32,12 @@ class Environment {
         for(let api of this.availableAPIs) {
             api.getProjectList(list => {
                 // tag everything with which API it came from
-                for(var item of list.projects) {
+                for(var item of list) {
                     // use a function so it doesn't get saved to JSON
                     item.$getApi = () => api
                 }
 
-                lists.push(list.projects)
+                lists.push(list)
                 if(lists.length === this.availableAPIs.length) cb(aggregate())
             })
         }

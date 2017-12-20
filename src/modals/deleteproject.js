@@ -2,7 +2,7 @@
 
 const dom = require('../dom')
 
-function createDeleteProjectModal(api, projectLocation, projectName) {
+function createDeleteProjectModal(api, projectLocation, projectName, cb) {
     var el = dom.modal("Delete Project", true)
 
     var warning = dom.div()
@@ -22,11 +22,9 @@ function createDeleteProjectModal(api, projectLocation, projectName) {
     })
     var del = dom.button("delete", "Delete", () => {
         if(name.value === projectName) {
-            api.getProjectList(list => {
-                list.removeProject(projectLocation, cb => {
-                    api.deleteProject(projectLocation, name.value)
-                    el.hide()
-                })
+            api.deleteProject(projectLocation, name.value, then => {
+                el.hide()
+                cb()
             })
         }
     }, ["button-dangerous", "button-disabled"])

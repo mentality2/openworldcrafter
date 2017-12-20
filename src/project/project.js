@@ -4,6 +4,8 @@ const utils = require('../utils.js')
 const uuid = require('uuid/v4')
 const thispackage = require("../../package.json")
 
+const noop = () => {}
+
 class Author {
     constructor(author) {
         if(typeof author === "string") {
@@ -281,13 +283,14 @@ class Project {
         return this.assets[id]
     }
 
-    save(force) {
+    save(force, cb) {
         if(force || this.$_dirty) {
             this.info.assignSaveUuid()
             this.$store.saveProjectFile(this.serializeJSON(), () => {
                 this.$_dirty = false
                 document.title = this.info.name + " - OpenWorldFactory"
                 this.$saveListener()
+                (cb || noop)()
             }, (errmsg, button, buttonAction) => this.$saveListener(errmsg, button, buttonAction))
         }
         else console.log("Skipping save as no changes have been made")

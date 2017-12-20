@@ -6,6 +6,66 @@ const newproject = require('./newproject.js')
 const deleteproject = require('../modals/deleteproject')
 // const docviewer = require('../docviewer')
 const thispackage = require("../../package.json")
+const utils = require('../utils')
+
+function createProjectList(ul) {
+    utils.removeAllChildren(ul)
+    $owf.aggregateProjectLists(list => {
+        if(list.length === 0) {
+            recentList.appendChild(dom.span("No recent files"))
+        }
+
+        for(let file of list) {
+            var item = dom.element("li")
+
+            var name = dom.element("a", file.name, "project-title")
+            name.addEventListener("click", event => {
+                file.$getApi().openProject(file.location, err => {
+                    $owf.handleError("Error Opening Project", err)
+                })
+            })
+            item.appendChild(name)
+
+            var more = dom.span(undefined, ["menu", "float-right", "menu-extends-left"])
+            var moreIcon = dom.icon("more", "menu-button")
+            var moreMenu = dom.div(undefined, "menu-content")
+            var menuEmpty = true
+
+            if(file.$getApi().deleteProject) {
+                menuEmpty = false
+                var deleteButton = dom.button(undefined, "Delete", () => {
+                    var deleteModal = deleteproject(file.$getApi(), file.location, file.name, cb => {
+                        createProjectList(ul)
+                    })
+                    deleteModal.addToContainer()
+                    deleteModal.show()
+                }, "nobutton")
+
+                moreMenu.appendChild(deleteButton)
+            }
+
+            more.appendChild(moreIcon)
+            more.appendChild(moreMenu)
+
+            if(!menuEmpty) item.appendChild(more)
+
+            if($owf.availableAPIs.length > 1) {
+                if(file.$getApi().buttonIcon) {
+                    var iconWrapper = dom.span(undefined, "float-right")
+                    var icon = dom.icon(file.$getApi().buttonIcon)
+                    iconWrapper.appendChild(icon)
+                    item.appendChild(iconWrapper)
+                }
+            }
+
+            if(file.desc) {
+                item.appendChild(dom.div(file.desc, ["project-description", ($owf.availableAPIs.length > 1) ? "margin-left" : "noop"]))
+            }
+
+            ul.appendChild(item)
+        }
+    })
+}
 
 function createPage(el) {
     // Prevent changing URL by drag and drop
@@ -52,60 +112,7 @@ function createPage(el) {
 
     // Recent files
     var recentList = dom.element("ul", undefined, "margin-right")
-    $owf.aggregateProjectLists(list => {
-        if(list.length === 0) {
-            recentList.appendChild(dom.span("No recent files"))
-        }
-
-        for(let file of list) {
-            var item = dom.element("li")
-
-            var name = dom.element("a", file.name, "project-title")
-            name.addEventListener("click", event => {
-                file.$getApi().openProject(file.location, err => {
-                    $owf.handleError("Error Opening Project", err)
-                })
-            })
-            item.appendChild(name)
-
-            var more = dom.span(undefined, ["menu", "float-right", "menu-extends-left"])
-            var moreIcon = dom.icon("more", "menu-button")
-            var moreMenu = dom.div(undefined, "menu-content")
-            var menuEmpty = true
-
-            if(file.$getApi().deleteProject) {
-                menuEmpty = false
-                var deleteButton = dom.button(undefined, "Delete", () => {
-                    var deleteModal = deleteproject(file.$getApi(), file.location, file.name)
-                    deleteModal.addToContainer()
-                    deleteModal.show()
-                    // $owf.getSaveMethods()[0].shareProject(file.location, console.log)
-                }, "nobutton")
-
-                moreMenu.appendChild(deleteButton)
-            }
-
-            more.appendChild(moreIcon)
-            more.appendChild(moreMenu)
-
-            if(!menuEmpty) item.appendChild(more)
-
-            if($owf.availableAPIs.length > 1) {
-                if(file.$getApi().buttonIcon) {
-                    var iconWrapper = dom.span(undefined, "float-right")
-                    var icon = dom.icon(file.$getApi().buttonIcon)
-                    iconWrapper.appendChild(icon)
-                    item.appendChild(iconWrapper)
-                }
-            }
-
-            if(file.desc) {
-                item.appendChild(dom.div(file.desc, ["project-description", ($owf.availableAPIs.length > 1) ? "margin-left" : "noop"]))
-            }
-
-            recentList.appendChild(item)
-        }
-    })
+    createProjectList(recentList)
 
     main.appendChild(dom.h1("Projects"))
     main.appendChild(toolbar)

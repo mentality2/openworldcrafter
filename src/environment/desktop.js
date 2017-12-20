@@ -43,22 +43,6 @@ class DesktopEnvironment extends require("./index") {
         require("../editor")(document.body, project)
     }
 
-    /* Convenience for getProjectList(list => list.addProject()) */
-    addRecentProject(name, location, desc) {
-        console.trace("DEPRECATED: addRecentProject")
-        this.getProjectList(list => list.addProject({
-            name,
-            location,
-            desc: desc
-        }))
-    }
-
-    /* Convenience for getProjectList(list => list.addProject()) */
-    removeRecentProject(project) {
-        console.trace("DEPRECATED: removeRecentProject")
-        this.getProjectList(list => list.removeProject(project))
-    }
-
     /*
         Open a new window with a documentation page
     */
@@ -150,7 +134,6 @@ class DesktopEnvironment extends require("./index") {
         var proj = project.createProject(name, desc, magicuuids.test_project)
         proj.$store = new disk("test.owf", proj, () => {
             proj.save()
-            this.availableAPIs[0].getProjectList(list => list.addProjectEntry(name, "test.owf", desc))
             this.viewProject(proj)
         })
     }

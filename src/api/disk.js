@@ -130,7 +130,7 @@ class DiskProjectStore extends require("./") {
     }
 
     changeName() {
-        $owf.getProjectList(list => list.addProjectEntry(this._project.info.name, this._file, this._project.info.description))
+        module.exports.DiskApiDescription._getProjectList(list => list.addProjectEntry(this._project.info.name, this._file, this._project.info.description))
     }
 }
 
@@ -181,8 +181,12 @@ class DiskApiDescription extends require("./apidescription.js") {
         })
     }
 
-    getProjectList(cb) {
+    _getProjectList(cb) {
         cb(this._projectList)
+    }
+
+    getProjectList(cb) {
+        cb(this._projectList.projects)
     }
 }
 

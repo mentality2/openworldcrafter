@@ -105,7 +105,7 @@ class AppProjectStore extends require("./") {
     }
 
     changeName() {
-        module.exports.AppApiDescription.getProjectList(list => {
+        module.exports.AppApiDescription._getProjectList(list => {
             list.addProjectEntry(this._project.info.name, this._id, this._project.info.description)
         })
     }
@@ -136,23 +136,27 @@ class AppApiDescription extends require("./apidescription.js") {
                 return
             }
 
-            fs.deleteDirectory(dir)
+            this._getProjectList(list => {
+                list.removeProject(location, then => {
+                    fs.deleteDirectory(dir, cb)
+                })
+            })
         })
     }
 
-    createProject(name, desc) {
-        var proj = project.createProject(name, desc)
+    createProject(name, desc, uuid) {
+        var proj = project.createProject(name, desc, uuid)
 
         proj.$store = new AppProjectStore(proj.info.uuid, proj, () => {
             proj.save()
-            this.getProjectList(list => list.addProjectEntry(name, proj.info.uuid, desc))
+            this._getProjectList(list => list.addProjectEntry(proj.info.name, proj.info.uuid, proj.info.description))
             $owf.viewProject(proj)
         })
     }
 
     openProject(location, onerr) {
         var appapi = new AppProjectStore(location, undefined, proj => {
-            this.getProjectList(list => list.addProjectEntry(proj.info.name, location, proj.info.description))
+            this._getProjectList(list => list.addProjectEntry(proj.info.name, location, proj.info.description))
             $owf.viewProject(proj)
         }, err => {
             if(err === "project version mismatch, please update OpenWorldFactory") {
@@ -173,7 +177,7 @@ class AppApiDescription extends require("./apidescription.js") {
         })
     }
 
-    getProjectList(cb) {
+    _getProjectList(cb) {
         if(this._projectList) cb(this._projectList)
         else {
             fs.readFile("projectlist.json", (err, data) => {
@@ -184,6 +188,7 @@ class AppApiDescription extends require("./apidescription.js") {
                     this._projectList = new projectlist.ProjectList(JSON.parse(data || "[]"), (data, cb) => {
                         fs.writeFileJSON("projectlist.json", data, (err, success) => {
                             if(err) console.log("write file error", err)
+                            cb()
                         })
                     })
 
@@ -191,6 +196,10 @@ class AppApiDescription extends require("./apidescription.js") {
                 }
             })
         }
+    }
+
+    getProjectList(cb) {
+        this._getProjectList(list => cb(list.projects))
     }
 }
 
