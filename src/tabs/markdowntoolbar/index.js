@@ -39,7 +39,7 @@ function insertRawText(textarea, text) {
 }
 
 function createMarkdownToolbar(editorArea, editCb, object) {
-    var el = dom.div(undefined, "margin-bottom")
+    var el = dom.div(undefined, ["margin-bottom", "markdown-toolbar"])
 
     function edit() {
         editorArea.focus()
@@ -93,16 +93,19 @@ function createMarkdownToolbar(editorArea, editCb, object) {
         edit()
     })
 
-    var emojiWrapper = dom.span(undefined, "emojiwrapper")
-    var emojiPicker = emoji(text => {
-        insertRawText(editorArea, text)
-        edit()
-    })
-    var emojiButton = dom.button("emoji", undefined, () => {
-        emojiPicker.classList.toggle("shown")
-    })
-    emojiWrapper.appendChild(emojiButton)
-    emojiWrapper.appendChild(emojiPicker)
+    // Mobile devices have built in emoji keyboards, no need to add our own
+    if(!$owf.mobile) {
+        var emojiWrapper = dom.span(undefined, "emojiwrapper")
+        var emojiPicker = emoji(text => {
+            insertRawText(editorArea, text)
+            edit()
+        })
+        var emojiButton = dom.button("emoji", undefined, () => {
+            emojiPicker.classList.toggle("shown")
+        })
+        emojiWrapper.appendChild(emojiButton)
+        emojiWrapper.appendChild(emojiPicker)
+    }
 
     var embed = dom.button("embed", undefined, () => {
         embedModal.show()
@@ -142,25 +145,44 @@ function createMarkdownToolbar(editorArea, editCb, object) {
             wrapSelection(editorArea, "[", `](${objectWithName.id})`)
             edit()
         } else {
-            var box = linkSearch.querySelector(".searchbar-box")
-            box.value = term || ""
-            box.dispatchEvent(new CustomEvent("change"))
-            linkSearch.classList.remove("invisible")
-            box.focus()
+            if(linkModal) linkModal.show()
+            else {
+                var box = linkSearch.querySelector(".searchbar-box")
+                box.value = term || ""
+                box.dispatchEvent(new CustomEvent("change"))
+                linkSearch.classList.remove("invisible")
+                box.focus()
+            }
         }
     })
     var linkSearch = search.createSearchBar(object.$project, insert => {
         linkSearch.classList.add("invisible")
         insertRawText(editorArea, `[${insert.name}](${insert.id})`)
+        if(linkModal) linkModal.hide()
         edit()
     })
-    linkSearch.classList.add("invisible")
+
+    if($owf.mobile) {
+        // use a modal window
+        var linkModal = dom.modal("Add Link")
+        linkModal.modal.classList.add("min-height-50-vh")
+        var linkModalActions = dom.div(undefined, "modal-actions")
+        linkModalActions.appendChild(dom.button(undefined, "Cancel", () => linkModal.hide()))
+
+        linkModal.appendChild(linkSearch)
+        linkModal.appendChild(linkModalActions)
+
+        linkModal.addToContainer()
+    } else {
+        linkSearch.classList.add("invisible")
+
+        linkWrapper.appendChild(linkSearch)
+    }
     linkWrapper.appendChild(link)
-    linkWrapper.appendChild(linkSearch)
 
     var help = dom.button("help", undefined, () => {
         $owf.showDocs("userdocs/markdown_formatting.md")
-    }, "float-right")
+    }, "margin-left-auto")
 
     el.appendChild(bold)
     el.appendChild(italic)
@@ -182,9 +204,11 @@ function createMarkdownToolbar(editorArea, editCb, object) {
 
     el.appendChild(dom.span(undefined, "margin-right"))
 
-    el.appendChild(emojiWrapper)
+    if(emojiWrapper) el.appendChild(emojiWrapper)
     el.appendChild(linkWrapper)
     el.appendChild(embed)
+
+    el.appendChild(dom.span(undefined, "margin-right"))
 
     el.appendChild(help)
 

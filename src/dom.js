@@ -41,7 +41,7 @@ function modal(title, removeOnClose) {
     wrapper.addEventListener("click", event => event.stopPropagation())
 
     wrapper.appendChild(overlay)
-    return {
+    var result = {
         wrapper,
         modal: el,
         show: function() {
@@ -64,8 +64,18 @@ function modal(title, removeOnClose) {
         },
         appendChild: function(element) {
             el.appendChild(element)
+        },
+        okCancel: function(ok, okText, cancel, cancelText) {
+            if(!okText) okText = "Ok"
+            if(!cancelText) cancelText = "Cancel"
+            if(!cancel) cancel = () => result.hide()
+
+            var actions = div(undefined, "modal-actions")
+            actions.appendChild(dom.button(undefined, cancelText, cancel))
+            actions.appendChild(dom.button(undefined, okText, ok))
         }
     }
+    return result
 }
 
 function span(contents, classes) {
