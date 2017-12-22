@@ -60,7 +60,7 @@ function createProjectList(ul) {
             }
 
             if(file.desc) {
-                item.appendChild(dom.div(file.desc, ["project-description", ($owf.availableAPIs.length > 1) ? "margin-left" : "noop"]))
+                item.appendChild(dom.div(file.desc, "project-description"))
             }
 
             ul.appendChild(item)
