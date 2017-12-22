@@ -5,7 +5,7 @@ const webrequest = require('../api/webrequest')
 
 const noop = () => {}
 
-function createDeviceNameModal(el) {
+function createDeviceNameModal(el, password) {
     var name = dom.inputText($owf.deviceType, "Device Name")
     el.modal.appendChild(name)
 
@@ -13,15 +13,18 @@ function createDeviceNameModal(el) {
     var cancel = dom.button(undefined, "Cancel", () => { el.hide() })
     var login = dom.button(undefined, "Add Device", () => {
         webrequest.postForm("/user/settings/devices/add", {
-            devicename: name.value
+            devicename: name.value,
+            password
         }, (status, data) => {
             if(status) {
+                console.log("result", status, data);
                 $owf.handleError("Error", "The device could not be added.", status)
             } else {
                 var credentials = JSON.parse(data)
-                localstorage.setItem("openworldfactory.device.name", credentials.name)
-                localstorage.setItem("openworldfactory.device.uuid", credentials.uuid)
-                localstorage.setItem("openworldfactory.device.token", credentials.token)
+                console.log("credentials", credentials);
+                localStorage.setItem("openworldfactory.device.name", credentials.name)
+                localStorage.setItem("openworldfactory.device.uuid", credentials.uuid)
+                localStorage.setItem("openworldfactory.device.token", credentials.token)
 
                 // now log out
                 webrequest.postForm("/logout", {}, () => {
@@ -30,6 +33,10 @@ function createDeviceNameModal(el) {
             }
         })
     })
+
+    actions.appendChild(cancel)
+    actions.appendChild(login)
+    el.appendChild(actions)
 }
 
 module.exports.createDeviceLoginModal = function() {
@@ -37,6 +44,13 @@ module.exports.createDeviceLoginModal = function() {
 
     var email = dom.inputText("", "Email")
     var password = dom.inputText("", "Password")
+    password.type = "password"
+
+    if(process.env.NODE_ENV === "development") {
+        // because I'm too lazy to type it every time
+        email.value = "dvader@deathstar.mil"
+        password.value = "luke"
+    }
 
     var actions = dom.div(undefined, "modal-actions")
     var cancel = dom.button(undefined, "Cancel", () => { el.hide() })
@@ -45,7 +59,7 @@ module.exports.createDeviceLoginModal = function() {
             email: email.value, password: password.value
         }, () => {
             email.remove(); password.remove(); actions.remove()
-            createDeviceNameModal(el)
+            createDeviceNameModal(el, password.value)
         })
     })
 

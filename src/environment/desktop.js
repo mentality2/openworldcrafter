@@ -3,6 +3,7 @@
 const electron = require('electron')
 const path = require('path')
 const disk = require("../api/disk.js")
+const web = require('../api/api.js')
 const https = require('https')
 const project = require('../project')
 const dom = require('../dom')
@@ -20,6 +21,12 @@ class DesktopEnvironment extends require("./index") {
         this.showLogoInCorner = true
 
         this.availableAPIs = [disk.DiskApiDescription]
+
+        web.getOnlineApi(api => {
+            if(api) this.availableAPIs.push(api)
+
+            this._onFinishLoad()
+        })
     }
 
     getProjectList(cb) {

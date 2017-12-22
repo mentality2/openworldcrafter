@@ -3,7 +3,7 @@
 var csrfToken = undefined
 
 // RM-BEFORE-FLIGHT
-const origin = $owf.origin || ""
+const origin = "http://jameslaptop.attlocal.net:7701"
 
 /*
  * All callbacks will be called with arguments (err, responseText)
@@ -16,6 +16,28 @@ function getCsrfToken(cb) {
             cb(data)
         })
     }
+}
+
+function attemptLogin(cb) {
+    getResource("/auth/status", (err, data) => {
+        if(err) {
+            cb(false)
+            return
+        }
+
+        var res = JSON.parse(data)
+        if(!res.loggedin) {
+            if(localStorage["openworldfactory.device.name"]) {
+                postResourceJson("/auth/devicelogin", {
+                    device: localStorage["openworldfactory.device.uuid"],
+                    token: localStorage["openworldfactory.device.token"]
+                }, (err, loginres) => {
+                    if(err) cb(false)
+                    else cb(true)
+                })
+            } else cb(false)
+        } else cb(true)
+    })
 }
 
 function getResource(url, cb) {
@@ -94,10 +116,12 @@ function postResourceJson(url, object, cb) {
         }
     }
 
-    req.open("POST", origin + url, true)
-    req.setRequestHeader("Content-Type", "application/json")
-    req.setRequestHeader("X-CSRF-Token", global.$csrfToken)
-    req.send(JSON.stringify(object))
+    getCsrfToken(csrf => {
+        req.open("POST", origin + url, true)
+        req.setRequestHeader("Content-Type", "application/json")
+        req.setRequestHeader("X-CSRF-Token", csrf)
+        req.send(JSON.stringify(object))
+    })
 }
 
 function postResourceFile(url, file, cb) {
@@ -112,7 +136,6 @@ function postResourceFile(url, file, cb) {
             }
         }
     }
-
 
     getCsrfToken(csrf => {
         req.open("POST", origin + url, true)
@@ -147,5 +170,7 @@ module.exports = {
     putResourceJson,
     postResourceJson,
     postResourceFile,
-    deleteResource
+    postForm,
+    deleteResource,
+    attemptLogin
 }

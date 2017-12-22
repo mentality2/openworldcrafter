@@ -3,7 +3,7 @@
 const api = require('../api/api')
 const dom = require('../dom')
 
-class WebEnviroment extends require("./index") {
+class WebEnviroment extends require("./") {
     constructor() {
         super()
 
@@ -12,6 +12,8 @@ class WebEnviroment extends require("./index") {
         */
         this.iframeTag = "iframe"
         this.styleDir = "/dist/styles/"
+
+        this._onFinishLoad()
     }
 
     getProjectList(cb) {

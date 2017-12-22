@@ -8,6 +8,16 @@ class Environment {
         this.iframeTag = "iframe"
     }
 
+    _onFinishLoad() {
+        if(this._finishLoadListener) this._finishLoadListener()
+        else this._finishedLoading = true
+    }
+
+    onFinishLoad(func) {
+        if(this._finishedLoading) func()
+        else this._finishLoadListener = func
+    }
+
     /*
         Called to make the welcome screen for the first time. Should not be used
         to return to the welcome screen after it has been closed.

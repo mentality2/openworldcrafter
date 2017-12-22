@@ -2,14 +2,17 @@
 
 const webrequest = require('./webrequest.js')
 const project = require('../project')
+const projectlist = require('./projectlist')
 const noop = () => {}
 
 /*
  * For saving projects to the server
  */
 
-class OnlineProjectStore {
+class OnlineProjectStore extends require("./") {
     constructor(projectID, readycb) {
+        super()
+
         this._pid = projectID
 
         this.getProjectFile(obj => {
@@ -18,6 +21,10 @@ class OnlineProjectStore {
                 readycb(new project.Project(obj, this))
             })
         })
+    }
+
+    getLocationString() {
+        return "Saved Online"
     }
 
     getProjectFile(cb) {
@@ -123,3 +130,65 @@ class OnlineProjectStore {
 }
 
 module.exports = OnlineProjectStore
+
+class OnlineApiDescription extends require("./apidescription.js") {
+    constructor() {
+        super()
+
+        this.buttonText = "Save Online"
+        this.buttonIcon = "cloud"
+    }
+
+    openProject(location, onerr) {
+        var appapi = new OnlineProjectStore(location, proj => {
+            $owf.viewProject(proj)
+        }, err => {
+            if(err === "project version mismatch, please update OpenWorldFactory") {
+                $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
+            } else {
+                console.log(err)
+                onerr(err)
+            }
+        })
+    }
+
+    // deleteProject(location, name, cb) {
+    // }
+
+    createProject(name, desc, uuid) {
+    }
+
+    shareProject(id, cb) {
+    }
+
+    _getProjectList(cb) {
+        if(this._projectList) {
+            cb(this._projectList)
+            return
+        }
+
+        webrequest.getResource("/user/projectlist", (err, res) => {
+            if(err) {
+                $owf.handleError("Error", "Could not get your list of projects. Maybe there is a network problem?")
+                return
+            }
+
+            this._projectList = new projectlist.ProjectList(JSON.parse(res), (data, cb) => {
+                // not applicable
+            })
+            cb(this._projectList)
+        })
+    }
+
+    getProjectList(cb) {
+        this._getProjectList(list => cb(list.projects))
+    }
+}
+
+module.exports.getOnlineApi = function(cb) {
+    webrequest.attemptLogin(result => {
+        console.log(result ? "Logged in" : "Not logged in")
+        if(result) cb(new OnlineApiDescription())
+        else cb()
+    })
+}

@@ -8,7 +8,9 @@
 
     <body>
         <script type="text/javascript">
-            require("./index.js")(document.body)
+            $owf.onFinishLoad(() => {
+                require("./index.js")(document.body)
+            })
         </script>
     </body>
 </html>

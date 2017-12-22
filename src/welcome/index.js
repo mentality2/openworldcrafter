@@ -4,6 +4,7 @@ const dom = require('../dom.js')
 const theme = require('../theme.js')
 const newproject = require('./newproject.js')
 const deleteproject = require('../modals/deleteproject')
+const devicelogin = require('../modals/devicelogin.js')
 // const docviewer = require('../docviewer')
 const thispackage = require("../../package.json")
 const utils = require('../utils')
@@ -100,13 +101,6 @@ function createPage(el) {
     })
     toolbar.appendChild(newProject)
 
-    if(process.env.NODE_ENV === "development" && $owf.remakeTestProject) {
-        var newProject = dom.button(undefined, "Remake test.owf", () => {
-            $owf.remakeTestProject()
-        })
-        toolbar.appendChild(newProject)
-    }
-
     var newProjectModal = newproject()
     main.appendChild(newProjectModal.wrapper)
 
@@ -128,6 +122,20 @@ function createPage(el) {
         updateMessage.appendChild(dom.div("You are running openworldfactory in development mode."))
         updateMessage.appendChild(dom.button(undefined, "Use Mobile Env", () => $owf.mobile = true))
         updateMessage.classList.remove("invisible")
+
+        if($owf.remakeTestProject) {
+            var newProject = dom.button(undefined, "Remake test.owf", () => {
+                $owf.remakeTestProject()
+            })
+            updateMessage.appendChild(newProject)
+        }
+
+        var loginOnline = dom.button(undefined, "Log In Online", () => {
+            var deviceLoginModal = devicelogin.createDeviceLoginModal()
+            deviceLoginModal.addToContainer()
+            deviceLoginModal.show()
+        })
+        updateMessage.appendChild(loginOnline)
     } else {
         // gets the latest package.json from github
         if($owf.checkUpdate) {
@@ -153,8 +161,8 @@ function createPage(el) {
     // docviewer(docs, "welcome.md", true)
 
     var container = dom.div()
-    container.appendChild(main)
     container.appendChild(docsContainer)
+    container.appendChild(main)
     el.appendChild(container)
 }
 

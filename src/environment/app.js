@@ -1,6 +1,7 @@
 "use strict"
 
 const api = require('../api/app')
+const web = require('../api/api')
 const dom = require('../dom')
 const fs = require('../api/fileplugin')
 const project = require('../project')
@@ -19,6 +20,12 @@ class AppEnvironment extends require("./index") {
         this.styleDir = "res/styles/"
 
         this.availableAPIs = [api.AppApiDescription]
+
+        web.getOnlineApi(api => {
+            if(api) this.availableAPIs.push(api)
+
+            this._onFinishLoad()
+        })
     }
 
     getProjectList(cb) {
