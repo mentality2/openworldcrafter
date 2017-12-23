@@ -78,7 +78,7 @@ class OnlineProjectStore extends require("./") {
     }
 
     getAssetUrl(name, cb) {
-        cb(`/project/${this._pid}/media/${name}`)
+        cb(`${webrequest.origin}/project/${this._pid}/media/${name}`)
     }
 
     deleteAsset(name, cb) {

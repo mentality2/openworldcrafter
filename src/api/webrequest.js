@@ -2,12 +2,45 @@
 
 var csrfToken = undefined
 
-// RM-BEFORE-FLIGHT
-const origin = "http://jameslaptop.attlocal.net:7701"
+const origin = process.env.OWF_ORIGIN || "http://localhost:7701"
 
 /*
  * All callbacks will be called with arguments (err, responseText)
  */
+
+function sendRequest(method, url, contenttype, data, cb) {
+    var request = new XMLHttpRequest()
+
+    request.onload = () => {
+        if(request.status >= 200 && request.status < 300) {
+            cb(undefined, request.responseText)
+        } else {
+            cb(request.status, request.responseText)
+        }
+    }
+    request.onerror = err => {
+        cb(err)
+    }
+
+    function send(csrf) {
+        request.open(method, origin + url, true)
+
+        if(csrf) request.setRequestHeader("X-CSRF-Token", csrf)
+        if(contenttype) request.setRequestHeader("Content-Type", contenttype)
+
+        try {
+            request.send(data)
+        } catch(err) {
+            console.log("Network error", err)
+            cb(err)
+        }
+    }
+
+    // don't send the token on GET calls because this interferes with GETting
+    // the CSRF token.
+    if(method === "GET") send()
+    else getCsrfToken(send)
+}
 
 function getCsrfToken(cb) {
     if(csrfToken) cb(csrfToken)
@@ -19,150 +52,43 @@ function getCsrfToken(cb) {
 }
 
 function attemptLogin(cb) {
-    getResource("/auth/status", (err, data) => {
-        if(err) {
-            cb(false)
-            return
-        }
-
-        var res = JSON.parse(data)
-        if(!res.loggedin) {
-            if(localStorage["openworldfactory.device.name"]) {
-                postResourceJson("/auth/devicelogin", {
-                    device: localStorage["openworldfactory.device.uuid"],
-                    token: localStorage["openworldfactory.device.token"]
-                }, (err, loginres) => {
-                    if(err) cb(false)
-                    else cb(true)
-                })
-            } else cb(false)
-        } else cb(true)
-    })
+    if(localStorage["openworldfactory.device.name"]) {
+        postResourceJson("/auth/devicelogin", {
+            device: localStorage["openworldfactory.device.uuid"],
+            token: localStorage["openworldfactory.device.token"]
+        }, (err, loginres) => {
+            if(err) cb(false)
+            else cb(true)
+        })
+    } else cb(false)
 }
 
 function getResource(url, cb) {
-    var req = new XMLHttpRequest()
-
-    req.onreadystatechange = function() {
-        if(req.readyState === 4) {
-            if(req.status >= 200 && req.status < 300) {
-                cb(null, req.responseText)
-            } else {
-                cb(req.status, req.responseText)
-            }
-        }
-    }
-
-    req.open("GET", origin + url, true)
-    req.send(null)
+    sendRequest("GET", url, undefined, undefined, cb)
 }
 
 function putResourceJson(url, object, cb) {
-    var req = new XMLHttpRequest()
-
-    req.onreadystatechange = function() {
-        if(req.readyState === 4) {
-            if(req.status >= 200 && req.status < 300) {
-                cb(null, req.responseText)
-            } else {
-                cb(req.status, req.responseText)
-            }
-        }
-    }
-
-    getCsrfToken(csrf => {
-        req.open("PUT", origin + url, true)
-        req.setRequestHeader("Content-Type", "application/json")
-        req.setRequestHeader("X-CSRF-Token", csrf)
-        req.send(object)
-    })
+    sendRequest("PUT", url, "application/json", JSON.stringify(object))
 }
 
 function postForm(url, fields, cb) {
-    var req = new XMLHttpRequest()
-
-    req.onreadystatechange = function() {
-        if(req.readyState === 4) {
-            if(req.status >= 200 && req.status < 300) {
-                cb(null, req.responseText)
-            } else {
-                cb(req.status, req.responseText)
-            }
-        }
-    }
-
     var fieldarray = []
     for(var field in fields) fieldarray.push(field + "=" + fields[field])
     var urlencoded = fieldarray.join("&")
 
-    getCsrfToken(csrf => {
-        req.open("POST", origin + url, true)
-        req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-        req.setRequestHeader("X-CSRF-Token", csrf)
-        req.send(urlencoded)
-    })
+    sendRequest("POST", url, "application/x-www-form-urlencoded", urlencoded, cb)
 }
 
 function postResourceJson(url, object, cb) {
-    var req = new XMLHttpRequest()
-
-    req.onreadystatechange = function() {
-        if(req.readyState === 4) {
-            if(req.status >= 200 && req.status < 300) {
-                cb(null, req.responseText)
-            } else {
-                cb(req.status, req.responseText)
-            }
-        }
-    }
-
-    getCsrfToken(csrf => {
-        req.open("POST", origin + url, true)
-        req.setRequestHeader("Content-Type", "application/json")
-        req.setRequestHeader("X-CSRF-Token", csrf)
-        req.send(JSON.stringify(object))
-    })
+    sendRequest("POST", url, "application/json", JSON.stringify(object), cb)
 }
 
 function postResourceFile(url, file, cb) {
-    var req = new XMLHttpRequest()
-
-    req.onreadystatechange = function() {
-        if(req.readyState === 4) {
-            if(req.status >= 200 && req.status < 300) {
-                cb(null, req.responseText)
-            } else {
-                cb(req.status, req.responseText)
-            }
-        }
-    }
-
-    getCsrfToken(csrf => {
-        req.open("POST", origin + url, true)
-        req.setRequestHeader("Content-Type", file.type)
-        req.setRequestHeader("X-CSRF-Token", csrf)
-        req.send(file)
-    })
+    sendRequest("POST", url, file.type, file, cb)
 }
 
 function deleteResource(url, cb) {
-    var req = new XMLHttpRequest()
-
-    req.onreadystatechange = function() {
-        if(req.readyState === 4) {
-            if(req.status >= 200 && req.status < 300) {
-                cb(null, req.responseText)
-            } else {
-                cb(req.status, req.responseText)
-            }
-        }
-    }
-
-    getCsrfToken(csrf => {
-        req.open("DELETE", origin + url, true)
-        req.setRequestHeader("X-CSRF-Token", csrf)
-        req.send()
-    })
+    sendRequest("DELETE", url, undefined, undefined, cb)
 }
 
 module.exports = {
