@@ -3,16 +3,81 @@
     .spreadsheet-row
         .spreadsheet-cell
             border: 1px solid $background
-            *
+            position: relative
+            padding-right: 2em
+            > span
                 width: 100%
+            .color-button
+                position: absolute
+                right: 0
+                top: 50%
+                transform: translateY(-50%)
+                display: none
+                background-color: transparent
 
 .editing
     .spreadsheet
         .spreadsheet-row
             .spreadsheet-cell
                 border: 1px dotted $outline
+
+                &:hover
+                    .color-button
+                        display: inline
                 &.focused
                     border: 1px solid $outline
                     *
                         // to get rid of that ugly orange outline
                         outline: none
+
+
+.color-dropdown
+    position: absolute
+    top: 100%
+    right: 0
+    border: 1px solid $outline
+    line-height: 0
+    z-index: 10
+    background-color: $background
+    .colorpatch
+        width: 1em
+        height: 1em
+        border-radius: 3px
+        margin: 3px
+        display: inline-block
+        &.transparent
+            border: 1px solid $outline
+
+
+.black
+    background-color: mix($background, black)
+.gray
+    background-color: mix($background, gray)
+.maroon
+    background-color: mix($background, maroon)
+.red
+    background-color: mix($background, red)
+.fuchsia
+    background-color: mix($background, fuchsia)
+.purple
+    background-color: mix($background, purple)
+.green
+    background-color: mix($background, green)
+.lime
+    background-color: mix($background, lime)
+.olive
+    background-color: mix($background, olive)
+.yellow
+    background-color: mix($background, yellow)
+.navy
+    background-color: mix($background, navy)
+.blue
+    background-color: mix($background, blue)
+.teal
+    background-color: mix($background, teal)
+.aqua
+    background-color: mix($background, aqua)
+.orange
+    background-color: mix($background, orange)
+.transparent
+    background-color: mix($background, transparent)

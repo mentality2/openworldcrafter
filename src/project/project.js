@@ -217,6 +217,8 @@ class Project {
         this.$allObjects = {}
         // list of all properties used on objects
         this.$propertyList = []
+        // highlight colors used in character sheets
+        this.propertyColors = serial.propertyColors || {}
 
         this.projroot = new ProjectObject(serial.projroot, this, null)
 
@@ -290,7 +292,7 @@ class Project {
                 this.$_dirty = false
                 document.title = this.info.name + " - OpenWorldFactory"
                 this.$saveListener()
-                (cb || noop)()
+                { (cb || noop)() }
             }, (errmsg, button, buttonAction) => this.$saveListener(errmsg, button, buttonAction))
         }
         else console.log("Skipping save as no changes have been made")
@@ -350,6 +352,17 @@ class Project {
                 break
             }
         }
+    }
+
+    setPropertyColor(prop, val, color) {
+        this.propertyColors[prop] = this.propertyColors[prop] || {}
+        this.propertyColors[prop][val] = color
+    }
+
+    getPropertyColor(prop, val) {
+        if(!this.propertyColors[prop]) return "transparent"
+        if(!this.propertyColors[prop][val]) return "transparent"
+        return this.propertyColors[prop][val]
     }
 }
 

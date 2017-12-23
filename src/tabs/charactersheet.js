@@ -4,6 +4,36 @@ const dom = require('../dom.js')
 const common = require('./common.js')
 const utils = require('../utils.js')
 
+function createColorDropdown(ref) {
+    var el = dom.div(undefined, "color-dropdown")
+
+    var count = 0
+    for(let color of utils.colors) {
+        var patch = dom.span(undefined, ["colorpatch", color, "cursor-pointer"])
+
+        patch.addEventListener("click", ev => {
+            console.log("click", ev);
+            ref.setColor(color)
+            el.classList.add("invisible")
+        })
+        patch.addEventListener("mouseenter", ev => {
+            ref.el.classList.remove(...utils.colors)
+            ref.el.classList.add(color)
+        })
+        patch.addEventListener("mouseleave", ev => {
+            ref.el.classList.remove(...utils.colors)
+            ref.el.classList.add(ref.originalColor)
+        })
+
+        el.appendChild(patch)
+        if(++count % 4 == 0) {
+            el.appendChild(dom.br())
+        }
+    }
+
+    return el
+}
+
 function createCharacterChartTab(object, ref) {
     var el = dom.div()
     var project = object.$project
@@ -27,14 +57,26 @@ function createCharacterChartTab(object, ref) {
     headers.insertBefore(dom.element("th", "Name", "spreadsheet-cell"), headers.firstChild)
     table.appendChild(headers)
 
+    var cellMap = {}
+    function updateColumnColors(prop) {
+        for(var id in cellMap) {
+            var newColor = project.getPropertyColor(prop, project.$allObjects[id].properties[prop])
+
+            // hooray for polyfills! we can use spread arguments
+            cellMap[id][prop].classList.remove(...utils.colors)
+            cellMap[id][prop].classList.add(newColor)
+        }
+    }
+
     // now all the objects, in alphabetical order
     var objectOrder = Object.keys(project.$allObjects).sort((a, b) => project.$allObjects[a].name.localeCompare(project.$allObjects[b].name))
-    for(var id of objectOrder) {
+    for(let id of objectOrder) {
         let obj = project.$allObjects[id]
 
         // don't include objects that don't have properties
         if(Object.keys(obj.properties).length) {
             var row = dom.element("tr", undefined, "spreadsheet-row")
+            cellMap[id] = {}
 
             // object name with link
             var name = dom.element("td", undefined, "spreadsheet-cell")
@@ -45,10 +87,16 @@ function createCharacterChartTab(object, ref) {
             name.appendChild(link)
             row.appendChild(name)
 
+            var colorchooserRef = {}
+            var colorchooser = createColorDropdown(colorchooserRef)
+
             for(let prop of properties) {
                 // if it's undefined then the dom method will create an empty cell
                 // no need to worry about that here
                 let cell = dom.element("td", undefined, "spreadsheet-cell")
+                cell.classList.add(obj.$project.getPropertyColor(prop, obj.properties[prop]))
+
+                cellMap[id][prop] = cell
 
                 let nonEditCell = dom.span(obj.properties[prop], "edit-invisible")
                 cell.appendChild(nonEditCell)
@@ -71,9 +119,30 @@ function createCharacterChartTab(object, ref) {
                     editCell.addEventListener("keyup", ev => {
                         obj.addProperty(prop, editCell.innerHTML)
                         nonEditCell.textContent = editCell.textContent
+                        updateColumnColors(prop)
                         obj.markDirty()
                     })
+
                     cell.appendChild(editCell)
+
+                    var color = dom.button("color", undefined, () => {}, ["color-button", "nobutton"])
+                    color.addEventListener("mouseenter", () => {
+                        colorchooserRef.setColor = newColor => {
+                            project.setPropertyColor(prop, obj.properties[prop], newColor)
+                            updateColumnColors(prop)
+                            colorchooserRef.originalColor = newColor
+                            obj.markDirty()
+                        }
+                        colorchooserRef.originalColor = object.$project.getPropertyColor(prop, obj.properties[prop])
+                        colorchooserRef.el = cell
+
+                        colorchooser.classList.remove("invisible")
+                        cell.appendChild(colorchooser)
+                    })
+                    cell.addEventListener("mouseleave", () => {
+                        colorchooser.remove()
+                    })
+                    cell.appendChild(color)
                 }
 
                 row.appendChild(cell)
@@ -98,12 +167,15 @@ function createRow(key, values, object) {
     var valueEl = dom.element("td")
     var valueSpan = dom.span(values[key], ["edit-invisible"])
     valueEl.appendChild(valueSpan)
-    var editValue = dom.inputText(values[key], "Value", ["edit-visible"])
-    editValue.addEventListener("change", ev => {
+    var editValue = dom.inputText(values[key], "Value", ["edit-visible", "no-margin-right"])
+    editValue.addEventListener("input", ev => {
         values[key] = valueSpan.textContent = editValue.value
+        valueEl.classList.remove(...utils.colors)
+        valueEl.classList.add(object.$project.getPropertyColor(key, values[key]))
         object.markDirty()
     })
     valueEl.appendChild(editValue)
+    valueEl.classList.add(object.$project.getPropertyColor(key, values[key]))
 
     var deleteEl = dom.element("td")
     var deleteButton = dom.button("delete", undefined, () => {

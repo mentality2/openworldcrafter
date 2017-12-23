@@ -1,6 +1,7 @@
 "use strict"
 
 const byteSuffix = ["bytes", "kb", "mb", "gb", "tb", "pb", "eb", "zb", "yb"]
+const colors = ["black", "gray", "maroon", "red", "fuchsia", "purple", "green", "lime", "olive", "yellow", "navy", "blue", "teal", "aqua", "orange", "transparent"]
 
 function compareVersions(v1, v2) {
     var v1p = v1.split(".")
@@ -214,5 +215,6 @@ module.exports = {
     queryParams,
     compareDates,
     acceptableSubobjects,
-    compareVersions
+    compareVersions,
+    colors
 }
