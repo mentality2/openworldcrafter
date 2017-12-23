@@ -49,7 +49,7 @@ class OnlineProjectStore extends require("./") {
     }
 
     saveProjectFile(data, cb) {
-        webrequest.putResourceJson(`/project/${this._pid}/project.json`, data, function(err, res) {
+        webrequest.putResourceJsonText(`/project/${this._pid}/project.json`, data, function(err, res) {
             if(err) {
                 // TODO: handle
                 console.log(err)

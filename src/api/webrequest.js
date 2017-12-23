@@ -10,6 +10,7 @@ const origin = process.env.OWF_ORIGIN || "http://localhost:7701"
 
 function sendRequest(method, url, contenttype, data, cb) {
     var request = new XMLHttpRequest()
+    cb = cb || (() => {})
 
     request.onload = () => {
         if(request.status >= 200 && request.status < 300) {
@@ -67,8 +68,8 @@ function getResource(url, cb) {
     sendRequest("GET", url, undefined, undefined, cb)
 }
 
-function putResourceJson(url, object, cb) {
-    sendRequest("PUT", url, "application/json", JSON.stringify(object))
+function putResourceJsonText(url, object, cb) {
+    sendRequest("PUT", url, "application/json", object, cb)
 }
 
 function postForm(url, fields, cb) {
@@ -93,7 +94,7 @@ function deleteResource(url, cb) {
 
 module.exports = {
     getResource,
-    putResourceJson,
+    putResourceJsonText,
     postResourceJson,
     postResourceFile,
     postForm,
