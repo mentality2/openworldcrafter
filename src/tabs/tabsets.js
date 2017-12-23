@@ -2,7 +2,6 @@
 
 const attachments = require('./attachments.js')
 const character = require('./character.js')
-const note = require('./note.js')
 const folder = require('./folder.js')
 const timeline = require('./timeline.js')
 const relationships = require('./relationships')
@@ -26,15 +25,13 @@ function createTabset(tabview, object, ref) {
     tabview.setPrintName(name)
     switch(object.type) {
         case "folder":
+        case "note":
             tabview.addTab(name, folder(object, ref))
             break
         case "character":
             tabview.addTab(name, character(object, ref))
             tabview.addTab("Character Sheet", charactersheet.createCharacterSheetTab(object, ref), "clipboard")
             tabview.addTab("Relationships", relationships(object, ref), "heart")
-            break
-        case "note":
-            tabview.addTab(name, note(object, ref))
             break
         case "timeline":
             tabview.addTab(name, timeline.createTimelineTab(object, ref))
