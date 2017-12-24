@@ -164,6 +164,9 @@ function createPage(el) {
     container.appendChild(docsContainer)
     container.appendChild(main)
     el.appendChild(container)
+
+    // ugh
+    if(window.$advertisements) $advertisements.show()
 }
 
 module.exports = createPage

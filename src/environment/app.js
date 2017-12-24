@@ -47,6 +47,9 @@ class AppEnvironment extends require("./index") {
 
         document.body.innerHTML = ""
         require("../editor")(document.body, project)
+
+        // no ads on project pages. the welcome screen is too much already
+        if(window.$advertisements) $advertisements.hide()
     }
 
     showWelcome() {
