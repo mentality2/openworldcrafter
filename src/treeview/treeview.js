@@ -153,7 +153,7 @@ class TreeView {
     addChild(parentEl, obj) {
         var el = dom.div(null, ["treeview-item", "treeview-item-collapsed"])
 
-        var arrow = dom.span(rightArrow)
+        var arrow = dom.span(rightArrow, "padding-right-3px")
 
         if(!Object.keys(obj.subobjects).length) {
             arrow.classList.add("hidden")
