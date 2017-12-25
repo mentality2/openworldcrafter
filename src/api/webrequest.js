@@ -2,7 +2,7 @@
 
 var csrfToken = undefined
 
-const origin = process.env.OWF_ORIGIN || "http://localhost:7701"
+const origin = typeof process.env.OWF_ORIGIN !== "undefined" ? process.env.OWF_ORIGIN : "http://localhost:7701"
 
 /*
  * All callbacks will be called with arguments (err, responseText)
@@ -99,5 +99,6 @@ module.exports = {
     postResourceFile,
     postForm,
     deleteResource,
-    attemptLogin
+    attemptLogin,
+    origin
 }

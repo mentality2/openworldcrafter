@@ -2,6 +2,7 @@
 
 const path = require('path')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = [
     // editor
@@ -15,6 +16,7 @@ module.exports = [
             rules: require("./rules.js")
         },
         plugins: [
+            new webpack.EnvironmentPlugin(['NODE_ENV', 'OWF_ORIGIN']),
             new CopyWebpackPlugin([
                 {
                     from: "./src/styles/css",
