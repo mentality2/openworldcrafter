@@ -2,6 +2,7 @@
 
 const dom = require('../dom.js')
 const common = require('./common.js')
+const markdown = require('../markdown')
 
 function createSnippetsTab(object, ref, trash) {
     var el = dom.div()
@@ -9,8 +10,7 @@ function createSnippetsTab(object, ref, trash) {
     el.appendChild(dom.div("Collect snippets of writing and use them later."))
 
     if(!trash) {
-        // note that this is NOT edit-visible, for ease of use
-        var newSnippetDiv = dom.div()
+        var newSnippetDiv = dom.div(undefined, "edit-visible")
         var makeFirefoxWorkDiv = dom.div()
 
         var newSnippet = dom.element("textarea")
@@ -46,10 +46,6 @@ function createSnippetsTab(object, ref, trash) {
 
     var contents = dom.div()
 
-    var dummy = dom.div()
-    contents.appendChild(dummy)
-    var topSnippet = dummy
-
     function createSnippetBox(snippet) {
         // only show trash on the trash tab, and vice versa
         if((trash && !snippet.trash) || (!trash && snippet.trash)) return
@@ -76,11 +72,11 @@ function createSnippetsTab(object, ref, trash) {
 
             snippetBox.remove()
             object.$project.save(true)
-        })
+        }, "edit-visible")
         deleteTools.appendChild(deleteButton)
         snippetBox.appendChild(deleteTools)
 
-        var snippetText = dom.div(snippet.text)
+        var snippetText = markdown.render(snippet.text || "", undefined, ref)
         snippetBox.appendChild(snippetText)
 
         snippetBox.addEventListener("click", ev => {
@@ -94,7 +90,9 @@ function createSnippetsTab(object, ref, trash) {
 
                 var msg = dom.span("Copied to clipboard", ["copytoclipboard", "initial"])
                 // insert it into the "delete tools" bar so it doesn't overlap the delete button
-                deleteTools.insertBefore(msg, deleteTools.firstChild)
+                if(!deleteTools.firstChild || deleteTools.firstChild.textContent !== "Copied to clipboard") {
+                    deleteTools.insertBefore(msg, deleteTools.firstChild)
+                }
 
                 setTimeout(() => msg.classList.remove("initial"), 10) // for transitions
                 setTimeout(() => msg.classList.add("initial"), 3000)
@@ -107,8 +105,7 @@ function createSnippetsTab(object, ref, trash) {
             textbox.remove()
         })
 
-        contents.insertBefore(snippetBox, topSnippet)
-        topSnippet = snippetBox
+        contents.insertBefore(snippetBox, contents.firstChild)
     }
 
     var snippets = object.$project.snippets
