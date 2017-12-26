@@ -71,7 +71,7 @@ function notes(object, el, ref) {
             object.markDirty()
         }
 
-        notesText.addEventListener("keyup", onEdit)
+        notesText.addEventListener("input", onEdit)
         var mdToolbar = markdowntoolbar(notesText, onEdit, object)
         editorArea.appendChild(mdToolbar)
         editorArea.appendChild(notesText)
