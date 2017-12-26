@@ -8,6 +8,28 @@ const devicelogin = require('../modals/devicelogin.js')
 // const docviewer = require('../docviewer')
 const thispackage = require("../../package.json")
 const utils = require('../utils')
+const tips = require('./tips.json')
+
+function createTip(updateMessage) {
+    if(Math.random() < .75) {
+        // if there's no updates or dev mode notice, add a tip sometimes
+        var tip = tips[Math.floor(Math.random() * tips.length)]
+        if(!tip.disabled) {
+            updateMessage.appendChild(dom.span("Tip: ", "bold"))
+            updateMessage.appendChild(dom.span(tip.text))
+            if(tip.link) {
+                var tipLink = dom.element("a", " " + tip.link[0])
+                if(tip.link[1] === "web") {
+                    tipLink.addEventListener("click", ev => $owf.showWebpage(tip.link[2]))
+                } else if(tip.link[1] === "docs") {
+                    tipLink.addEventListener("click", ev => $owf.showDocs(tip.link[2]))
+                }
+                updateMessage.appendChild(tipLink)
+            }
+            updateMessage.classList.remove("invisible")
+        }
+    }
+}
 
 function createProjectList(ul) {
     utils.removeAllChildren(ul)
@@ -116,6 +138,8 @@ function createPage(el) {
 
     var updateMessage = dom.div(undefined, ["highlighted-message", "invisible", "margin-bottom"])
     docsContainer.appendChild(updateMessage)
+
+    // top message (update notice, tip, or devmode notice)
     if(process.env.NODE_ENV === "development") {
         // no need to check for updates, but we'll put an extra devmode notice
         updateMessage.appendChild(dom.div("Development Mode Notice", "bold"))
@@ -148,11 +172,18 @@ function createPage(el) {
                             $owf.showWebpage("https://openworldfactory.github.io")
                         }
                     }, ["float-right"]))
-                        updateMessage.appendChild(dom.div("Update to v" + pkg.version, "bold"))
-                        updateMessage.appendChild(dom.div(pkg.updateInfo ? pkg.updateInfo.message : "An update is available."))
+                    updateMessage.appendChild(dom.div("Update to v" + pkg.version, "bold"))
+                    updateMessage.appendChild(dom.div(pkg.updateInfo ? pkg.updateInfo.message : "An update is available."))
                     updateMessage.classList.remove("invisible")
+                } else {
+                    // no update, show a tip
+                    createTip(updateMessage)
                 }
             })
+        } else {
+            // mobile devices don't check for updates as that's the app store's
+            // job. just show a tip
+            createTip(updateMessage)
         }
     }
 
