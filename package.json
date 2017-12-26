@@ -13,7 +13,7 @@
     "compile-icons": "./scripts/compile-icons.js",
     "compile-docs": "./scripts/compile-docs.js",
     "compile-web": "OWF_ORIGIN=\"\" webpack --config webpack/webpack.config.js",
-    "compile-app-prod": "webpack --config webpack/app.webpack.config.js -p",
+    "compile-app-prod": "NODE_ENV=production webpack --config webpack/app.webpack.config.js -p",
     "compile-app": "webpack --config webpack/app.webpack.config.js",
     "compile-all": "npm run compile-sass; npm run compile-icons; npm run compile-web",
     "test": "echo \"Error: no test specified\" && exit 1",

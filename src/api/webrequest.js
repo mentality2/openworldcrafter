@@ -40,13 +40,17 @@ function sendRequest(method, url, contenttype, data, cb) {
     // don't send the token on GET calls because this interferes with GETting
     // the CSRF token.
     if(method === "GET") send()
-    else getCsrfToken(send)
+    else getCsrfToken(send, cb)
 }
 
-function getCsrfToken(cb) {
+function getCsrfToken(cb, err) {
     if(csrfToken) cb(csrfToken)
     else {
         getResource("/csrf-token", (status, data) => {
+            if(status) {
+                // oops, error
+                err(status)
+            }
             cb(data)
         })
     }
