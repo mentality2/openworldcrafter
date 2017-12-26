@@ -202,8 +202,14 @@ function createAttachmentTab(object) {
         }
 
         line.addEventListener("click", () => {
-            attachmentViewer.setAttachment(attachment)
-            attachmentViewer.el.show()
+            if(window.$images) {
+                // use the native plugin to show the image
+                object.$project.getAssetUrl(attachment, $images.showImage)
+            } else {
+                // display the image in a modal
+                attachmentViewer.setAttachment(attachment)
+                attachmentViewer.el.show()
+            }
         })
 
         line.appendChild(image)
