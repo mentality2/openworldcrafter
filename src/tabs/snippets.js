@@ -60,7 +60,7 @@ function createSnippetsTab(object, ref, trash) {
                 snippet.trash = !snippet.trash
                 snippetBox.remove()
                 object.$project.save(true)
-            })
+            }, "edit-visible")
             deleteTools.appendChild(restoreButton)
         }
         var deleteButton = dom.button("delete", undefined, () => {
