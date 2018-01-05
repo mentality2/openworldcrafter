@@ -1,4 +1,4 @@
-# ![open world factory](./logos/header.svg) MIT License
+# ![open world factory](./logos/header.svg) License
 
 Copyright (c) 2017 FlyingPiMonster
 
@@ -19,3 +19,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+In addition, this project contains font files under the SIL Open Font License,
+Version 1.1. These files are located in the following directories:
+
+- src/styles/cantarell
+- src/styles/noto_emoji
+
+A copy of that license can be found in either of those directories.
