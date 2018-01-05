@@ -130,14 +130,14 @@ function createPage(el) {
     var recentList = dom.element("ul", undefined, "margin-right")
     createProjectList(recentList)
 
-    main.appendChild(dom.h1("Projects"))
+    var updateMessage = dom.div(undefined, ["highlighted-message", "invisible", "margin-bottom"])
+
+    main.appendChild(dom.h1("Welcome"))
+    main.appendChild(updateMessage)
     main.appendChild(toolbar)
     main.appendChild(recentList)
 
     var docsContainer = dom.div("", ["column", "float-right"])
-
-    var updateMessage = dom.div(undefined, ["highlighted-message", "invisible", "margin-bottom"])
-    docsContainer.appendChild(updateMessage)
 
     // top message (update notice, tip, or devmode notice)
     if(process.env.NODE_ENV === "development") {
