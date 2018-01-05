@@ -50,8 +50,9 @@ function getCsrfToken(cb, err) {
             if(status) {
                 // oops, error
                 err(status)
+            } else {
+                cb(data)
             }
-            cb(data)
         })
     }
 }
