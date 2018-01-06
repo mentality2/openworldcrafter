@@ -46,10 +46,12 @@ function modal(title, removeOnClose) {
         wrapper,
         modal: el,
         show: function() {
+            if(!wrapper.parentNode) this.addToContainer()
             wrapper.classList.add("modal-visible")
         },
         hide: function() {
             wrapper.classList.remove("modal-visible")
+            if(removeOnClose) wrapper.remove()
         },
         setTitle: function(newTitle) {
             titleEl.textContent = newTitle

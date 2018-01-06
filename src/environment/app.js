@@ -6,6 +6,7 @@ const dom = require('../dom')
 const fs = require('../api/fileplugin')
 const project = require('../project')
 const magicuuids = require('../magicuuids')
+const settings = require('../modals/settings')
 
 class AppEnvironment extends require("./index") {
     constructor() {
@@ -73,6 +74,11 @@ class AppEnvironment extends require("./index") {
     */
     showWebpage(url) {
         cordova.InAppBrowser.open(url, "_blank")
+    }
+
+    showSettings() {
+        var settingsModal = settings.createAppSettingsModal()
+        settingsModal.show()
     }
 
     handleError(title, message, debug) {

@@ -46,6 +46,7 @@ function createMoreMenu() {
 
     var settings = dom.div("Settings")
     settings.addEventListener("click", () => {
+        $owf.showSettings()
     })
 
     var documentation = dom.div("Documentation")
@@ -141,7 +142,8 @@ function createPage(el) {
     var main = dom.div("", ["column", "float-left", "welcome", "center-column"])
 
     // New/Open Toolbar
-    var toolbar = dom.div()
+    // margin-top-3px to avoid clipping under the welcome bar
+    var toolbar = dom.div(undefined, "margin-top-3px")
 
     if($owf.showOpenDialog) {
         var open = dom.button("", "Open\u2026", () => {

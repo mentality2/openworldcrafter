@@ -2,6 +2,11 @@
 
 const dom = require('./dom.js')
 
+const themeNames = {
+    theme_dark: "Dark Theme",
+    theme_light: "Light Theme"
+}
+
 const themes = {
     theme_dark: "theme_dark.css",
     theme_light: "theme_light.css"
@@ -51,6 +56,10 @@ function changeTheme(name) {
     localStorage["openworldfactory.preferences.theme"] = name
 }
 
+function getTheme() {
+    return localStorage["openworldfactory.preferences.theme"]
+}
+
 module.exports = {
-    setTheme, changeTheme, reload
+    setTheme, changeTheme, reload, themes: themeNames, getTheme
 }

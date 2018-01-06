@@ -1,5 +1,7 @@
 "use strict"
 
+const settings = require('../modals/settings')
+
 class Environment {
     constructor() {
         /*
@@ -108,6 +110,14 @@ class Environment {
     */
     showWebpage(url) {
         throw "Not Implemented: showWebpage"
+    }
+
+    /*
+        Show a settings page or modal.
+    */
+    showSettings() {
+        var settingsModal = settings.createSettingsModal()
+        settingsModal.show()
     }
 
     /*
