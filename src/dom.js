@@ -62,6 +62,7 @@ function modal(title, removeOnClose) {
                 document.body.appendChild(container)
             }
 
+            if(wrapper.parentNode) wrapper.remove()
             document.getElementById("main-modal-container").appendChild(wrapper)
         },
         appendChild: function(element) {

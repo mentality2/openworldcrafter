@@ -10,6 +10,8 @@ const thispackage = require("../../package.json")
 const utils = require('../utils')
 const tips = require('./tips.json')
 
+var aboutModal = require('../modals/about.js').createAboutModal()
+
 function createTip(updateMessage) {
     if(Math.random() < .75) {
         // if there's no updates or dev mode notice, add a tip sometimes
@@ -29,6 +31,36 @@ function createTip(updateMessage) {
             updateMessage.classList.remove("invisible")
         }
     }
+}
+
+function createMoreMenu() {
+    var more = dom.span(undefined, ["menu", "menu-extends-left", "double-font", "line-height-1em"])
+    var moreIcon = dom.icon("more", ["menu-button", "vertical-align-middle"])
+    var moreMenu = dom.div(undefined, ["menu-content", "line-height-1em"])
+
+    var about = dom.div("About")
+    about.addEventListener("click", () => {
+        aboutModal.addToContainer()
+        aboutModal.show()
+    })
+
+    var settings = dom.div("Settings")
+    settings.addEventListener("click", () => {
+    })
+
+    var documentation = dom.div("Documentation")
+    documentation.addEventListener("click", () => {
+        $owf.showDocs("userdocs/index.md")
+    })
+
+    moreMenu.appendChild(about)
+    moreMenu.appendChild(settings)
+    moreMenu.appendChild(documentation)
+
+    more.appendChild(moreIcon)
+    more.appendChild(moreMenu)
+
+    return more
 }
 
 function createProjectList(ul) {
@@ -132,7 +164,10 @@ function createPage(el) {
 
     var updateMessage = dom.div(undefined, ["highlighted-message", "invisible", "margin-bottom"])
 
-    main.appendChild(dom.h1("Welcome"))
+    var header = dom.div(undefined, "welcome-menu")
+    header.appendChild(createMoreMenu())
+    header.appendChild(dom.h1("Welcome"))
+    main.appendChild(header)
     main.appendChild(updateMessage)
     main.appendChild(toolbar)
     main.appendChild(recentList)

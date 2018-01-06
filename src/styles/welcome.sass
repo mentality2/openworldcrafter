@@ -1,4 +1,7 @@
 .welcome
+    // to make the welcome menu stay in place
+    margin-top: -6px
+
     ul
         list-style: none
         padding-left: 1em
@@ -9,3 +12,12 @@
             .project-owner
                 float: right
                 margin-right: 1em
+
+    .welcome-menu
+        position: sticky
+        top: 0
+        background-color: $background
+
+        .menu
+            position: absolute
+            right: 0
