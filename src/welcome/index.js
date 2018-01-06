@@ -106,7 +106,7 @@ function createPage(el) {
     theme.setTheme()
     if($owf.mobile) document.body.classList.add("mobile")
 
-    var main = dom.div("", ["column", "float-left", "welcome"])
+    var main = dom.div("", ["column", "float-left", "welcome", "center-column"])
 
     // New/Open Toolbar
     var toolbar = dom.div()
@@ -136,8 +136,6 @@ function createPage(el) {
     main.appendChild(updateMessage)
     main.appendChild(toolbar)
     main.appendChild(recentList)
-
-    var docsContainer = dom.div("", ["column", "float-right"])
 
     // top message (update notice, tip, or devmode notice)
     if(process.env.NODE_ENV === "development") {
@@ -187,14 +185,7 @@ function createPage(el) {
         }
     }
 
-    var docs = dom.div()
-    docsContainer.appendChild(docs)
-    // docviewer(docs, "welcome.md", true)
-
-    var container = dom.div()
-    container.appendChild(docsContainer)
-    container.appendChild(main)
-    el.appendChild(container)
+    el.appendChild(main)
 
     // ugh
     if(window.$advertisements) $advertisements.show()
