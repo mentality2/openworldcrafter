@@ -1,6 +1,26 @@
 *, *:before, *:after
     box-sizing: inherit
 
+.about-line
+    // -webkit-backface-visibility: hidden
+    font-size: 1.5em
+    margin-bottom: 10px !important
+    cursor: pointer
+
+    span::after
+        content: "\0025B6"
+        // animate color instead of opacity because opacity causes bluriness
+        // for some strange reason
+        transition: margin-left 200ms, color 200ms
+        color: $background
+        margin-left: 0
+
+    &:hover
+        color: $accent
+        span::after
+            color: $accent
+            margin-left: .5em
+
 .tag-wrapper
     position: relative
     display: inline-block

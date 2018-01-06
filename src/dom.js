@@ -29,6 +29,7 @@ function modal(title, removeOnClose) {
 
     var titleEl = div(title, "modal-title")
     el.appendChild(titleEl)
+    if(!title) titleEl.classList.toggle("invisible", title)
 
     wrapper.appendChild(el)
 
@@ -52,6 +53,7 @@ function modal(title, removeOnClose) {
         },
         setTitle: function(newTitle) {
             titleEl.textContent = newTitle
+            if(!title) titleEl.classList.toggle("invisible", title)
         },
         addToContainer: function() {
             if(!document.getElementById("main-modal-container")) {

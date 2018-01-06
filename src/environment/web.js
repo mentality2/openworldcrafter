@@ -13,6 +13,8 @@ class WebEnviroment extends require("./") {
         this.iframeTag = "iframe"
         this.styleDir = "/dist/styles/"
 
+        this.buildType = "web"
+
         this._onFinishLoad()
     }
 

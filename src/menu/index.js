@@ -29,7 +29,10 @@ function createMainMenubar(project, callbacks, ref) {
     menu.addMenuItem("view", "Light Theme", () => theme.changeTheme("theme_light"))
 
     menu.addTopMenu("help", "Help")
-    // menu.addMenuLink("help", "About", "https://example.com")
+    menu.addMenuItem("help", "About", () => {
+        console.log("About");
+        callbacks.about()
+    })
     // menu.addMenuLink("help", "Tutorials", "https://example.com")
     menu.addMenuItem("help", "Documentation", () => $owf.showDocs("userdocs/index.md"))
 

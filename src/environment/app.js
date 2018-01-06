@@ -19,7 +19,10 @@ class AppEnvironment extends require("./index") {
         this.iframeTag = "iframe"
         this.styleDir = "res/styles/"
 
+        this.buildType = "app"
+
         this.availableAPIs = [api.AppApiDescription]
+
 
         web.getOnlineApi(api => {
             if(api) this.availableAPIs.push(api)

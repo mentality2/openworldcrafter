@@ -8,6 +8,7 @@ const treeview = require('../treeview')
 const tabs = require('../tabs')
 const dom = require('../dom.js')
 const projectsettings = require('../modals/projectsettings.js')
+const about = require('../modals/about.js')
 const utils = require('../utils')
 
 class Editable {
@@ -59,6 +60,8 @@ function createPage(el, proj) {
     theme.setTheme()
 
     var projectInfo = projectsettings.createProjectSettingsModal(proj, ref)
+    var aboutModal = about.createAboutModal()
+    aboutModal.addToContainer()
 
     function goToPage(object, ignoreHistory) {
         tree.obj.setSelected(object, ignoreHistory)
@@ -80,7 +83,8 @@ function createPage(el, proj) {
         projectInfo: projectInfo.show,
         print: () => window.print(),
         // share: (sharingModal ? sharingModal.show : undefined)
-        toggleTreeView: () => tree.obj.isRevealed() ? tree.obj.conceal() : tree.obj.reveal()
+        toggleTreeView: () => tree.obj.isRevealed() ? tree.obj.conceal() : tree.obj.reveal(),
+        about: () => aboutModal.show()
     }, ref)
 
     document.body.appendChild(projectInfo.wrapper)
