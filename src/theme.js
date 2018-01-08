@@ -23,7 +23,7 @@ function setTheme(name) {
         changeTheme(name)
     } else {
         // use default theme in localstorage, or default
-        changeTheme(localStorage["openworldfactory.preferences.theme"] || "theme_dark")
+        changeTheme(localStorage["openworldfactory.preferences.theme"] || "theme_light")
     }
 }
 
