@@ -46,6 +46,12 @@ function createMarkdownToolbar(editorArea, editCb, object) {
         editCb()
     }
 
+    var done = dom.button(undefined, "Done", () => {
+        // must be done in this order because the edit() focuses the text area
+        edit()
+        editorArea.blur()
+    }, ["mobile-visible", "margin-right"])
+
     var bold = dom.button("bold", undefined, () => {
         wrapSelection(editorArea, "**", "**")
         edit()
@@ -184,6 +190,7 @@ function createMarkdownToolbar(editorArea, editCb, object) {
         $owf.showDocs("userdocs/markdown_formatting.md")
     }, "margin-left-auto")
 
+    el.appendChild(done)
     el.appendChild(bold)
     el.appendChild(italic)
     el.appendChild(strikethrough)
