@@ -82,14 +82,14 @@
       "timestamp": 1515188432393
     },
     "sass": {
-      "buildnumber": 49,
-      "datestring": "2018-01-06 16:05:55",
-      "timestamp": 1515254755717
+      "buildnumber": 59,
+      "datestring": "2018-01-09 20:19:24",
+      "timestamp": 1515529164595
     },
     "app": {
-      "buildnumber": 44,
-      "datestring": "2018-01-06 16:06:53",
-      "timestamp": 1515254813740
+      "buildnumber": 55,
+      "datestring": "2018-01-09 20:21:14",
+      "timestamp": 1515529274900
     }
   }
 }

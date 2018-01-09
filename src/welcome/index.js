@@ -179,7 +179,7 @@ function createPage(el) {
         // no need to check for updates, but we'll put an extra devmode notice
         updateMessage.appendChild(dom.div("Development Mode Notice", "bold"))
         updateMessage.appendChild(dom.div("You are running openworldfactory in development mode."))
-        updateMessage.appendChild(dom.button(undefined, "Use Mobile Env", () => $owf.mobile = true))
+        updateMessage.appendChild(dom.button(undefined, "Use Mobile Env", () => ($owf.mobile = true, document.body.classList.add("mobile"))))
         updateMessage.classList.remove("invisible")
 
         if($owf.remakeTestProject) {
