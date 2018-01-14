@@ -39,7 +39,7 @@ function insertRawText(textarea, text) {
 }
 
 function createMarkdownToolbar(editorArea, editCb, object) {
-    var el = dom.div(undefined, ["margin-bottom", "markdown-toolbar"])
+    var el = dom.div(undefined, ["margin-bottom-3px", "markdown-toolbar"])
 
     function edit() {
         editorArea.focus()
