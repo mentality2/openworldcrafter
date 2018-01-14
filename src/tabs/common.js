@@ -57,8 +57,9 @@ function notes(object, el, ref) {
     el.appendChild(notes)
 
     if(object.isEditable()) {
-        var editorArea = dom.div(undefined, ["edit-visible", "flexbox-column", "flex-grow"])
+        var editorArea = dom.div(undefined, ["edit-visible", "flexbox-column", "flex-grow", "markdown-editor"])
         var notesText = dom.element("textarea", object.notes || "", ["flex-grow", "min-height-50-vh"])
+        notesText.placeholder = "Add notes here"
 
         function onEdit() {
             if(notesText.value) {
@@ -70,6 +71,24 @@ function notes(object, el, ref) {
             }
             object.markDirty()
         }
+
+        notesText.addEventListener("focus", () => {
+            editorArea.classList.add("markdown-editor-focused")
+        })
+        notesText.addEventListener("blur", () => {
+            // Use a timeout because the textbox is blurred before toolbar
+            // buttons are clicked. This gives the button time to be clicked
+            // before the layout is changed.
+            setTimeout(() => {
+                if(editorArea.contains(document.activeElement) || editorArea === document.activeElement) {
+                    // don't remove the class because something inside the editor
+                    // area is still focused, just not the textarea. probably a
+                    // toolbar button
+                } else {
+                    editorArea.classList.remove("markdown-editor-focused")
+                }
+            }, 100)
+        })
 
         notesText.addEventListener("input", onEdit)
         var mdToolbar = markdowntoolbar(notesText, onEdit, object)
