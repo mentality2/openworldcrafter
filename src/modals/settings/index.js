@@ -3,6 +3,8 @@
 const dom = require('../../dom.js')
 const theme = require('../../theme.js')
 
+var tipsLabelId = 0
+
 function createSettingsModal() {
     var el = dom.modal("Settings", true) // remove on close
 
@@ -24,7 +26,24 @@ function createSettingsModal() {
     themeSection.appendChild(dom.h3("Theme"))
     themeSection.appendChild(selectTheme)
 
+    var tipsSection = dom.div()
+    var tipsCheckbox = dom.element("input")
+    tipsCheckbox.type = "checkbox"
+    tipsCheckbox.id = `tipslabel-${ tipsLabelId ++ }`
+    var tipsLabel = dom.element("label", "Show tips on the welcome screen")
+    tipsLabel.htmlFor = tipsCheckbox.id
+    tipsCheckbox.checked = localStorage["openworldfactory.preferences.hidetips"] !== "true"
+
+    tipsCheckbox.addEventListener("change", () => {
+        localStorage["openworldfactory.preferences.hidetips"] = tipsCheckbox.checked ? "false" : "true"
+    })
+
+    tipsSection.appendChild(dom.h3("Tips"))
+    tipsSection.appendChild(tipsCheckbox)
+    tipsSection.appendChild(tipsLabel)
+
     el.appendChild(themeSection)
+    el.appendChild(tipsSection)
 
     return el
 }

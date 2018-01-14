@@ -13,7 +13,7 @@ const tips = require('./tips.json')
 var aboutModal = require('../modals/about.js').createAboutModal()
 
 function createTip(updateMessage) {
-    if(Math.random() < .75) {
+    if(localStorage["openworldfactory.preferences.hidetips"] !== "true" && Math.random() < .75) {
         // if there's no updates or dev mode notice, add a tip sometimes
         var tip = tips[Math.floor(Math.random() * tips.length)]
         if(!tip.disabled) {

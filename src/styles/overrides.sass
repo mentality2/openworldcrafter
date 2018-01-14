@@ -88,9 +88,30 @@ textarea, input:not(.nobutton), select, option, button:not(.nobutton)
 .nobutton:focus
     outline: none
 
-label
-    margin-right: 1em
+input[type=checkbox]
+    display: none
 
+    &+label::before
+        content: ""
+        vertical-align: middle
+        margin-right: .5em
+        display: inline-block
+        width: 1em
+        height: 1em
+        border-radius: 3px
+        padding: 3px
+        background-color: $background
+        box-shadow: inset 0 0 3px 0 $outline
+
+    &:checked + label::before
+        // background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTIuMzI5bW0iIGhlaWdodD0iNTMuMzFtbSIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgNTIuMzI5Mzc2IDUzLjMxMDA0MyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMjcuMzk2IC0xMTguNjcpIj48cGF0aCBkPSJtNzMuNDI1IDExOC44NGMtMS4yMzQ1LjMzMDc5LTIuMzQyNiAxLjEzNDMtMy4wMzUxIDIuMzMzN2wtMjIuNSAzOC45NzEtMTIuOTktNy41Yy0yLjM5ODktMS4zODUtNS40NDUtLjU2ODgxLTYuODMgMS44MzAxcy0uNTY4NjggNS40NDU0IDEuODMwMiA2LjgzMDRsMTcuMzIxIDEwYzEuMzQ5NC43NzkwNiAyLjkwMzUuODYxNDkgNC4yNTE3LjM1NzY4IDEuMDQ4Ni0uMzkxODYgMS45NzIzLTEuMTM4MiAyLjU3ODMtMi4xODc4bDI1LTQzLjMwMWMxLjM4NS0yLjM5ODkuNTY4NjgtNS40NDU1LTEuODMwMi02LjgzMDQtMS4xOTk0LS42OTI1MS0yLjU2MDgtLjgzNDMtMy43OTUzLS41MDM1eiIgc3R5bGU9InBhaW50LW9yZGVyOm5vcm1hbCIvPjwvZz48L3N2Zz4=')
+        // background-repeat: no-repeat
+        // background-size: contain
+        // background-color: $foreground
+        // background-blend-mode: color
+        content: "\002713"
+        // tbh this is just a magic number to center the checkmark vertically
+        line-height: .65em
 
 input[type=number]
     width: 3em
