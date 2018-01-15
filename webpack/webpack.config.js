@@ -23,6 +23,10 @@ module.exports = [
                     to: "styles"
                 },
                 {
+                    from: "./resources/emoji",
+                    to: "emoji"
+                },
+                {
                     from: "./src/styles/cantarell",
                     to: "cantarell"
                 },
