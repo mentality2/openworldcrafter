@@ -142,6 +142,10 @@ class DesktopEnvironment extends require("./index") {
         proj.$store = new disk("test.owf", proj, () => {
             proj.save()
             this.viewProject(proj)
+
+            // this is bad code. we really shouldn't be accessing _projectList
+            // directly but ¯\_(ツ)_/¯
+            disk.DiskApiDescription._projectList.addProjectEntry(name, "test.owf", desc, () => {})
         })
     }
 
