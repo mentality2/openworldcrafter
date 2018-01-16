@@ -67,9 +67,9 @@
   "optionalDependencies": {},
   "buildinfo": {
     "docs": {
-      "buildnumber": 9,
-      "datestring": "2018-01-16 00:10:35",
-      "timestamp": 1516061435425
+      "buildnumber": 10,
+      "datestring": "2018-01-16 17:04:42",
+      "timestamp": 1516122282085
     },
     "icons": {
       "buildnumber": 10,
@@ -87,9 +87,9 @@
       "timestamp": 1516068586717
     },
     "app": {
-      "buildnumber": 86,
-      "datestring": "2018-01-16 01:31:26",
-      "timestamp": 1516066286488
+      "buildnumber": 95,
+      "datestring": "2018-01-16 18:53:03",
+      "timestamp": 1516128783101
     }
   }
 }

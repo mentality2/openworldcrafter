@@ -68,7 +68,7 @@ function createProjectList(ul) {
     utils.removeAllChildren(ul)
     $owf.aggregateProjectLists(list => {
         if(list.length === 0) {
-            recentList.appendChild(dom.span("No recent files"))
+            ul.appendChild(dom.span("No recent files"))
         }
 
         for(let file of list) {
