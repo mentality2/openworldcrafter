@@ -12,7 +12,6 @@ function createColorDropdown(ref) {
         var patch = dom.span(undefined, ["colorpatch", color, "cursor-pointer"])
 
         patch.addEventListener("click", ev => {
-            console.log("click", ev);
             ref.setColor(color)
             el.classList.add("invisible")
         })
@@ -51,6 +50,15 @@ function createCharacterChartTab(object, ref) {
         }
     }
     var properties = Object.keys(keyFreq).sort((a, b) => keyFreq[b] - keyFreq[a])
+
+    if(properties.length === 0) {
+        // luckily, this won't change while the page is loaded
+
+        var placeholderHelp = dom.placeholderHelp("This page shows all your Character Sheets in one table. To start, go to a character's Character Sheet and add a property.", "userdocs/characterchart.md")
+        el.appendChild(placeholderHelp)
+
+        return el
+    }
 
     // now that we have a list of properties, create the header row
     var headers = dom.tr_headers(properties, "spreadsheet-row", "spreadsheet-cell")
@@ -161,7 +169,7 @@ function createCharacterChartTab(object, ref) {
 function createRow(key, values, object) {
     var row = dom.element("tr")
 
-    var nameEl = dom.element("td")
+    var nameEl = dom.element("td", undefined, "padding-right")
     nameEl.appendChild(dom.span(key))
 
     var valueEl = dom.element("td")
@@ -296,6 +304,9 @@ function createNewPropertyModal(object, cb) {
 function createCharacterSheetTab(object, ref) {
     var el = dom.div()
 
+    var placeholderHelp = dom.placeholderHelp(`{$Click} {$edit} to add properties to ${ object.name }'s character sheet.`, "userdocs/characterchart.md")
+    el.appendChild(placeholderHelp)
+
     var characterChartLink = dom.element("a", "View Character Chart", ["bold", "cursor-pointer", "margin-right"])
     characterChartLink.addEventListener("click", event => {
         ref.goToPage(object.$project.$virtualObjects.characterChart)
@@ -309,6 +320,7 @@ function createCharacterSheetTab(object, ref) {
         var row = createRow(property, object.properties, object)
         rows[property] = row
         table.appendChild(row)
+        placeholderHelp.classList.add("invisible")
     }
 
     el.appendChild(table)
@@ -323,6 +335,7 @@ function createCharacterSheetTab(object, ref) {
         } else {
             // otherwise just add it to the end
             table.appendChild(row)
+            placeholderHelp.classList.add("invisible")
         }
 
         rows[key] = row

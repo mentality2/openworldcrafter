@@ -206,7 +206,51 @@ function svg(code, classes) {
     return el
 }
 
+function placeholderHelp(text, linkDest, linkText, classes) {
+    // make it edit invisible because usually the placeholder text just tells
+    // you to enter edit mode
+    classes = ["placeholder-help", "edit-invisible"].concat(classes)
+
+    // prepare the text. there are a few helpful variables that can be used
+    if(text.indexOf("$") > 0) {
+        var parts = text.split(/[\}\{]/)
+        var el = div(undefined, classes)
+
+        for(var part of parts) {
+            switch(part) {
+                case "$Click":
+                    el.appendChild(span($owf.mobile ? "Tap" : "Click"))
+                    break
+                case "$click":
+                    el.appendChild(span($owf.mobile ? "tap" : "click"))
+                    break
+                case "$edit":
+                    el.appendChild(button("edit", "Edit", () => {}, ["edit-button", "float-none", "cursor-normal"]))
+                    break
+                case "$plus":
+                    el.appendChild(button("add", undefined, () => {}, ["cursor-normal"]))
+                    break
+                default:
+                    el.appendChild(span(part))
+                    break
+            }
+        }
+    } else {
+        var el = div(text, classes)
+    }
+
+    if(linkDest) {
+        var link = element("a", " " + (linkText || "Learn more."))
+        link.addEventListener("click", () => {
+            $owf.showDocs(linkDest)
+        })
+        el.appendChild(link)
+    }
+    return el
+}
+
 module.exports = {
     input, button, element, span, div, h1, h2, h3, h4, h5, h6, table, hr, br, p,
-    tr, tr_headers, propertyTable, modal, inputText, icon, svg, applyClasses
+    tr, tr_headers, propertyTable, modal, inputText, icon, svg, applyClasses,
+    placeholderHelp
 }

@@ -25,19 +25,20 @@ function createTagTab(object, ref) {
 function createTagMainTab(object, ref) {
     var el = dom.div()
 
-    el.appendChild(dom.div("Tags make it easy to organize and group items in your project."))
-
-    var contents = dom.div(undefined, "edit-invisible")
-    contents.appendChild(dom.h1("All Tags"))
-
     var tags = object.$project.getAllTags()
-    for(var id in tags) {
-        contents.appendChild(common.createObjectBlurb(tags[id], ref))
+    if(tags.length) {
+        var contents = dom.div(undefined, "edit-invisible")
+        contents.appendChild(dom.h1("All Tags"))
+
+        for(var id in tags) {
+            contents.appendChild(common.createObjectBlurb(tags[id], ref))
+        }
+
+        el.appendChild(contents)
+    } else {
+        el.appendChild(dom.placeholderHelp("Tags make it easy to organize and group items in your project. Add a tag to an object and it will show up here.", "userdocs/organization/tags.md"))
     }
 
-    if(!tags.length) contents.appendChild(dom.div("Add a tag to an object and it will show up here."))
-
-    el.appendChild(contents)
 
     return el
 }

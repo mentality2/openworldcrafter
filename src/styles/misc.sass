@@ -1,6 +1,23 @@
 *, *:before, *:after
     box-sizing: inherit
 
+.placeholder-help
+    opacity: .5
+
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    text-align: center
+
+    width: 75%
+
+    -moz-user-select: none
+    -webkit-user-select: none
+    -ms-user-select: none
+    user-select: none
+    cursor: default
+
 .about-line
     // -webkit-backface-visibility: hidden
     font-size: 1.5em
@@ -119,14 +136,16 @@
         border-color: $error
         background-color: $error
     &.button-disabled
-        box-shadow: none
-        border: 1px dashed $outline
+        opacity: .5
         cursor: default
+        &:focus
+            border: none
 
     &.button-disabled.button-dangerous
         box-shadow: 0 0 3px 0 $error
         border: 1px solid $error
         background-color: unset
+        opacity: unset
 
 .dropzone
     width: 100%
@@ -229,11 +248,12 @@
 
 .snippet
     position: relative
-    margin-bottom: 1em
+    // margin-bottom: 1em
 
     .snippetdeletetools
         position: absolute
         right: 0
+        top: 6px
 
         .copytoclipboard
             margin-right: .5em

@@ -33,6 +33,9 @@ function createTimelineTab(object, ref) {
 
     common.nameEditor(object, el, ref)
 
+    var placeholderHelp = dom.placeholderHelp("{$Click} {$plus} in the project overview to add an event to this timeline.")
+    el.appendChild(placeholderHelp)
+
     var editToolbar = dom.div(undefined, "edit-visible")
     var newEvent = dom.button("add", "New Event", () => {
         ref.showNewObjectModal()
@@ -53,6 +56,7 @@ function createTimelineTab(object, ref) {
         var blurbSuffix = object.subobjects[id].metadata.time ? utils.formatTime(object.subobjects[id].metadata.time, object.metadata.months) : undefined
         var blurb = common.createObjectBlurb(object.subobjects[id], ref, blurbSuffix)
         el.appendChild(blurb)
+        placeholderHelp.classList.add("invisible")
     }
 
     return el

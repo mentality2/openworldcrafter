@@ -110,6 +110,9 @@ function createAttachmentTab(object) {
     var attachmentViewer = new attachmentviewer(object.$project)
     el.appendChild(attachmentViewer.el.wrapper)
 
+    var placeholderHelp = dom.placeholderHelp(`{$Click} {$edit}, then "Upload" to add attachments.`)
+    el.appendChild(placeholderHelp)
+
     if(object.isEditable()) {
         // edit controls
         var editControls = dom.div("", ["edit-visible", "margin-top-3px"])
@@ -216,6 +219,8 @@ function createAttachmentTab(object) {
         line.appendChild(detailTD)
 
         content.appendChild(line)
+
+        placeholderHelp.classList.add("invisible")
     }
 
     var content = dom.span(undefined, "attachments")

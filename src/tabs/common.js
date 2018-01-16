@@ -57,6 +57,13 @@ function notes(object, el, ref) {
     el.appendChild(notes)
 
     if(object.isEditable()) {
+        var placeholderHelp = dom.placeholderHelp(`{$Click} {$edit} to edit your notes on ${ object.name }`)
+        el.appendChild(placeholderHelp)
+        function placeholderHelpCheck() {
+            placeholderHelp.classList.toggle("invisible", object.notes || Object.keys(object.subobjects).length)
+        }
+        placeholderHelpCheck()
+
         var editorArea = dom.div(undefined, ["edit-visible", "flexbox-column", "flex-grow", "markdown-editor"])
         var notesText = dom.element("textarea", object.notes || "", ["flex-grow", "min-height-50-vh"])
         notesText.placeholder = "Add notes here"
@@ -69,7 +76,10 @@ function notes(object, el, ref) {
                 notes.innerText = ""
                 delete object.notes
             }
+
             object.markDirty()
+
+            placeholderHelpCheck()
         }
 
         notesText.addEventListener("focus", () => {

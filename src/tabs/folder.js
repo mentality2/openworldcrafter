@@ -18,6 +18,7 @@ function createFolderTab(object, ref) {
 
     if(Object.keys(object.subobjects).length) el.appendChild(contents)
 
+
     return el
 }
 

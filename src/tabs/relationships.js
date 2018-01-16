@@ -114,6 +114,9 @@ function findOtherObject(rel, id) {
 function createRelationshipsTab(object, ref) {
     var el = dom.div()
 
+    var placeholderHelp = dom.placeholderHelp(`{$Click} {$edit} to edit ${ object.name }'s relationships.`, "userdocs/relationships.md")
+    el.appendChild(placeholderHelp)
+
     if(object.isEditable()) {
         var editDiv = dom.div(undefined, "edit-visible")
         editDiv.appendChild(dom.button("add", "Add Relationship", () => {
@@ -129,10 +132,13 @@ function createRelationshipsTab(object, ref) {
 
     function remakeBlurbs() {
         utils.removeAllChildren(relationshipDiv)
+        placeholderHelp.classList.remove("invisible")
 
         var previous = {}
 
         for(let relID in object.relationships) {
+            placeholderHelp.classList.add("invisible")
+
             var rel = object.relationships[relID]
             var partner = findOtherObject(rel, object.id)
             var otherObject = object.$project.getObjectById(partner.id)

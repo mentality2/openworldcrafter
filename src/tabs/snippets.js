@@ -7,9 +7,10 @@ const markdown = require('../markdown')
 function createSnippetsTab(object, ref, trash) {
     var el = dom.div()
 
-    el.appendChild(dom.div("Collect snippets of writing and use them later."))
-
     if(!trash) {
+        var placeholderHelp = dom.placeholderHelp("{$Click} {$edit} to start adding snippets.", "userdocs/snippets.md")
+        el.appendChild(placeholderHelp)
+
         var newSnippetDiv = dom.div(undefined, "edit-visible")
         var makeFirefoxWorkDiv = dom.div()
 
@@ -42,6 +43,10 @@ function createSnippetsTab(object, ref, trash) {
         // there's not an extra div here (required for firefox)
         makeFirefoxWorkDiv.appendChild(newSnippetDiv)
         el.appendChild(makeFirefoxWorkDiv)
+    } else {
+        // this is the trash tab
+        var placeholderHelp = dom.placeholderHelp("Snippets that you throw away will show up here.", "userdocs/snippets.md")
+        el.appendChild(placeholderHelp)
     }
 
     var contents = dom.div()
@@ -72,6 +77,8 @@ function createSnippetsTab(object, ref, trash) {
 
             snippetBox.remove()
             object.$project.save(true)
+
+            placeholderHelp.classList.toggle("invisible", object.$project.snippets.length > 0)
         }, "edit-visible")
         deleteTools.appendChild(deleteButton)
         snippetBox.appendChild(deleteTools)
@@ -106,6 +113,7 @@ function createSnippetsTab(object, ref, trash) {
         })
 
         contents.insertBefore(snippetBox, contents.firstChild)
+        placeholderHelp.classList.toggle("invisible", object.$project.snippets.length > 0)
     }
 
     var snippets = object.$project.snippets

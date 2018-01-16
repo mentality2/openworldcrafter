@@ -23,11 +23,24 @@
     // make scrolling smooth. Interestingly, both Android and iOS use webkit.
     -webkit-overflow-scrolling: touch
 
+    .placeholder-help
+        width: 100%
+        padding: 3px
+
     &.keyboard-is-open
         .tab-wrapper
             padding-bottom: 0
             .tabrow
                 display: none
+
+    // make the bottom bar more compact
+    .edit-button
+        margin-left: auto
+        // remove the margin
+        svg.margin-right-3px
+            margin-right: 0
+        .button-text
+            display: none
 
     .markdown-editor
         .markdown-toolbar
@@ -88,15 +101,6 @@
             width: 100%
 
             display: flex
-
-            // make the bottom bar more compact
-            .edit-button
-                margin-left: auto
-                // remove the margin
-                svg.margin-right-3px
-                    margin-right: 0
-                .button-text
-                    display: none
 
             .tabrow-button
                 border: 0
