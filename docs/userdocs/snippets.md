@@ -6,6 +6,8 @@ page is at the bottom of the project overview.
 To add a new snippet, go to the page and click Edit. A text box will appear at
 the top to enter your text. Make sure you click "Add Snippet" when you're done.
 
+![Date and time editor](../screenshots/theme_light/add_snippet.png)
+
 All your snippets will appear below, newest on top. Clicking any snippet will
 copy it to your clipboard so you can paste it elsewhere.
 

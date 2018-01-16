@@ -11,4 +11,5 @@
 
 ## Organization
 - [Tags](organization/tags.md)
+- [Snippets](snippets.md)
 - [Character Sheets](characterchart.md)
