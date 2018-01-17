@@ -18,6 +18,12 @@ class MobileMenu extends require("./menubar.js") {
         })
         this._dom.appendChild(searchbar)
 
+        var overlay = dom.div(undefined, ["searchbar-overlay", "invisible"])
+        overlay.addEventListener("click", () => {
+            toggle()
+        })
+        this._dom.appendChild(overlay)
+
         var searchInput = searchbar.querySelector(".searchbar-box")
         function toggle(val) {
             // only focus the searchbar if we're showing the searchbar and not
@@ -30,6 +36,7 @@ class MobileMenu extends require("./menubar.js") {
                 searchbar.blur()
             }
             searchButton.classList.toggle("invisible")
+            overlay.classList.toggle("invisible")
         }
 
         var leaveSearch = dom.button("exit", undefined, () => {

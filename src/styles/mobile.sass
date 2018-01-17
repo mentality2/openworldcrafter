@@ -198,6 +198,16 @@
             div *
                 padding-left: 9px
 
+        .searchbar-overlay
+            background-color: $background
+            opacity: .5
+            z-index: 1000
+
+            position: fixed
+            top: 0
+            left: 0
+            width: 100%
+            height: 100%
         .searchbar-button
             float: right
         .searchbar-top
@@ -207,8 +217,8 @@
             right: 210%
             transition: left 150ms, right 150ms
 
-            // put it above the tree view
-            z-index: 2
+            // put it above the tree view and overlay
+            z-index: 1010
 
             &.searchbar-shown
                 left: 0

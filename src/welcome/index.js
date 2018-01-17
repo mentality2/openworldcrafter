@@ -64,7 +64,7 @@ function createMoreMenu() {
     return more
 }
 
-function createProjectList(ul) {
+function createProjectList(ul, searchTerm) {
     utils.removeAllChildren(ul)
     $owf.aggregateProjectLists(list => {
         if(list.length === 0) {
@@ -73,6 +73,12 @@ function createProjectList(ul) {
 
         for(let file of list) {
             var item = dom.element("li")
+
+            if(searchTerm) {
+                if(file.name.indexOf(searchTerm) < 0 && (!file.desc || file.desc.indexOf(searchTerm) < 0)) {
+                    continue;
+                }
+            }
 
             var name = dom.element("a", file.name, "project-title")
             name.addEventListener("click", event => {
@@ -143,7 +149,15 @@ function createPage(el) {
 
     // New/Open Toolbar
     // margin-top-3px to avoid clipping under the welcome bar
-    var toolbar = dom.div(undefined, "margin-top-3px")
+    var toolbar = dom.div(undefined, ["margin-top-3px", "flexbox"])
+
+    var search = dom.span(undefined, ["flexitem-wide", "padding-right"])
+    var searchInput = dom.inputText(undefined, "Search Projects", "fullwidth")
+    searchInput.addEventListener("input", () => {
+        createProjectList(recentList, searchInput.value)
+    })
+    search.appendChild(searchInput)
+    toolbar.appendChild(search)
 
     if($owf.showOpenDialog) {
         var open = dom.button("", "Open\u2026", () => {
@@ -161,7 +175,7 @@ function createPage(el) {
     main.appendChild(newProjectModal.wrapper)
 
     // Recent files
-    var recentList = dom.element("ul", undefined, "margin-right")
+    var recentList = dom.element("ul")
     createProjectList(recentList)
 
     var updateMessage = dom.div(undefined, ["highlighted-message", "invisible", "margin-bottom"])
