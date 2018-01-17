@@ -9,7 +9,7 @@
 const fs = require('fs')
 const path = require('path')
 
-var dir = path.join(__dirname, "..", "resources", "icons", "plain")
+var dir = path.join(__dirname, "..", "src", "icons", "plain")
 var list = fs.readdirSync(dir)
 
 var object = {}
@@ -18,4 +18,4 @@ for(var file of list) {
     object[file.match(/^\w+(?=\.svg$)/)[0]] = fs.readFileSync(path.join(dir, file), "utf8").trim()
 }
 
-fs.writeFileSync(path.join(dir, "..", "index.json"), JSON.stringify(object))
+fs.writeFileSync(path.join(__dirname, "..", "resources", "icons.json"), JSON.stringify(object))

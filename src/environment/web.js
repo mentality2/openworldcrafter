@@ -11,7 +11,7 @@ class WebEnviroment extends require("./") {
             Used to switch between webview and iframe
         */
         this.iframeTag = "iframe"
-        this.styleDir = "/dist/styles/"
+        this.styleDir = "/dist/resources/styles/"
 
         this.buildType = "web"
 
@@ -47,7 +47,14 @@ class WebEnviroment extends require("./") {
         Open a new window with a documentation page
     */
     showDocs(page) {
-        window.open("/dist/docs/" + page.replace(/\.md$/, ".htm"), "_blank")
+        window.open("/dist/resources/docs/index.htm#" + page, "_blank")
+    }
+
+    /*
+        Display the license file
+    */
+    showLicense() {
+        window.open("/dist/resources/docs/license.htm")
     }
 
     /*

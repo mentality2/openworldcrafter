@@ -51,7 +51,7 @@ function createMoreMenu() {
 
     var documentation = dom.div("Documentation")
     documentation.addEventListener("click", () => {
-        $owf.showDocs("userdocs/index.md")
+        $owf.showDocs("index")
     })
 
     moreMenu.appendChild(about)

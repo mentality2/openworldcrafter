@@ -22,7 +22,7 @@ function createAboutModal() {
     docs.appendChild(dom.icon("help", ["margin-right-20px"]))
     docs.appendChild(dom.span("Documentation"))
     docs.addEventListener("click", () => {
-        $owf.showDocs("userdocs/index.md")
+        $owf.showDocs("index")
     })
 
     var website = dom.div(undefined, "about-line")
@@ -44,7 +44,7 @@ function createAboutModal() {
     license.appendChild(dom.icon("legal", "margin-right-20px"))
     license.appendChild(dom.span("License & Legal"))
     license.addEventListener("click", () => {
-        $owf.showDocs("license.md")
+        $owf.showLicense()
     })
 
     el.appendChild(docs)

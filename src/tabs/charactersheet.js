@@ -54,7 +54,7 @@ function createCharacterChartTab(object, ref) {
     if(properties.length === 0) {
         // luckily, this won't change while the page is loaded
 
-        var placeholderHelp = dom.placeholderHelp("This page shows all your Character Sheets in one table. To start, go to a character's Character Sheet and add a property.", "userdocs/characterchart.md")
+        var placeholderHelp = dom.placeholderHelp("This page shows all your Character Sheets in one table. To start, go to a character's Character Sheet and add a property.", "character_chart")
         el.appendChild(placeholderHelp)
 
         return el
@@ -304,7 +304,7 @@ function createNewPropertyModal(object, cb) {
 function createCharacterSheetTab(object, ref) {
     var el = dom.div()
 
-    var placeholderHelp = dom.placeholderHelp(`{$Click} {$edit} to add properties to ${ object.name }'s character sheet.`, "userdocs/characterchart.md")
+    var placeholderHelp = dom.placeholderHelp(`{$Click} {$edit} to add properties to ${ object.name }'s character sheet.`, "character_chart")
     el.appendChild(placeholderHelp)
 
     var characterChartLink = dom.element("a", "View Character Chart", ["bold", "cursor-pointer", "margin-right"])

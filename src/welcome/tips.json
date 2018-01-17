@@ -4,8 +4,7 @@
     },
     {
         "text": "Do you love spreadsheets as much as I do? Probably not, but you can still use Character Sheets! They're a great way to organize data about your characters.",
-        "link": ["Learn more!", "docs", "userdocs/character_sheets.md"],
-        "disabled": true
+        "link": ["Learn more!", "docs", "character_chart"]
     },
     {
         "text": "Thought of an awesome one-liner, but afraid you'll forget it? Keep it in your Snippets page."
@@ -16,6 +15,6 @@
     },
     {
         "text": "Use the Relationships tab to keep track of who's related to whom. It's very useful for avoiding your protagonist's in-laws.",
-        "link": ["Learn more!", "docs", "userdocs/relationships.md"]
+        "link": ["Learn more!", "docs", "relationships"]
     }
 ]

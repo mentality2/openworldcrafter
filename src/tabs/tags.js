@@ -36,7 +36,7 @@ function createTagMainTab(object, ref) {
 
         el.appendChild(contents)
     } else {
-        el.appendChild(dom.placeholderHelp("Tags make it easy to organize and group items in your project. Add a tag to an object and it will show up here.", "userdocs/organization/tags.md"))
+        el.appendChild(dom.placeholderHelp("Tags make it easy to organize and group items in your project. Add a tag to an object and it will show up here.", "tags"))
     }
 
 

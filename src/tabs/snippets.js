@@ -8,7 +8,7 @@ function createSnippetsTab(object, ref, trash) {
     var el = dom.div()
 
     if(!trash) {
-        var placeholderHelp = dom.placeholderHelp("{$Click} {$edit} to start adding snippets.", "userdocs/snippets.md")
+        var placeholderHelp = dom.placeholderHelp("{$Click} {$edit} to start adding snippets.", "snippets")
         el.appendChild(placeholderHelp)
 
         var newSnippetDiv = dom.div(undefined, "edit-visible")
@@ -45,7 +45,7 @@ function createSnippetsTab(object, ref, trash) {
         el.appendChild(makeFirefoxWorkDiv)
     } else {
         // this is the trash tab
-        var placeholderHelp = dom.placeholderHelp("Snippets that you throw away will show up here.", "userdocs/snippets.md")
+        var placeholderHelp = dom.placeholderHelp("Snippets that you throw away will show up here.", "snippets")
         el.appendChild(placeholderHelp)
     }
 

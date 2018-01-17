@@ -10,7 +10,7 @@ module.exports = [
         entry: "./src/environment/app.js",
         output: {
             path: path.join(__dirname, "..", "dist", "app"),
-            filename: "js/editor.js"
+            filename: "src/editor.js"
         },
         module: {
             rules: require("./rules.js")
@@ -19,24 +19,12 @@ module.exports = [
             new webpack.EnvironmentPlugin(['NODE_ENV', 'OWF_ORIGIN']),
             new CopyWebpackPlugin([
                 {
-                    from: "./src/styles/css",
-                    to: "styles"
-                },
-                {
-                    from: "./src/styles/cantarell",
-                    to: "cantarell"
-                },
-                {
-                    from: "./src/styles/noto_emoji",
-                    to: "noto_emoji"
+                    from: "./resources",
+                    to: "resources"
                 },
                 {
                     from: "./build/icons",
                     to: "icons"
-                },
-                {
-                    from: "./dist/docs",
-                    to: "docs"
                 }
             ])
         ]

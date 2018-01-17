@@ -99,6 +99,13 @@ class Environment {
     }
 
     /*
+        Display the license file
+    */
+    showLicense() {
+        this.showDocs("license")
+    }
+
+    /*
         Open a new window with the welcome page
     */
     showWelcome() {

@@ -17,7 +17,7 @@ class DesktopEnvironment extends require("./index") {
             Used to switch between webview and iframe
         */
         this.iframeTag = "webview"
-        this.styleDir = path.join(__dirname, "../styles/css/")
+        this.styleDir = path.join(__dirname, "../../resources/styles/")
         this.showLogoInCorner = true
 
         this.availableAPIs = [disk.DiskApiDescription]
@@ -54,7 +54,14 @@ class DesktopEnvironment extends require("./index") {
         Open a new window with a documentation page
     */
     showDocs(page) {
-        electron.ipcRenderer.send("openWindow", path.join(__dirname, "..", "docviewer", "docviewer.htm") + "?docPage=" + encodeURIComponent(page))
+        electron.ipcRenderer.send("openWindow", path.join(__dirname, "..", "..", "resources", "docs", "index.htm") + "#" + page)
+    }
+
+    /*
+        Display the license file
+    */
+    showLicense() {
+        electron.ipcRenderer.send("openWindow", path.join(__dirname, "..", "..", "resources", "docs", "license.htm"))
     }
 
     /*

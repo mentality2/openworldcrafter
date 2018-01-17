@@ -1,4 +1,4 @@
-# ![open world factory](../logos/header.svg) Relationships
+# Relationships
 
 The Relationships tab keeps track of each character's relationships with other
 characters.
@@ -6,7 +6,7 @@ characters.
 To add a relationship to a character, go to their Relationships tab, enter Edit
 Mode, and click "Add Relationship." The following window will appear.
 
-![Add Relationship window](../screenshots/theme_light/add_relationship.png)
+![Add Relationship window](add_relationship.png)
 
 You can choose a relationship from the dropdown menu, or choose "other" to enter
 your own. Then, use the search box to search the project for the other

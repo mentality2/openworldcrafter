@@ -18,7 +18,7 @@ class AppEnvironment extends require("./index") {
             Used to switch between webview and iframe
         */
         this.iframeTag = "iframe"
-        this.styleDir = "res/styles/"
+        this.styleDir = "res/resources/styles/"
 
         this.buildType = "app"
 
@@ -66,7 +66,14 @@ class AppEnvironment extends require("./index") {
     */
     showDocs(page) {
         // _blank is still required so that the project isn't unloaded
-        cordova.InAppBrowser.open("res/docs/" + page.replace(/\.md$/, ".htm"), "_blank", "zoom=no")
+        cordova.InAppBrowser.open("res/resources/docs/index.htm#" + page, "_blank", "zoom=no")
+    }
+
+    /*
+        Display the license file
+    */
+    showLicense() {
+        cordova.InAppBrowser.open("res/resources/docs/license.htm", "_blank", "zoom=no")
     }
 
     /*

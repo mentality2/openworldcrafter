@@ -187,7 +187,7 @@ function createMarkdownToolbar(editorArea, editCb, object) {
     linkWrapper.appendChild(link)
 
     var help = dom.button("help", undefined, () => {
-        $owf.showDocs("userdocs/markdown_formatting.md")
+        $owf.showDocs("markdown_formatting")
     }, "margin-left-auto")
 
     el.appendChild(done)

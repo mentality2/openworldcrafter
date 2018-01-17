@@ -34,7 +34,7 @@ function createMainMenubar(project, callbacks, ref) {
         callbacks.about()
     })
     // menu.addMenuLink("help", "Tutorials", "https://example.com")
-    menu.addMenuItem("help", "Documentation", () => $owf.showDocs("userdocs/index.md"))
+    menu.addMenuItem("help", "Documentation", () => $owf.showDocs("index"))
 
     if(process.env.NODE_ENV === "development") {
         menu.addTopMenu("dev", "Developer")

@@ -114,7 +114,7 @@ function findOtherObject(rel, id) {
 function createRelationshipsTab(object, ref) {
     var el = dom.div()
 
-    var placeholderHelp = dom.placeholderHelp(`{$Click} {$edit} to edit ${ object.name }'s relationships.`, "userdocs/relationships.md")
+    var placeholderHelp = dom.placeholderHelp(`{$Click} {$edit} to edit ${ object.name }'s relationships.`, "relationships")
     el.appendChild(placeholderHelp)
 
     if(object.isEditable()) {

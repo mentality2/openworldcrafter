@@ -23,7 +23,7 @@ SOFTWARE.
 In addition, this project contains font files under the SIL Open Font License,
 Version 1.1. These files are located in the following directories:
 
-- src/styles/cantarell
-- src/styles/noto_emoji
+- resources/fonts/cantarell
+- resources/fonts/noto_emoji
 
 A copy of that license can be found in either of those directories.

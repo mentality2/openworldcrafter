@@ -1,0 +1,61 @@
+.docs-logo
+    // makes it not centered like most images
+    margin: 0 !important
+    max-width: 50% !important
+
+.docs-body-wrapper
+    display: block
+
+.docs-wrapper
+    display: flex
+    flex-flow: row
+
+    .docs-index
+        min-width: 300px
+        padding-right: 1em
+        position: relative
+
+        .docs-index-inside
+            position: sticky
+            top: 0
+            background-color: $background
+
+        a
+            margin-bottom: 6px
+            display: block
+
+    .docs-index-separator
+        display: none
+
+    .docs
+        min-width: 0
+
+        .docs-section > h1
+            position: sticky
+            // -1px for the mobile app
+            top: -1px
+            background-color: $background
+
+            padding-right: 1em
+            .docs-top-link
+                position: absolute
+                right: 0
+                top: 0
+
+@media screen and (max-width: 700px)
+    .docs-logo
+        max-width: 100% !important
+
+    .docs-wrapper
+        display: block
+
+        .docs-index-separator
+            display: block
+
+    .docs-index
+        margin-bottom: 1em
+
+        .docs-index-section
+            display: inline-block
+            vertical-align: top
+            margin-right: 1em
