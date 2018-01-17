@@ -10,6 +10,12 @@
         <script>
             var theme = localStorage["openworldfactory.preferences.theme"] || "theme_light"
             document.getElementById("stylesheet_link").href=`../styles/${ theme }.css`
+
+            // sometimes the background shows up as white on the android in app
+            // browser. this is a very annoying workaround that forces it to
+            // update
+            document.body.style.backgroundColor = "white"
+            setTimeout(() => document.body.style.removeProperty("background-color"), 10)
         </script>
     </head>
 
