@@ -68,7 +68,7 @@ class DesktopEnvironment extends require("./index") {
         Open a new window with the welcome page
     */
     showWelcome() {
-        electron.ipcRenderer.send("openWindow", path.join(__dirname, "..", "welcome", "welcome.htm"))
+        electron.ipcRenderer.send("openWindow", path.join(__dirname, "..", "index.htm"))
     }
 
     /*
