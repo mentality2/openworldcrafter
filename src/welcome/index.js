@@ -65,6 +65,8 @@ function createMoreMenu() {
 }
 
 function createProjectList(ul, searchTerm) {
+    if(searchTerm) searchTerm = searchTerm.toUpperCase()
+
     utils.removeAllChildren(ul)
     $owf.aggregateProjectLists(list => {
         if(list.length === 0) {
@@ -75,17 +77,22 @@ function createProjectList(ul, searchTerm) {
             var item = dom.element("li")
 
             if(searchTerm) {
-                if(file.name.indexOf(searchTerm) < 0 && (!file.desc || file.desc.indexOf(searchTerm) < 0)) {
+                if(file.name.toUpperCase().indexOf(searchTerm) < 0 && (!file.desc || file.desc.toUpperCase().indexOf(searchTerm) < 0)) {
                     continue;
                 }
             }
 
             var name = dom.element("a", file.name, "project-title")
-            name.addEventListener("click", event => {
+            function onclick() {
                 file.$getApi().openProject(file.location, err => {
                     $owf.handleError("Error Opening Project", err)
                 })
+            }
+            name.addEventListener("click", onclick)
+            name.addEventListener("keyup", ev => {
+                if(ev.keyCode === 13) onclick()
             })
+            name.tabIndex = 0
             item.appendChild(name)
 
             var more = dom.span(undefined, ["menu", "float-right", "menu-extends-left"])

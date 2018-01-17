@@ -11,6 +11,7 @@ class TabArea {
     constructor(domobj, project) {
         this._domobj = domobj
         domobj.classList.add("tab-wrapper")
+        this._project = project
 
         var tabrow = dom.div()
         tabrow.classList.add("tabrow")
@@ -19,12 +20,11 @@ class TabArea {
 
         if(project && project.isEditable()) {
             this._edit = dom.button("edit", "Edit", () => {
-                this._domobj.classList.add("editing")
+                this.editMode()
             }, ["button", "edit-invisible", "edit-button"])
 
             var save = dom.button("save", "Save", () => {
-                project.save()
-                this._domobj.classList.remove("editing")
+                this.viewMode()
             }, ["button", "edit-visible", "edit-button"])
 
             this._tabrow.appendChild(this._edit)
@@ -45,6 +45,22 @@ class TabArea {
         this._tabs = []
 
         this._selectListener = noop
+    }
+
+    editMode() {
+        this._domobj.classList.add("editing")
+        this._mode = "edit"
+    }
+
+    viewMode() {
+        this._project.save()
+        this._domobj.classList.remove("editing")
+        this._mode = "view"
+    }
+
+    toggleMode() {
+        if(this._mode === "edit") this.viewMode()
+        else this.editMode()
     }
 
     _recalcPrintName() {

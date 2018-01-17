@@ -10,6 +10,7 @@ const dom = require('../dom.js')
 const projectsettings = require('../modals/projectsettings.js')
 const about = require('../modals/about.js')
 const utils = require('../utils')
+const shortcuts = require('./shortcuts.js')
 
 class Editable {
     constructor(project, tree) {
@@ -158,6 +159,7 @@ function createPage(el, proj) {
             event.returnValue = res
             if(res) event.preventDefault()
         }
+        shortcuts.clearShortcuts()
     })
 
     var container = dom.div("", ["flexbox", "mainpanel"])
@@ -166,6 +168,11 @@ function createPage(el, proj) {
 
     container.appendChild(tree.el)
     container.appendChild(tabview.el)
+
+    shortcuts.clearShortcuts()
+    shortcuts.createShortcut("s", () => proj.save())
+    shortcuts.createShortcut("f", () => menubar.querySelector(".searchbar-box").focus())
+    shortcuts.createShortcut("e", () => tabview.obj.toggleMode())
 
     el.appendChild(container)
 }

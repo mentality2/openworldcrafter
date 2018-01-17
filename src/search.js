@@ -130,11 +130,17 @@ function createSearchResultBox(result, closeResultBox, cb) {
 
     box.appendChild(dom.div(result.obj.name, "bold"))
 
-    box.tabIndex = 1
+    box.tabIndex = 0
 
     box.addEventListener("click", () => {
         closeResultBox()
         cb(result.obj)
+    })
+    box.addEventListener("keydown", ev => {
+        if(ev.keyCode === 13) {
+            closeResultBox()
+            cb(result.obj)
+        }
     })
 
     box.appendChild(dom.div(result.summary))
