@@ -22,9 +22,9 @@ function createDeviceNameModal(el, password) {
             } else {
                 var credentials = JSON.parse(data)
                 console.log("credentials", credentials);
-                localStorage.setItem("openworldfactory.device.name", credentials.name)
-                localStorage.setItem("openworldfactory.device.uuid", credentials.uuid)
-                localStorage.setItem("openworldfactory.device.token", credentials.token)
+                localStorage.setItem("openworldcrafter.device.name", credentials.name)
+                localStorage.setItem("openworldcrafter.device.uuid", credentials.uuid)
+                localStorage.setItem("openworldcrafter.device.token", credentials.token)
 
                 // now log out
                 webrequest.postForm("/logout", {}, () => {

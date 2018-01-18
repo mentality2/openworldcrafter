@@ -13,7 +13,7 @@ const tips = require('./tips.json')
 var aboutModal = require('../modals/about.js').createAboutModal()
 
 function createTip(updateMessage) {
-    if(localStorage["openworldfactory.preferences.hidetips"] !== "true" && Math.random() < .75) {
+    if(localStorage["openworldcrafter.preferences.hidetips"] !== "true" && Math.random() < .75) {
         // if there's no updates or dev mode notice, add a tip sometimes
         var tip = tips[Math.floor(Math.random() * tips.length)]
         if(!tip.disabled) {
@@ -199,12 +199,12 @@ function createPage(el) {
     if(process.env.NODE_ENV === "development") {
         // no need to check for updates, but we'll put an extra devmode notice
         updateMessage.appendChild(dom.div("Development Mode Notice", "bold"))
-        updateMessage.appendChild(dom.div("You are running openworldfactory in development mode."))
+        updateMessage.appendChild(dom.div("You are running openworldcrafter in development mode."))
         updateMessage.appendChild(dom.button(undefined, "Use Mobile Env", () => ($owf.mobile = true, document.body.classList.add("mobile"))))
         updateMessage.classList.remove("invisible")
 
         if($owf.remakeTestProject) {
-            var newProject = dom.button(undefined, "Remake test.owf", () => {
+            var newProject = dom.button(undefined, "Remake test.owc", () => {
                 $owf.remakeTestProject()
             })
             updateMessage.appendChild(newProject)
@@ -225,7 +225,7 @@ function createPage(el) {
                         if(pkg.updateInfo && pkg.updateInfo.url) {
                             $owf.showWebpage(pkg.updateInfo.url)
                         } else {
-                            $owf.showWebpage("https://openworldfactory.github.io")
+                            $owf.showWebpage("https://openworldcrafter.com")
                         }
                     }, ["float-right"]))
                     updateMessage.appendChild(dom.div("Update to v" + pkg.version, "bold"))

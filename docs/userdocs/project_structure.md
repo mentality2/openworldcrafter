@@ -26,7 +26,7 @@ bottom of the project overview.
 
 ## Types of Items
 
-OpenWorldFactory provides several types of notes for organizing different
+openworldcrafter provides several types of notes for organizing different
 information about your world.
 
 - [Notes and Characters](#folders_notes_and_characters)

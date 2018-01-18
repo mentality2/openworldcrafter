@@ -51,12 +51,12 @@ function createPage(el, proj) {
 
     ref.changeProjectName = () => {
         ref.changeProjectNameInMenu()
-        document.title = proj.info.name + " - OpenWorldFactory"
+        document.title = proj.info.name + " - openworldcrafter"
         proj.$store.changeName()
     }
 
     ref.project = proj
-    document.title = proj.info.name + " - OpenWorldFactory"
+    document.title = proj.info.name + " - openworldcrafter"
 
     theme.setTheme()
 

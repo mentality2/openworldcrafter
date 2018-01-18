@@ -119,7 +119,7 @@ class DesktopEnvironment extends require("./index") {
     /** DESKTOP SPECIFIC STUFF **/
 
     checkUpdate(cb) {
-        https.get('https://raw.githubusercontent.com/openworldfactory/openworldfactory/master/package.json', (res) => {
+        https.get('https://raw.githubusercontent.com/openworldcrafter/openworldcrafter/master/package.json', (res) => {
             if(res.statusCode !== 200) {
                 console.log("Cannot check for updates; fetching package.json returned " + res.statusCode)
                 res.resume()
@@ -143,16 +143,16 @@ class DesktopEnvironment extends require("./index") {
 
     remakeTestProject() {
         var name = "TEST PROJECT"
-        var desc = "Transient project for testing purposes. Click 'Remake test.owf' on the welcome page to reset this project. You must be in dev mode to do this."
+        var desc = "Transient project for testing purposes. Click 'Remake test.owc' on the welcome page to reset this project. You must be in dev mode to do this."
 
         var proj = project.createProject(name, desc, magicuuids.test_project)
-        proj.$store = new disk("test.owf", proj, () => {
+        proj.$store = new disk("test.owc", proj, () => {
             proj.save()
             this.viewProject(proj)
 
             // this is bad code. we really shouldn't be accessing _projectList
             // directly but ¯\_(ツ)_/¯
-            disk.DiskApiDescription._projectList.addProjectEntry(name, "test.owf", desc, () => {})
+            disk.DiskApiDescription._projectList.addProjectEntry(name, "test.owc", desc, () => {})
         })
     }
 

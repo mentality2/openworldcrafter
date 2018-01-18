@@ -1,1 +1,1 @@
-![OpenWorldFactory](./docs/logos/header.png)
+![open world crafter](./docs/logos/header.png)

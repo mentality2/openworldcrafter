@@ -6,7 +6,7 @@ const thispackage = require('../../package.json')
 function createAboutModal() {
     var el = dom.modal()
 
-    el.appendChild(dom.icon("openworldfactory_full", ["fullwidth", "height-unset", "no-fill-or-stroke", "no-margin-bottom"]))
+    el.appendChild(dom.icon("openworldcrafter_full", ["fullwidth", "height-unset", "no-fill-or-stroke", "no-margin-bottom"]))
     if($owf.buildType) {
         var build = thispackage.buildinfo[$owf.buildType]
         if(build) {
@@ -26,18 +26,18 @@ function createAboutModal() {
     })
 
     var website = dom.div(undefined, "about-line")
-    website.appendChild(dom.icon("openworldfactory", ["margin-right-20px", "no-fill-or-stroke"]))
+    website.appendChild(dom.icon("openworldcrafter", ["margin-right-20px", "no-fill-or-stroke"]))
     website.appendChild(dom.span("Website"))
     website.addEventListener("click", () => {
-        $owf.showWebpage("https://openworldfactory.github.io/")
+        $owf.showWebpage("https://openworldcrafter.github.io/")
     })
 
     var github = dom.div(undefined, "about-line")
-    var octocatIcon = localStorage["openworldfactory.preferences.theme"] === "theme_dark" ? "octocat_dark" : "octocat_light"
+    var octocatIcon = localStorage["openworldcrafter.preferences.theme"] === "theme_dark" ? "octocat_dark" : "octocat_light"
     github.appendChild(dom.icon(octocatIcon, ["margin-right-20px", "no-fill-or-stroke"]))
     github.appendChild(dom.span("GitHub"))
     github.addEventListener("click", () => {
-        $owf.showWebpage("https://github.com/openworldfactory")
+        $owf.showWebpage("https://github.com/openworldcrafter")
     })
 
     var license = dom.div(undefined, "about-line")

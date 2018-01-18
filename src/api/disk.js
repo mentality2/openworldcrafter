@@ -49,8 +49,8 @@ class DiskProjectStore extends require("./") {
                     })
                 })
                 .catch(e => {
-                    if(e === "project version mismatch, please update OpenWorldFactory") {
-                        $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
+                    if(e === "project version mismatch, please update openworldcrafter") {
+                        $owf.handleError("Update Required", "This project was created in a newer version of openworldcrafter. Please update to view it so data isn't lost.")
                     } else {
                         errcb("This project file seems to be corrupt.")
                         console.log(e)
@@ -142,16 +142,16 @@ class DiskApiDescription extends require("./apidescription.js") {
 
         this.buttonText = "Save to Computer"
 
-        var projectListData = JSON.parse(localStorage["openworldfactory.recentFiles"] || [])
+        var projectListData = JSON.parse(localStorage["openworldcrafter.recentFiles"] || "[]")
         this._projectList = new projectlist.ProjectList(projectListData, save => {
-            localStorage.setItem("openworldfactory.recentFiles", JSON.stringify(save))
+            localStorage.setItem("openworldcrafter.recentFiles", JSON.stringify(save))
         })
     }
 
     createProject(name, desc) {
         electron.remote.dialog.showSaveDialog({
             title: "Save Project",
-            defaultPath: name + ".owf"
+            defaultPath: name + ".owc"
         }, filename => {
             var proj = project.createProject(name, desc)
             proj.$store = new DiskProjectStore(filename, proj, () => {
@@ -172,8 +172,8 @@ class DiskApiDescription extends require("./apidescription.js") {
 
             $owf.viewProject(proj)
         }, err => {
-            if(err === "project version mismatch, please update OpenWorldFactory") {
-                $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
+            if(err === "project version mismatch, please update openworldcrafter") {
+                $owf.handleError("Update Required", "This project was created in a newer version of openworldcrafter. Please update to view it so data isn't lost.")
             } else {
                 this._projectList.removeProject(location)
                 onerr(err)

@@ -23,7 +23,7 @@ function setTheme(name) {
         changeTheme(name)
     } else {
         // use default theme in localstorage, or default
-        changeTheme(localStorage["openworldfactory.preferences.theme"] || "theme_light")
+        changeTheme(localStorage["openworldcrafter.preferences.theme"] || "theme_light")
     }
 }
 
@@ -53,11 +53,11 @@ function changeTheme(name) {
     }
 
     // set preference
-    localStorage["openworldfactory.preferences.theme"] = name
+    localStorage["openworldcrafter.preferences.theme"] = name
 }
 
 function getTheme() {
-    return localStorage["openworldfactory.preferences.theme"]
+    return localStorage["openworldcrafter.preferences.theme"]
 }
 
 module.exports = {

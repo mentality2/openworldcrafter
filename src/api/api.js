@@ -143,8 +143,8 @@ class OnlineApiDescription extends require("./apidescription.js") {
         var appapi = new OnlineProjectStore(location, proj => {
             $owf.viewProject(proj)
         }, err => {
-            if(err === "project version mismatch, please update OpenWorldFactory") {
-                $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
+            if(err === "project version mismatch, please update openworldcrafter") {
+                $owf.handleError("Update Required", "This project was created in a newer version of openworldcrafter. Please update to view it so data isn't lost.")
             } else {
                 console.log(err)
                 onerr(err)

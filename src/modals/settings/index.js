@@ -32,10 +32,10 @@ function createSettingsModal() {
     tipsCheckbox.id = `tipslabel-${ tipsLabelId ++ }`
     var tipsLabel = dom.element("label", "Show tips on the welcome screen")
     tipsLabel.htmlFor = tipsCheckbox.id
-    tipsCheckbox.checked = localStorage["openworldfactory.preferences.hidetips"] !== "true"
+    tipsCheckbox.checked = localStorage["openworldcrafter.preferences.hidetips"] !== "true"
 
     tipsCheckbox.addEventListener("change", () => {
-        localStorage["openworldfactory.preferences.hidetips"] = tipsCheckbox.checked ? "false" : "true"
+        localStorage["openworldcrafter.preferences.hidetips"] = tipsCheckbox.checked ? "false" : "true"
     })
 
     tipsSection.appendChild(dom.h3("Tips"))

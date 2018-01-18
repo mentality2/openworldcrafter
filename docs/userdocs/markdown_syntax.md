@@ -91,9 +91,9 @@ For other emoji, write the name of the emoji between two colons.
 
 ### Example
 
-    I <3 OpenWorldFactory, but I need :coffee: to write :books:.
+    I <3 openworldcrafter, but I need :coffee: to write :books:.
 
-I <3 OpenWorldFactory, but I need :coffee: to write :books:.
+I <3 openworldcrafter, but I need :coffee: to write :books:.
 
 ## Spoilers
 Spoilers are hidden until you roll your mouse over them (or, on mobile, tap

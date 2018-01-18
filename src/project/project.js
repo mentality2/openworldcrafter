@@ -208,7 +208,7 @@ class Project {
     constructor(serial, store) {
         console.log("Loading project from JSON", serial)
         if(utils.compareVersions(serial.info.saveVersion, thispackage.version) > 0) {
-            throw "project version mismatch, please update OpenWorldFactory"
+            throw "project version mismatch, please update openworldcrafter"
         }
 
         this.info = new ProjectInfo(serial.info)
@@ -290,7 +290,7 @@ class Project {
             this.info.assignSaveUuid()
             this.$store.saveProjectFile(this.serializeJSON(), () => {
                 this.$_dirty = false
-                document.title = this.info.name + " - OpenWorldFactory"
+                document.title = this.info.name + " - openworldcrafter"
                 this.$saveListener()
                 { (cb || noop)() }
             }, (errmsg, button, buttonAction) => this.$saveListener(errmsg, button, buttonAction))
@@ -304,7 +304,7 @@ class Project {
 
     markDirty() {
         this.$_dirty = true
-        document.title = "*" + this.info.name + " - OpenWorldFactory"
+        document.title = "*" + this.info.name + " - openworldcrafter"
     }
     isDirty() {
         return this.$_dirty

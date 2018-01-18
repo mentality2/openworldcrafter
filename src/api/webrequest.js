@@ -2,7 +2,7 @@
 
 var csrfToken = undefined
 
-const origin = typeof process.env.OWF_ORIGIN !== "undefined" ? process.env.OWF_ORIGIN : "http://localhost:7701"
+const origin = typeof process.env.OWC_ORIGIN !== "undefined" ? process.env.OWC_ORIGIN : "http://localhost:7701"
 
 /*
  * All callbacks will be called with arguments (err, responseText)
@@ -58,10 +58,10 @@ function getCsrfToken(cb, err) {
 }
 
 function attemptLogin(cb) {
-    if(localStorage["openworldfactory.device.name"]) {
+    if(localStorage["openworldcrafter.device.name"]) {
         postResourceJson("/auth/devicelogin", {
-            device: localStorage["openworldfactory.device.uuid"],
-            token: localStorage["openworldfactory.device.token"]
+            device: localStorage["openworldcrafter.device.uuid"],
+            token: localStorage["openworldcrafter.device.token"]
         }, (err, loginres) => {
             if(err) cb(false)
             else cb(true)

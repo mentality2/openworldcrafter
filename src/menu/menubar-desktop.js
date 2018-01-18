@@ -10,7 +10,7 @@ class Menu extends require("./menubar.js") {
         // the web version shows a menu with the display name instead, and this
         // is handled separately
         if($owf.showLogoInCorner) {
-            var logo = dom.span("openworldfactory" + (process.env.NODE_ENV === "development" ? ":dev" : ""), ["logo", "cursor-pointer"])
+            var logo = dom.span("openworldcrafter" + (process.env.NODE_ENV === "development" ? ":dev" : ""), ["logo", "cursor-pointer"])
             logo.addEventListener("click", () => {
                 $owf.showWelcome()
             })

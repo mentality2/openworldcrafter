@@ -103,7 +103,7 @@ class AppEnvironment extends require("./index") {
 
     remakeTestProject() {
         var name = "TEST PROJECT"
-        var desc = "Transient project for testing purposes. Click 'Remake test.owf' on the welcome page to reset this project. You must be in dev mode to do this."
+        var desc = "Transient project for testing purposes. Click 'Remake test.owc' on the welcome page to reset this project. You must be in dev mode to do this."
 
         this.availableAPIs[0].createProject(name, desc, magicuuids.test_project)
     }

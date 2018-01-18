@@ -159,8 +159,8 @@ class AppApiDescription extends require("./apidescription.js") {
             this._getProjectList(list => list.addProjectEntry(proj.info.name, location, proj.info.description))
             $owf.viewProject(proj)
         }, err => {
-            if(err === "project version mismatch, please update OpenWorldFactory") {
-                $owf.handleError("Update Required", "This project was created in a newer version of OpenWorldFactory. Please update to view it so data isn't lost.")
+            if(err === "project version mismatch, please update openworldcrafter") {
+                $owf.handleError("Update Required", "This project was created in a newer version of openworldcrafter. Please update to view it so data isn't lost.")
             } else {
                 console.log(err)
                 onerr(err)
@@ -172,7 +172,7 @@ class AppApiDescription extends require("./apidescription.js") {
         fs.makeZipFile(getProjectDirectory(id), (err, zip) => {
             if(err) cb(err)
             else {
-                fs.writeFileBlobExternal(id + ".owf", zip, cb)
+                fs.writeFileBlobExternal(id + ".owc", zip, cb)
             }
         })
     }

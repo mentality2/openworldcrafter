@@ -2,7 +2,7 @@
 
 const dom = require('../../dom')
 const adRevenueWarning = `Revenue from ads on the Welcome screen let me spend
-more time and resources on making openworldfactory better. Removing ads does not
+more time and resources on making openworldcrafter better. Removing ads does not
 cost anything, but will cause me to shed a single tear. Are you sure you want to
 do this?`
 const adsEnabled = `Thanks! Ads have been enabled. You may need to restart the app for
@@ -33,7 +33,7 @@ function createDisableAdsModal(cb) {
         cb()
     }))
     modalActions.appendChild(dom.button(undefined, "Disable Ads", () => {
-        localStorage["openworldfactory.disableadvertisements"] = "true"
+        localStorage["openworldcrafter.disableadvertisements"] = "true"
         if(window.$advertisements) window.$advertisements.hide()
         el.hide()
         cb()
@@ -48,8 +48,8 @@ function createAppSettingsModal(modal) {
     var adsSection = dom.div()
 
     var adsButton = dom.button(undefined, undefined, () => {
-        if(localStorage["openworldfactory.disableadvertisements"]) {
-            delete localStorage["openworldfactory.disableadvertisements"]
+        if(localStorage["openworldcrafter.disableadvertisements"]) {
+            delete localStorage["openworldcrafter.disableadvertisements"]
             var modal = createAdsEnabledModal()
             labelAdsButton()
         } else {
@@ -59,7 +59,7 @@ function createAppSettingsModal(modal) {
         modal.show()
     })
     function labelAdsButton() {
-        if(localStorage["openworldfactory.disableadvertisements"]) {
+        if(localStorage["openworldcrafter.disableadvertisements"]) {
             adsButton.textContent = "Enable Ads"
         } else {
             adsButton.textContent = "Disable Ads"

@@ -1,8 +1,8 @@
 {
-  "name": "openworldfactory",
+  "name": "openworldcrafter",
   "version": "3.0.0",
   "updateInfo": {
-    "url": "https://openworldfactory.github.io",
+    "url": "https://openworldcrafter.github.io",
     "message": "v2.0.0 adds character relationships"
   },
   "description": "The Notepad for Authors",
@@ -12,7 +12,7 @@
     "compile-sass": "./scripts/updatebuild.js sass; node-sass --output-style=compressed src/styles/theme_dark.sass resources/styles/theme_dark.css; node-sass --output-style=compressed src/styles/theme_light.sass resources/styles/theme_light.css",
     "compile-icons": "./scripts/updatebuild.js icons; ./scripts/compile-icons.js",
     "compile-docs": "./scripts/updatebuild.js docs; ./scripts/compile-docs.js",
-    "compile-web": "./scripts/updatebuild.js web; OWF_ORIGIN=\"\" webpack --config webpack/webpack.config.js",
+    "compile-web": "./scripts/updatebuild.js web; OWC_ORIGIN=\"\" webpack --config webpack/webpack.config.js",
     "compile-app-prod": "./scripts/updatebuild.js app; NODE_ENV=production webpack --config webpack/app.webpack.config.js -p",
     "compile-app": "./scripts/updatebuild.js app; webpack --config webpack/app.webpack.config.js",
     "compile-all": "npm run compile-sass; npm run compile-icons; npm run compile-web",
@@ -45,11 +45,11 @@
     "yargs": "^8.0.2"
   },
   "build": {
-    "appId": "net.flyingpimonster.openworldfactory",
-    "productName": "openworldfactory",
+    "appId": "net.flyingpimonster.openworldcrafter",
+    "productName": "openworldcrafter",
     "fileAssociations": {
-      "ext": "owf",
-      "name": "OpenWorldFactory project"
+      "ext": "owc",
+      "name": "openworldcrafter project"
     },
     "linux": {
       "category": "Office",
@@ -67,19 +67,19 @@
   "optionalDependencies": {},
   "buildinfo": {
     "docs": {
-      "buildnumber": 65,
-      "datestring": "2018-01-17 05:10:36",
-      "timestamp": 1516165836036
+      "buildnumber": 67,
+      "datestring": "2018-01-18 01:22:14",
+      "timestamp": 1516238534226
     },
     "icons": {
-      "buildnumber": 11,
-      "datestring": "2018-01-17 00:31:20",
-      "timestamp": 1516149080802
+      "buildnumber": 18,
+      "datestring": "2018-01-18 01:22:09",
+      "timestamp": 1516238529498
     },
     "web": {
-      "buildnumber": 11,
-      "datestring": "2018-01-17 06:21:43",
-      "timestamp": 1516170103041
+      "buildnumber": 12,
+      "datestring": "2018-01-18 00:47:29",
+      "timestamp": 1516236449451
     },
     "sass": {
       "buildnumber": 180,
@@ -87,9 +87,9 @@
       "timestamp": 1516212846321
     },
     "app": {
-      "buildnumber": 127,
-      "datestring": "2018-01-17 16:24:13",
-      "timestamp": 1516206253104
+      "buildnumber": 135,
+      "datestring": "2018-01-18 01:25:30",
+      "timestamp": 1516238730611
     }
   }
 }

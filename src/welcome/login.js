@@ -6,7 +6,7 @@ function createLoginBox() {
     var box = dom.div()
 
     box.appendChild(dom.h2("Log In"))
-    box.appendChild(dom.span("Login to OpenWorldFactory to save and share your projects online"))
+    box.appendChild(dom.span("Login to openworldcrafter to save and share your projects online"))
     box.appendChild(dom.br())
 
     var username = dom.inputText("", "Username")
