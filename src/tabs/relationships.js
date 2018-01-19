@@ -22,7 +22,8 @@ function createModal(obj, cb) {
     var linkSearch = search.createSearchBar(obj.$project, result => {
         char2uuid = result.id
         char2Name.textContent = result.name
-    }, object => (object.type === "character"))
+        add.classList.remove("button-disabled")
+    }, object => (object.type === "character" && object.id !== obj.id))
 
     var char2uuid
 
@@ -49,13 +50,13 @@ function createModal(obj, cb) {
     selectDiv.appendChild(swap)
 
     var char1 = dom.div()
-    var char1Role = dom.span(undefined, ["margin-right", "bold"])
+    var char1Role = dom.span(undefined, ["margin-right", "bold", "relationships-modal-label"])
     char1.appendChild(char1Role)
     var char1Name = dom.span(obj.name)
     char1.appendChild(char1Name)
 
     var char2 = dom.div()
-    var char2Role = dom.span(undefined, ["margin-right", "bold"])
+    var char2Role = dom.span(undefined, ["margin-right", "bold", "relationships-modal-label"])
     char2.appendChild(char2Role)
     var char2Name = dom.span()
     char2Name.appendChild(linkSearch)
@@ -89,6 +90,8 @@ function createModal(obj, cb) {
         modal.wrapper.remove()
     })
     var add = dom.button(undefined, "Add", () => {
+        if(!char2uuid) return
+
         var r1, c1, r2, c2
         if(char1RoleEdit) r1 = char1RoleEdit.value
         else r1 = char1Role.textContent
@@ -99,7 +102,7 @@ function createModal(obj, cb) {
         cb()
 
         modal.wrapper.remove()
-    })
+    }, "button-disabled")
     modalActions.appendChild(cancel)
     modalActions.appendChild(add)
     modal.modal.appendChild(modalActions)
@@ -141,6 +144,7 @@ function createRelationshipsTab(object, ref) {
 
             var rel = object.relationships[relID]
             var partner = findOtherObject(rel, object.id)
+            if(!partner) continue
             var otherObject = object.$project.getObjectById(partner.id)
             if(!otherObject) continue
 
