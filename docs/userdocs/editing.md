@@ -1,6 +1,7 @@
 # Editing
 
-To enter Edit Mode, click the Edit button in the top right corner:
+To enter Edit Mode, click the Edit button in the top right corner (bottom right
+on mobile):
 
 ![Edit button](edit_button.png)
 
