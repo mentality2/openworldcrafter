@@ -10,19 +10,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
         <link rel="stylesheet" id="stylesheet_link" />
-        <script>
-            var theme = localStorage["openworldcrafter.preferences.theme"] || "theme_light"
-            document.getElementById("stylesheet_link").href=`../styles/${ theme }.css`
-
-            // sometimes the background shows up as white on the android in app
-            // browser. this is a very annoying workaround that forces it to
-            // update
-            document.body.style.backgroundColor = "white"
-            setTimeout(() => document.body.style.removeProperty("background-color"), 10)
-        </script>
     </head>
 
     <body><div class="docs-body-wrapper">
+        <script>
+            var theme = localStorage["openworldcrafter.preferences.theme"] || "theme_light"
+            document.getElementById("stylesheet_link").href=`../styles/${ theme }.css`
+        </script>
+
         <img src="logos/header.svg" class="docs-logo"/>
         <a name="top"></a>
 
@@ -60,7 +55,8 @@ information about your world.</p>
 <li><a href="#timelines_and_events">Timelines and Events</a></li>
 </ul>
 </div><a name="editing"></a><div id="docs-editing" class="docs-section"><h1>Editing</h1>
-<p>To enter Edit Mode, click the Edit button in the top right corner:</p>
+<p>To enter Edit Mode, click the Edit button in the top right corner (bottom right
+on mobile):</p>
 <p><img src="edit_button.png" alt="Edit button"></p>
 <p>Edit Mode allows you to add notes, attachments, and other details to the items
 in your project. You can also rename objects using the Name field at the top:</p>
@@ -390,6 +386,12 @@ color-code &quot;Yes&quot; as green and &quot;No&quot; as red.</p>
 
                 header.appendChild(topLink)
             }
+
+            // sometimes the background shows up as white on the android in app
+            // browser. this is a very annoying workaround that forces it to
+            // update
+            document.body.style.backgroundColor = "white"
+            setTimeout(() => document.body.style.removeProperty("background-color"), 10)
         </script>
     </div></body>
 </html>
