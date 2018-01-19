@@ -80,7 +80,7 @@ class AppEnvironment extends require("./index") {
         View a webpage, as when an external link is clicked
     */
     showWebpage(url) {
-        cordova.InAppBrowser.open(url, "_blank")
+        cordova.InAppBrowser.open(url, "_blank", "zoom=no")
     }
 
     showSettings() {
