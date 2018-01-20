@@ -14,6 +14,7 @@ function createEmbedModal(insertCb) {
         if(code) {
             insert.classList.remove("button-disabled")
             preview.innerHTML = code
+            embed.fillEmbed(preview.querySelector(".embedded-video-placeholder"))
         } else {
             insert.classList.add("button-disabled")
             preview.innerHTML = "<div>Sorry, this service doesn't seem to be supported yet. Make sure the URL is correct.</div>"

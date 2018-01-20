@@ -21,6 +21,46 @@
     &:hover *
         opacity: 1
 
+
 .embedded-video
-    height: 480px
-    max-width: 100%
+    border: 3px solid $foreground
+    border-radius: 3px
+    padding: .5em
+    display: flex
+    color: $foreground
+    margin-bottom: 1em
+
+    transition: border 200ms, color 200ms
+
+    &:hover
+        border: 3px solid $accent
+        color: $accent
+
+    img
+        margin-right: 1em
+        margin-left: 0
+        display: inline
+        vertical-align: text-top
+        height: 5em
+
+    &>span
+        &>span
+            display: block
+        .embedded-video-author
+            opacity: .5
+            &::before
+                content: "by "
+
+    &.embedded-video-errored
+        border: 3px solid $error
+        color: $error
+        .embedded-video-author
+            display: none
+
+    &.embedded-video-placeholder, &.embedded-video-errored
+        img
+            width: 9em
+            background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTcwLjMzbW0iIGhlaWdodD0iMTA1LjY1bW0iIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDE3MC4zMjU1NyAxMDUuNjQ4OTEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTE4LjYyMyAtNTQuNzY3KSI+PHBhdGggZD0ibTUwLjkyMSA1NS4yNjdjLTE3LjYxNiAwLTMxLjc5OCAxNC4xODItMzEuNzk4IDMxLjc5OHY0MS4wNTRjMCAxNy42MTYgMTQuMTgyIDMxLjc5OCAzMS43OTggMzEuNzk4aDEwNS43M2MxNy42MTYgMCAzMS43OTgtMTQuMTgyIDMxLjc5OC0zMS43OTh2LTQxLjA1NGMwLTE3LjYxNi0xNC4xODItMzEuNzk4LTMxLjc5OC0zMS43OTh6bTM0Ljk3MyAyMi4xNTcgMjYuMTI2IDE1LjA4NCAyNi4xMjYgMTUuMDg0LTI2LjEyNiAxNS4wODQtMjYuMTI2IDE1LjA4M3YtMzAuMTY3eiIgc3Ryb2tlPSIjMDAwIi8+PC9nPjwvc3ZnPg==)
+            background-size: 50%
+            background-position: center
+            background-repeat: no-repeat

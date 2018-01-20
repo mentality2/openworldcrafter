@@ -3,6 +3,7 @@
 const markdownit = require('markdown-it')
 const dom = require('../dom')
 const uuidRegex = require('./links').uuidRegex
+const embed = require('./embed')
 
 const md = new markdownit()
 md.use(require('markdown-it-emoji'))
@@ -23,6 +24,13 @@ md.use(require("markdown-it-container"), "spoiler", spoilerArgs)
 function rerender(el, text, ref) {
     el.innerHTML = md.render(text)
 
+    // videos
+    // this MUST be done before links
+    var videos = el.querySelectorAll(".embedded-video-placeholder")
+    for(let video of videos) {
+        embed.fillEmbed(video)
+    }
+
     // replace links
     var links = el.querySelectorAll("a")
     for(let link of links) {
@@ -31,21 +39,18 @@ function rerender(el, text, ref) {
 
             var href = link.getAttribute("href")
 
-            console.log("link href", href)
-
-            if(uuidRegex.test(href)) {
+            if(!href) {
+                // well i guess we're not going anywhere
+            } else if(uuidRegex.test(href)) {
                 // go to the object with this id
                 ref.goToPageId(href)
             } else if(!(/^[a-z]+:/i.test(href))) {
-                href = "https://" + href
-                $owf.showWebpage(href)
+                $owf.showWebpage("https://" + href)
             } else {
                 $owf.showWebpage(href)
             }
         })
     }
-
-    // markdown-it-block-embed
 }
 
 // renders stored markdown into DOM elements
