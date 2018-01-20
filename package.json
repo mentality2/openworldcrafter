@@ -1,9 +1,9 @@
 {
   "name": "openworldcrafter",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "updateInfo": {
     "url": "https://openworldcrafter.github.io",
-    "message": "v2.0.0 adds character relationships"
+    "message": "v3.0.1 adds snippets and the character chart, along with numerous minor improvements"
   },
   "description": "The Notepad for Authors",
   "main": "src/entry.js",
@@ -87,9 +87,9 @@
       "timestamp": 1516416588770
     },
     "app": {
-      "buildnumber": 154,
-      "datestring": "2018-01-20 02:39:42",
-      "timestamp": 1516415982250
+      "buildnumber": 155,
+      "datestring": "2018-01-20 02:51:24",
+      "timestamp": 1516416684999
     }
   }
 }
