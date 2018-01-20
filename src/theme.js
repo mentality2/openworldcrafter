@@ -43,6 +43,13 @@ function changeTheme(name) {
         link.id = "mainStylesheet"
         document.head.appendChild(link)
     }
+    if(!document.getElementById("emojiStylesheet")) {
+        var link = dom.element("link")
+        link.rel = "stylesheet"
+        link.href = $owf.styleDir + "emoji.css"
+        link.id = "emojiStylesheet"
+        document.head.appendChild(link)
+    }
 
     // ?rl=a is so that the stylesheet can easily be reloaded by adding a char to the url
     if(themes[name]) document.getElementById("mainStylesheet").href = $owf.styleDir + themes[name] + "?rl=a"

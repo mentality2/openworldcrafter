@@ -9,13 +9,13 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-        <link rel="stylesheet" id="stylesheet_link" />
+        <link rel="stylesheet" id="mainStylesheet" />
     </head>
 
     <body><div>
         <script>
             var theme = localStorage["openworldcrafter.preferences.theme"] || "theme_light"
-            document.getElementById("stylesheet_link").href=`../styles/${ theme }.css`
+            document.getElementById("mainStylesheet").href=`../styles/${ theme }.css`
 
             // sometimes the background shows up as white on the android in app
             // browser. this is a very annoying workaround that forces it to
