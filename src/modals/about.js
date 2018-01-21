@@ -1,22 +1,13 @@
 "use strict"
 
 const dom = require('../dom')
-const thispackage = require('../../package.json')
+const buildinfo = require('../buildinfo')
 
 function createAboutModal() {
     var el = dom.modal()
 
     el.appendChild(dom.icon("openworldcrafter_full", ["fullwidth", "height-unset", "no-fill-or-stroke", "no-margin-bottom"]))
-    if($owf.buildType) {
-        var build = thispackage.buildinfo[$owf.buildType]
-        if(build) {
-            el.appendChild(dom.span(`v${ thispackage.version } build ${$owf.buildType}-${ thispackage.buildinfo.app.buildnumber } created ${thispackage.buildinfo.app.datestring }`))
-        } else {
-            el.appendChild(dom.span(`v${ thispackage.version }`))
-        }
-    } else {
-        el.appendChild(dom.span(`v${ thispackage.version }`))
-    }
+    el.appendChild(dom.span(buildinfo.getBuildString()))
 
     var docs = dom.div(undefined, "about-line")
     docs.appendChild(dom.icon("help", ["margin-right-20px"]))

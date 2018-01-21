@@ -13,9 +13,9 @@
     "compile-icons": "./scripts/updatebuild.js icons; ./scripts/compile-icons.js",
     "compile-docs": "./scripts/updatebuild.js docs; ./scripts/compile-docs.js",
     "compile-web": "./scripts/updatebuild.js web; OWC_ORIGIN=\"\" webpack --config webpack/webpack.config.js",
-    "compile-app-prod": "./scripts/updatebuild.js app; NODE_ENV=production webpack --config webpack/app.webpack.config.js -p",
+    "compile-app-prod": "./scripts/compile-app-prod.sh",
     "compile-app": "./scripts/updatebuild.js app; webpack --config webpack/app.webpack.config.js",
-    "compile-all": "npm run compile-sass; npm run compile-icons; npm run compile-web",
+    "compile-all": "yarn run compile-sass; yarn run compile-docs; yarn run compile-icons; yarn run compile-web",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "dist-mac": "electron-builder --mac dmg",
@@ -67,29 +67,29 @@
   "optionalDependencies": {},
   "buildinfo": {
     "docs": {
-      "buildnumber": 71,
-      "datestring": "2018-01-20 19:34:53",
-      "timestamp": 1516476893582
+      "buildnumber": 74,
+      "datestring": "2018-01-21 19:15:22",
+      "timestamp": 1516562122255
     },
     "icons": {
-      "buildnumber": 18,
-      "datestring": "2018-01-18 01:22:09",
-      "timestamp": 1516238529498
+      "buildnumber": 20,
+      "datestring": "2018-01-21 19:15:22",
+      "timestamp": 1516562122906
     },
     "web": {
-      "buildnumber": 12,
-      "datestring": "2018-01-18 00:47:29",
-      "timestamp": 1516236449451
+      "buildnumber": 14,
+      "datestring": "2018-01-21 19:15:23",
+      "timestamp": 1516562123468
     },
     "sass": {
-      "buildnumber": 212,
-      "datestring": "2018-01-20 19:29:31",
-      "timestamp": 1516476571811
+      "buildnumber": 216,
+      "datestring": "2018-01-21 19:15:21",
+      "timestamp": 1516562121232
     },
     "app": {
-      "buildnumber": 157,
-      "datestring": "2018-01-21 18:16:30",
-      "timestamp": 1516558590004
+      "buildnumber": 158,
+      "datestring": "2018-01-21 18:21:27",
+      "timestamp": 1516558887175
     }
   }
 }
