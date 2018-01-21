@@ -84,7 +84,7 @@ class AppEnvironment extends require("./index") {
     }
 
     showSettings() {
-        var settingsModal = settings.createAppSettingsModal()
+        var settingsModal = settings.createSettingsModal()
         settingsModal.show()
     }
 
