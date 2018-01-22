@@ -73,12 +73,12 @@ function createFeedbackModal() {
         if(select.value === "security_vulnerability") {
             securitySection.classList.remove("invisible")
             textbox.classList.add("invisible")
-            email.classList.add("invisible")
+            // email.classList.add("invisible")
             modalActions.classList.add("invisible")
         } else {
             securitySection.classList.add("invisible")
             textbox.classList.remove("invisible")
-            email.classList.remove("invisible")
+            // email.classList.remove("invisible")
             modalActions.classList.remove("invisible")
         }
     }
@@ -87,9 +87,9 @@ function createFeedbackModal() {
 
     var textbox = dom.element("textarea")
 
-    var email = dom.element("input", undefined, "no-margin-right")
-    email.type = "email"
-    email.placeholder = "Email address for followup (optional)"
+    // var email = dom.element("input", undefined, "no-margin-right")
+    // email.type = "email"
+    // email.placeholder = "Email address for followup (optional)"
 
     var sendDebugInfo = dom.element("input")
     sendDebugInfo.type = "checkbox"
@@ -119,7 +119,7 @@ function createFeedbackModal() {
 
     modal.appendChild(selectDiv)
     modal.appendChild(textbox)
-    modal.appendChild(email)
+    // modal.appendChild(email)
     modal.appendChild(debugInfoSection)
     modal.appendChild(securitySection)
 
