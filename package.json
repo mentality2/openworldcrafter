@@ -1,8 +1,8 @@
 {
   "name": "openworldcrafter",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "updateInfo": {
-    "url": "https://openworldcrafter.github.io",
+    "url": "https://openworldcrafter.com",
     "message": "v3.0.1 adds snippets and the character chart, along with numerous minor improvements"
   },
   "description": "The Notepad for Authors",
@@ -67,29 +67,29 @@
   "optionalDependencies": {},
   "buildinfo": {
     "docs": {
-      "buildnumber": 74,
-      "datestring": "2018-01-21 19:15:22",
-      "timestamp": 1516562122255
+      "buildnumber": 76,
+      "datestring": "2018-01-22 04:12:46",
+      "timestamp": 1516594366295
     },
     "icons": {
-      "buildnumber": 20,
-      "datestring": "2018-01-21 19:15:22",
-      "timestamp": 1516562122906
+      "buildnumber": 22,
+      "datestring": "2018-01-22 04:12:47",
+      "timestamp": 1516594367361
     },
     "web": {
-      "buildnumber": 14,
-      "datestring": "2018-01-21 19:15:23",
-      "timestamp": 1516562123468
+      "buildnumber": 16,
+      "datestring": "2018-01-22 04:12:48",
+      "timestamp": 1516594368031
     },
     "sass": {
-      "buildnumber": 216,
-      "datestring": "2018-01-21 19:15:21",
-      "timestamp": 1516562121232
+      "buildnumber": 221,
+      "datestring": "2018-01-22 04:12:42",
+      "timestamp": 1516594362369
     },
     "app": {
-      "buildnumber": 158,
-      "datestring": "2018-01-21 18:21:27",
-      "timestamp": 1516558887175
+      "buildnumber": 161,
+      "datestring": "2018-01-22 21:54:59",
+      "timestamp": 1516658099328
     }
   }
 }
