@@ -1,4 +1,4 @@
-Copyright (c) 2017 FlyingPiMonster
+Copyright (c) 2017 FlyingPiMonster <flyingpimonster@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -17,13 +17,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
---------------------------------------------------------------------------------
-
-In addition, this project contains font files under the SIL Open Font License,
-Version 1.1. These files are located in the following directories:
-
-- resources/fonts/cantarell
-- resources/fonts/noto_emoji
-
-A copy of that license can be found in either of those directories.
