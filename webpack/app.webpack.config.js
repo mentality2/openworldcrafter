@@ -16,7 +16,7 @@ module.exports = [
             rules: require("./rules.js")
         },
         plugins: [
-            new webpack.EnvironmentPlugin(['NODE_ENV', 'OWC_ORIGIN']),
+            new webpack.EnvironmentPlugin(['NODE_ENV', 'OWC_ORIGIN', 'OWC_COMMIT_ID']),
             new CopyWebpackPlugin([
                 {
                     from: "./resources",

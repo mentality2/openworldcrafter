@@ -76,8 +76,12 @@ function modal(title, removeOnClose) {
             if(!cancel) cancel = () => result.hide()
 
             var actions = div(undefined, "modal-actions")
-            actions.appendChild(dom.button(undefined, cancelText, cancel))
-            actions.appendChild(dom.button(undefined, okText, ok))
+            actions.appendChild(button(undefined, cancelText, cancel))
+            actions.appendChild(button(undefined, okText, ok))
+
+            el.appendChild(actions)
+
+            return actions
         }
     }
     return result

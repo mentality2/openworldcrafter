@@ -61,9 +61,3 @@ module.exports.createSettingsModal = function() {
     addOkButton(modal)
     return modal
 }
-module.exports.createAppSettingsModal = function() {
-    var modal = createSettingsModal()
-    require("./app.js").createAppSettingsModal(modal)
-    addOkButton(modal)
-    return modal
-}
