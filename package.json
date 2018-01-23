@@ -41,8 +41,7 @@
     "markdown-it": "^8.3.2",
     "markdown-it-container": "^2.0.0",
     "markdown-it-emoji": "^1.4.0",
-    "uuid": "^3.1.0",
-    "yargs": "^8.0.2"
+    "uuid": "^3.1.0"
   },
   "build": {
     "appId": "com.openworldcrafter.desktop",
@@ -87,9 +86,9 @@
       "timestamp": 1516416588770
     },
     "app": {
-      "buildnumber": 155,
-      "datestring": "2018-01-20 02:51:24",
-      "timestamp": 1516416684999
+      "buildnumber": 157,
+      "datestring": "2018-01-23 01:58:32",
+      "timestamp": 1516672712072
     }
   }
 }
