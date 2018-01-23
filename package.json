@@ -71,7 +71,6 @@
       "timestamp": 1516594366295
     },
     "icons": {
-<<<<<<< HEAD
       "buildnumber": 19,
       "datestring": "2018-01-23 02:59:13",
       "timestamp": 1516676353987
@@ -90,10 +89,6 @@
       "buildnumber": 157,
       "datestring": "2018-01-23 01:58:32",
       "timestamp": 1516672712072
-=======
-      "buildnumber": 22,
-      "datestring": "2018-01-22 04:12:47",
-      "timestamp": 1516594367361
     },
     "web": {
       "buildnumber": 16,
@@ -109,7 +104,6 @@
       "buildnumber": 161,
       "datestring": "2018-01-22 21:54:59",
       "timestamp": 1516658099328
->>>>>>> master
     }
   }
 }
