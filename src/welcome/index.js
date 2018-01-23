@@ -9,6 +9,7 @@ const devicelogin = require('../modals/devicelogin.js')
 const thispackage = require("../../package.json")
 const utils = require('../utils')
 const tips = require('./tips.json')
+const feedbackModal = require('../modals/feedback.js')
 
 var aboutModal = require('../modals/about.js').createAboutModal()
 
@@ -25,7 +26,10 @@ function createTip(updateMessage) {
                     tipLink.addEventListener("click", ev => $owf.showWebpage(tip.link[2]))
                 } else if(tip.link[1] === "docs") {
                     tipLink.addEventListener("click", ev => $owf.showDocs(tip.link[2]))
-                }
+                } else if(tip.link[1] === "feedback")
+                    tipLink.addEventListener("click", ev => {
+                        feedbackModal.createFeedbackModal().show()
+                    })
                 updateMessage.appendChild(tipLink)
             }
             updateMessage.classList.remove("invisible")

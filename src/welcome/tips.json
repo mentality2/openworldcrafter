@@ -16,5 +16,9 @@
     {
         "text": "Use the Relationships tab to keep track of who's related to whom. It's very useful for avoiding your protagonist's in-laws.",
         "link": ["Learn more!", "docs", "relationships"]
+    },
+    {
+        "text": "Love openworldcrafter? Hate it? Found a bug? Want a feature?",
+        "link": ["Your feedback is appreciated!", "feedback"]
     }
 ]
