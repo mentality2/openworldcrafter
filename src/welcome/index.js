@@ -222,7 +222,7 @@ function createPage(el) {
         // gets the latest package.json from github
         if($owf.checkUpdate) {
             $owf.checkUpdate(pkg => {
-                if(pkg.version !== thispackage.version) {
+                if(utils.compareVersions(pkg.version, thispackage.version) > 0) {
                     updateMessage.appendChild(dom.button("download", "Go to Download", () => {
                         if(pkg.updateInfo && pkg.updateInfo.url) {
                             $owf.showWebpage(pkg.updateInfo.url)
