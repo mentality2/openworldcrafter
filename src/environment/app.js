@@ -22,11 +22,13 @@ class AppEnvironment extends require("./index") {
 
         this.buildType = "app"
 
-        this.availableAPIs = [api.AppApiDescription]
+        this.availableAPIs = {
+            app: api.AppApiDescription
+        }
 
 
         web.getOnlineApi(api => {
-            if(api) this.availableAPIs.push(api)
+            if(api) this.availableAPIs.web = api
 
             this._onFinishLoad()
         })

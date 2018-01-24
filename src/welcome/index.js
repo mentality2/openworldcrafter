@@ -88,9 +88,7 @@ function createProjectList(ul, searchTerm) {
 
             var name = dom.element("a", file.name, "project-title")
             function onclick() {
-                file.$getApi().openProject(file.location, err => {
-                    $owf.handleError("Error Opening Project", err)
-                })
+                utils.goToPage(`editor.htm?file=${ encodeURIComponent(file.location) }&api=${ encodeURIComponent(file.$apiName) }`)
             }
             name.addEventListener("click", onclick)
             name.addEventListener("keyup", ev => {

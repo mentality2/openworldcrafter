@@ -10,7 +10,7 @@ module.exports = [
         entry: "./src/environment/web.js",
         output: {
             path: path.join(__dirname, "..", "dist", "web"),
-            filename: "src/editor.js"
+            filename: "js/bundle.js"
         },
         module: {
             rules: require("./rules.js")
@@ -19,9 +19,13 @@ module.exports = [
             new webpack.EnvironmentPlugin(['NODE_ENV', 'OWC_ORIGIN']),
             new CopyWebpackPlugin([
                 {
-                    from: "./resources/",
+                    from: "./resources",
                     to: "resources"
                 },
+                {
+                    from: "./pages",
+                    to: "pages"
+                }
             ])
         ]
     }

@@ -28,7 +28,7 @@ function createWindow(page, preload) {
     // keep the menu in dev mode so devtools works
     if(process.env.NODE_ENV !== "development") win.setMenu(null)
 
-    win.loadURL(url.format(new url.URL(page, "file:///")))
+    win.loadURL(url.format(new url.URL(path.join(__dirname, page), "file:///")))
 
     win.webContents.on("will-prevent-unload", e => {
         var choice = electron.dialog.showMessageBox({
@@ -52,14 +52,16 @@ function createWindow(page, preload) {
 }
 
 // open file handler for macos
-electron.app.on("open-file", (event, path) => {
-    createWindow(path.join(__dirname, "editor", "editor.htm") + "?file=" + encodeURIComponent(file))
-})
+// i have no idea if this works so i'm going to comment it out for now
+// electron.app.on("open-file", (event, path) => {
+//     createWindow(path.join(__dirname, "editor", "editor.htm") + "?file=" + encodeURIComponent(file))
+// })
 
 electron.app.on("ready", () => {
-    createWindow(path.join(__dirname, "index.htm"), true)
+    // createWindow(path.join(__dirname, "index.htm"), true)
+    createWindow("../pages/welcome.htm", true)
 
-    // if(args._.length && false) {
+    // if(args._.length) {
     //     for(var file of args._) {
     //         createWindow(path.join(__dirname, "editor", "editor.htm") + "?file=" + encodeURIComponent(file))
     //     }

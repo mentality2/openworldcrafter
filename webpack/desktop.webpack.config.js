@@ -6,9 +6,9 @@ const webpack = require('webpack')
 
 module.exports = [
     {
-        entry: "./src/environment/app.js",
+        entry: "./src/environment/desktop.js",
         output: {
-            path: path.join(__dirname, "..", "dist", "app"),
+            path: path.join(__dirname, "..", "dist", "desktop"),
             filename: "js/bundle.js"
         },
         module: {
@@ -24,6 +24,10 @@ module.exports = [
                 {
                     from: "./pages",
                     to: "pages"
+                },
+                {
+                    from: "./build",
+                    to: "build"
                 }
             ])
         ]

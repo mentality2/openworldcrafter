@@ -41,16 +41,19 @@ class Environment {
     */
     aggregateProjectLists(cb) {
         var lists = []
-        for(let api of this.availableAPIs) {
+        for(let apiName in this.availableAPIs) {
+            let api = this.availableAPIs[apiName]
+
             api.getProjectList(list => {
                 // tag everything with which API it came from
                 for(var item of list) {
                     // use a function so it doesn't get saved to JSON
                     item.$getApi = () => api
+                    item.$apiName = apiName
                 }
 
                 lists.push(list)
-                if(lists.length === this.availableAPIs.length) cb(aggregate())
+                if(lists.length === Object.keys(this.availableAPIs).length) cb(aggregate())
             })
         }
 

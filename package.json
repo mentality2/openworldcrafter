@@ -5,14 +5,15 @@
     "url": "https://openworldcrafter.com",
     "message": "v3.0.1 adds snippets and the character chart, along with numerous minor improvements"
   },
-  "description": "The Notepad for Authors",
-  "main": "src/entry.js",
+  "description": "The Notepad App for Writers",
+  "homepage": "https://www.openworldcrafter.com/",
+  "main": "js/entry.js",
   "author": "FlyingPiMonster <flyingpimonster@gmail.com> (https://github.com/flyingpimonster)",
   "scripts": {
     "compile-sass": "node-sass --output-style=compressed src/styles/theme_dark.sass resources/styles/theme_dark.css; node-sass --output-style=compressed src/styles/theme_light.sass resources/styles/theme_light.css",
     "compile-icons": "./scripts/compile-icons.js",
     "compile-docs": "./scripts/compile-docs.js",
-    "compile-web": "OWC_ORIGIN=\"\" webpack --config webpack/webpack.config.js",
+    "compile-web": "OWC_ORIGIN=\"\" webpack --config webpack/web.webpack.config.js",
     "compile-app-prod": "./scripts/compile-app-prod.sh",
     "compile-app": "webpack --config webpack/app.webpack.config.js",
     "compile-all": "yarn run compile-sass; yarn run compile-docs; yarn run compile-icons; yarn run compile-web",
@@ -46,10 +47,6 @@
   "build": {
     "appId": "com.openworldcrafter.desktop",
     "productName": "openworldcrafter",
-    "fileAssociations": {
-      "ext": "owc",
-      "name": "openworldcrafter project"
-    },
     "linux": {
       "category": "Office",
       "desktop": {
@@ -58,9 +55,6 @@
     },
     "mac": {
       "category": "public.app-category.productivity"
-    },
-    "nsis": {
-      "perMachine": true
     }
   },
   "optionalDependencies": {}

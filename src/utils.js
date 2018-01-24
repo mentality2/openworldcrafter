@@ -204,6 +204,13 @@ const acceptableSubobjects = {
     "timeline": ["event"]
 }
 
+function goToPage(name) {
+    var a = document.createElement("a")
+    a.href = name
+    document.body.appendChild(a)
+    a.click()
+}
+
 module.exports = {
     bytesText,
     formatTime,
@@ -216,5 +223,6 @@ module.exports = {
     compareDates,
     acceptableSubobjects,
     compareVersions,
-    colors
+    colors,
+    goToPage
 }

@@ -1,11 +1,11 @@
 "use strict"
 
-const jszip = require('jszip')
-const fs = require('fs')
+const jszip = $native.jszip
+const fs = $native.fs
 const project = require('../project')
-const uuid = require('uuid/v4')
-const path = require('path')
-const electron = require('electron')
+const uuid = $native.uuid
+const path = $native.path
+const electron = $native.electron
 const projectlist = require('./projectlist.js')
 
 const noop = () => {}

@@ -1,13 +1,14 @@
 "use strict"
 
-const electron = require('electron')
-const path = require('path')
+const electron = $native.electron
+const path = $native.path
 const disk = require("../api/disk.js")
 const web = require('../api/api.js')
-const https = require('https')
+const https = $native.https
 const project = require('../project')
 const dom = require('../dom')
 const magicuuids = require('../magicuuids')
+const utils = require('../utils.js')
 
 class DesktopEnvironment extends require("./index") {
     constructor() {
@@ -17,13 +18,15 @@ class DesktopEnvironment extends require("./index") {
             Used to switch between webview and iframe
         */
         this.iframeTag = "webview"
-        this.styleDir = path.join(__dirname, "../../resources/styles/")
+        this.styleDir = "../resources/styles/"
         this.showLogoInCorner = true
 
-        this.availableAPIs = [disk.DiskApiDescription]
+        this.availableAPIs = {
+            disk: disk.DiskApiDescription
+        }
 
         web.getOnlineApi(api => {
-            if(api) this.availableAPIs.push(api)
+            if(api) this.availableAPIs.web = api
 
             this._onFinishLoad()
         })
@@ -54,21 +57,21 @@ class DesktopEnvironment extends require("./index") {
         Open a new window with a documentation page
     */
     showDocs(page) {
-        electron.ipcRenderer.send("openWindow", path.join(__dirname, "..", "..", "resources", "docs", "index.htm") + "#" + page)
+        electron.ipcRenderer.send("openWindow", path.join("..", "resources", "docs", "index.htm") + "#" + page)
     }
 
     /*
         Display the license file
     */
     showLicense() {
-        electron.ipcRenderer.send("openWindow", path.join(__dirname, "..", "..", "resources", "docs", "license.htm"))
+        electron.ipcRenderer.send("openWindow", path.join("..", "resources", "docs", "license.htm"))
     }
 
     /*
         Open a new window with the welcome page
     */
     showWelcome() {
-        electron.ipcRenderer.send("openWindow", path.join(__dirname, "..", "index.htm"))
+        electron.ipcRenderer.send("openWindow", "../pages/welcome.htm")
     }
 
     /*
@@ -148,11 +151,12 @@ class DesktopEnvironment extends require("./index") {
         var proj = project.createProject(name, desc, magicuuids.test_project)
         proj.$store = new disk("test.owc", proj, () => {
             proj.save()
-            this.viewProject(proj)
 
             // this is bad code. we really shouldn't be accessing _projectList
             // directly but ¯\_(ツ)_/¯
             disk.DiskApiDescription._projectList.addProjectEntry(name, "test.owc", desc, () => {})
+
+            utils.goToPage("editor.htm?file=test.owc&api=disk")
         })
     }
 
