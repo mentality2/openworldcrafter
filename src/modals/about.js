@@ -10,7 +10,7 @@ function createAboutModal() {
     var iconDiv = dom.div(undefined, "no-margin-bottom")
     iconDiv.appendChild(dom.icon("openworldcrafter_full", ["fullwidth", "height-unset", "no-fill-or-stroke", "no-margin-bottom"]))
     el.appendChild(iconDiv)
-    el.appendChild(dom.span(buildinfo.getBuildString()))
+    el.appendChild(dom.element("small", buildinfo.getBuildString()))
 
     var docs = dom.div(undefined, "about-line")
     docs.appendChild(dom.icon("help", ["margin-right-20px"]))
