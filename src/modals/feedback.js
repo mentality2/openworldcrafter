@@ -108,8 +108,8 @@ function createFeedbackModal() {
     var emailLink = dom.element("a", "openworldcrafter@gmail.com")
     emailLink.addEventListener("click", () => $owf.showWebpage("mailto:openworldcrafter@gmail.com"))
 
-    var keyLink = dom.element("a", "https://openworldcrafter.com/openworldcrafter.gpg")
-    keyLink.addEventListener("click", () => $owf.showWebpage("https://openworldcrafter.com/openworldcrafter.gpg"))
+    var keyLink = dom.element("a", "https://www.openworldcrafter.com/openworldcrafter.asc")
+    keyLink.addEventListener("click", () => $owf.showWebpage("https://www.openworldcrafter.com/openworldcrafter.asc"))
 
     securitySection.appendChild(dom.span("To report a security vulnerability, please email me directly at "))
     securitySection.appendChild(emailLink)
