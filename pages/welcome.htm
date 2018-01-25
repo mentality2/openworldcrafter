@@ -7,12 +7,24 @@
     </head>
 
     <body>
-        <script type="text/javascript" src="../js/native.js"></script>
-        <script type="text/javascript" src="../js/bundle.js"></script>
+        <!-- The scripts here are a little confusing, so an explanation is
+        warranted. Basically, this first script sets up a global function, $go,
+        that is called to create and display the page. Then, the native code is
+        loaded and run. That code, in js/native.js (or platform-dependent
+        equivalent) does whatever native stuff it needs to, like injecting the
+        fs module, waiting for ondeviceready (cordova), etc. Then, it
+        dynamically loads bundle.js by creating a new script tag and adding it
+        to the page. Then, it calls $go(). The same principle applies in
+        editor.htm. -->
         <script type="text/javascript">
-            $owf.onFinishLoad(() => {
-                $owf.loadWelcome()
-            })
+            "use strict"
+
+            function $go() {
+                $owf.onFinishLoad(() => {
+                    $owf.loadWelcome()
+                })
+            }
         </script>
+        <script type="text/javascript" src="../js/native.js"></script>
     </body>
 </html>

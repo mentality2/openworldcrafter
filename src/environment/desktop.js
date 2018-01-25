@@ -18,7 +18,6 @@ class DesktopEnvironment extends require("./index") {
             Used to switch between webview and iframe
         */
         this.iframeTag = "webview"
-        this.styleDir = "../resources/styles/"
         this.showLogoInCorner = true
 
         this.availableAPIs = {
@@ -49,7 +48,6 @@ class DesktopEnvironment extends require("./index") {
     viewProject(project) {
         this.project = project
 
-        document.body.innerHTML = ""
         require("../editor")(document.body, project)
     }
 

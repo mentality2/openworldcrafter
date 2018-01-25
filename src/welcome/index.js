@@ -139,18 +139,6 @@ function createProjectList(ul, searchTerm) {
 }
 
 function createPage(el) {
-    // Prevent changing URL by drag and drop
-    window.addEventListener("dragover", e => {
-        if(e) e.preventDefault()
-    }, false)
-    window.addEventListener("drop", e => {
-        if(e) e.preventDefault()
-    }, false)
-
-    // change this back from editor settings
-    document.documentElement.style.overflow = "initial"
-    document.body.style.overflow = "initial"
-
     theme.setTheme()
     if($owf.mobile) document.body.classList.add("mobile")
 

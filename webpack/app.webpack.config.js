@@ -24,6 +24,10 @@ module.exports = [
                 {
                     from: "./pages",
                     to: "pages"
+                },
+                {
+                    from: "./build/icons",
+                    to: "icons"
                 }
             ])
         ]

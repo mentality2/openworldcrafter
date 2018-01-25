@@ -17,6 +17,11 @@ const statusbar = {
     theme_light: "#333"
 }
 
+const background = {
+    theme_dark: "#333",
+    theme_light: "#ccc"
+}
+
 function setTheme(name) {
     if(name) {
         // use given theme
@@ -39,25 +44,29 @@ function changeTheme(name) {
     if(!document.getElementById("mainStylesheet")) {
         var link = dom.element("link")
         link.rel = "stylesheet"
-        link.href = $owf.styleDir + themes[name]
+        link.href = "../resources/styles/" + themes[name]
         link.id = "mainStylesheet"
         document.head.appendChild(link)
     }
     if(!document.getElementById("emojiStylesheet")) {
         var link = dom.element("link")
         link.rel = "stylesheet"
-        link.href = $owf.styleDir + "emoji.css"
+        link.href = "../resources/styles/emoji.css"
         link.id = "emojiStylesheet"
         document.head.appendChild(link)
     }
 
     // ?rl=a is so that the stylesheet can easily be reloaded by adding a char to the url
-    if(themes[name]) document.getElementById("mainStylesheet").href = $owf.styleDir + themes[name] + "?rl=a"
+    if(themes[name]) document.getElementById("mainStylesheet").href = "../resources/styles/" + themes[name] + "?rl=a"
 
     // if StatusBar is defined, use it to set the status bar to the foreground color
     if(typeof StatusBar !== "undefined") {
         StatusBar.backgroundColorByHexString(statusbar[name] || statusbar.theme_light)
     }
+
+    // set the background color manually, because on the app it sometimes shows
+    // a white background. argh
+    document.documentElement.style.backgroundColor = background[name]
 
     // set preference
     localStorage["openworldcrafter.preferences.theme"] = name

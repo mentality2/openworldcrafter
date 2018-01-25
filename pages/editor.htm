@@ -7,38 +7,40 @@
     </head>
 
     <body>
-        <script type="text/javascript" src="../js/native.js"></script>
-        <script type="text/javascript" src="../js/bundle.js"></script>
         <script type="text/javascript">
             "use strict"
 
-            function queryParams() {
-                var params = {}
+            // to be run by the native code
+            function $go() {
+                function queryParams() {
+                    var params = {}
 
-                if(location.search) {
-                    var parts = location.search.substring(1).split('&')
+                    if(location.search) {
+                        var parts = location.search.substring(1).split('&')
 
-                    for (var i = 0; i < parts.length; i++) {
-                        var nv = parts[i].split('=')
-                        if (!nv[0]) continue
-                        params[nv[0]] = decodeURIComponent(nv[1]) || true
+                        for (var i = 0; i < parts.length; i++) {
+                            var nv = parts[i].split('=')
+                            if (!nv[0]) continue
+                            params[nv[0]] = decodeURIComponent(nv[1]) || true
+                        }
                     }
+
+                    return params
                 }
 
-                return params
+                var params = queryParams()
+
+                $owf.onFinishLoad(() => {
+                    if(params.file && params.api && $owf.availableAPIs[params.api]) {
+                        $owf.availableAPIs[params.api].openProject(params.file, err => {
+                            $owf.handleError("Error Opening Project", err)
+                        })
+                    } else {
+                        $owf.handleError("Error: No Project Specified", err)
+                    }
+                })
             }
-
-            var params = queryParams()
-
-            $owf.onFinishLoad(() => {
-                if(params.file && params.api && $owf.availableAPIs[params.api]) {
-                    $owf.availableAPIs[params.api].openProject(params.file, err => {
-                        $owf.handleError("Error Opening Project", err)
-                    })
-                } else {
-                    $owf.handleError("Error: No Project Specified", err)
-                }
-            })
         </script>
+        <script type="text/javascript" src="../js/native.js"></script>
     </body>
 </html>

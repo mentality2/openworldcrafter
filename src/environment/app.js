@@ -7,6 +7,7 @@ const fs = require('../api/fileplugin')
 const project = require('../project')
 const magicuuids = require('../magicuuids')
 const settings = require('../modals/settings')
+const utils = require('../utils.js')
 
 class AppEnvironment extends require("./index") {
     constructor() {
@@ -18,14 +19,12 @@ class AppEnvironment extends require("./index") {
             Used to switch between webview and iframe
         */
         this.iframeTag = "iframe"
-        this.styleDir = "res/resources/styles/"
 
         this.buildType = "app"
 
         this.availableAPIs = {
             app: api.AppApiDescription
         }
-
 
         web.getOnlineApi(api => {
             if(api) this.availableAPIs.web = api
@@ -51,16 +50,11 @@ class AppEnvironment extends require("./index") {
     viewProject(project) {
         this.project = project
 
-        document.body.innerHTML = ""
         require("../editor")(document.body, project)
-
-        // no ads on project pages. the welcome screen is too much already
-        if(window.$advertisements) $advertisements.hide()
     }
 
     showWelcome() {
-        document.body.innerHTML = ""
-        this.loadWelcome()
+        utils.goToPage("welcome.htm")
     }
 
     /*
@@ -68,14 +62,14 @@ class AppEnvironment extends require("./index") {
     */
     showDocs(page) {
         // _blank is still required so that the project isn't unloaded
-        cordova.InAppBrowser.open("res/resources/docs/index.htm#" + page, "_blank", "zoom=no")
+        cordova.InAppBrowser.open("../resources/docs/index.htm#" + page, "_blank", "zoom=no")
     }
 
     /*
         Display the license file
     */
     showLicense() {
-        cordova.InAppBrowser.open("res/resources/docs/license.htm", "_blank", "zoom=no")
+        cordova.InAppBrowser.open("../resources/docs/license.htm", "_blank", "zoom=no")
     }
 
     /*
