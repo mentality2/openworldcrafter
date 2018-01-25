@@ -234,9 +234,6 @@ function createPage(el) {
     }
 
     el.appendChild(main)
-
-    // ugh
-    if(window.$advertisements) $advertisements.show()
 }
 
 module.exports = createPage

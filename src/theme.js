@@ -47,17 +47,23 @@ function changeTheme(name) {
         link.href = "../resources/styles/" + themes[name]
         link.id = "mainStylesheet"
         document.head.appendChild(link)
+    } else {
+        link = document.getElementById("mainStylesheet")
     }
     if(!document.getElementById("emojiStylesheet")) {
-        var link = dom.element("link")
-        link.rel = "stylesheet"
-        link.href = "../resources/styles/emoji.css"
-        link.id = "emojiStylesheet"
-        document.head.appendChild(link)
+        var emojiLink = dom.element("link")
+        emojiLink.rel = "stylesheet"
+        emojiLink.href = "../resources/styles/emoji.css"
+        emojiLink.id = "emojiStylesheet"
+        document.head.appendChild(emojiLink)
     }
 
     // ?rl=a is so that the stylesheet can easily be reloaded by adding a char to the url
-    if(themes[name]) document.getElementById("mainStylesheet").href = "../resources/styles/" + themes[name] + "?rl=a"
+    if(themes[name]) link.href = "../resources/styles/" + themes[name] + "?rl=a"
+
+    link.addEventListener("load", () => {
+        $placeholder.removePlaceholder()
+    })
 
     // if StatusBar is defined, use it to set the status bar to the foreground color
     if(typeof StatusBar !== "undefined") {

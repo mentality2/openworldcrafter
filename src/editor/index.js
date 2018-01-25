@@ -41,6 +41,8 @@ function createPage(el, proj) {
     document.documentElement.style.overflow = "hidden"
     document.body.style.overflow = "hidden"
 
+    theme.setTheme()
+
     var ref = {}
 
     var mainModalContainer = dom.div()
@@ -57,8 +59,6 @@ function createPage(el, proj) {
 
     ref.project = proj
     document.title = proj.info.name + " - openworldcrafter"
-
-    theme.setTheme()
 
     var projectInfo = projectsettings.createProjectSettingsModal(proj, ref)
     var aboutModal = about.createAboutModal()
