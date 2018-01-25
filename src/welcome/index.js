@@ -148,7 +148,7 @@ function createPage(el) {
     // margin-top-3px to avoid clipping under the welcome bar
     var toolbar = dom.div(undefined, ["margin-top-3px", "flexbox"])
 
-    var search = dom.span(undefined, ["flexitem-wide", "padding-right"])
+    var search = dom.span(undefined, ["flexitem-wide", "padding-right-3px"])
     var searchInput = dom.inputText(undefined, "Search Projects", "fullwidth")
     searchInput.addEventListener("input", () => {
         createProjectList(recentList, searchInput.value)
