@@ -164,9 +164,7 @@ class DesktopEnvironment extends require("./index") {
                 title: "Open Project",
                 properties: ["openFile"]
             }, filenames => {
-                disk.DiskApiDescription.openProject(filenames[0], err => {
-                    this.handleError("Error Opening Project", err)
-                })
+                utils.launchEditor(filenames[0], "disk")
             })
         } catch(e) {
             this.handleError("Error Opening Project", e)
