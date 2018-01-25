@@ -142,7 +142,7 @@ class OnlineApiDescription extends require("./apidescription.js") {
 
     openProject(location, onerr) {
         var appapi = new OnlineProjectStore(location, proj => {
-            utils.launchEditor(location, "web")
+            $owf.viewProject(proj)
         }, err => {
             if(err === "project version mismatch, please update openworldcrafter") {
                 $owf.handleError("Update Required", "This project was created in a newer version of openworldcrafter. Please update to view it so data isn't lost.")
