@@ -148,13 +148,13 @@ class DesktopEnvironment extends require("./index") {
 
         var proj = project.createProject(name, desc, magicuuids.test_project)
         proj.$store = new disk("test.owc", proj, () => {
-            proj.save()
-
             // this is bad code. we really shouldn't be accessing _projectList
             // directly but ¯\_(ツ)_/¯
             disk.DiskApiDescription._projectList.addProjectEntry(name, "test.owc", desc, () => {})
 
-            utils.goToPage("editor.htm?file=test.owc&api=disk")
+            proj.save(true, () => {
+                utils.launchEditor("test.owc", "disk")
+            })
         })
     }
 
