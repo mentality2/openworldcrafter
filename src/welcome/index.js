@@ -88,7 +88,7 @@ function createProjectList(ul, searchTerm) {
 
             var name = dom.element("a", file.name, "project-title")
             function onclick() {
-                utils.goToPage(`editor.htm?file=${ encodeURIComponent(file.location) }&api=${ encodeURIComponent(file.$apiName) }`)
+                utils.launchEditor(file.location, file.$apiName)
             }
             name.addEventListener("click", onclick)
             name.addEventListener("keyup", ev => {

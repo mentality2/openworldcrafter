@@ -3,6 +3,7 @@
 const webrequest = require('./webrequest.js')
 const project = require('../project')
 const projectlist = require('./projectlist')
+const utils = require('../utils.js')
 const noop = () => {}
 
 /*
@@ -141,7 +142,7 @@ class OnlineApiDescription extends require("./apidescription.js") {
 
     openProject(location, onerr) {
         var appapi = new OnlineProjectStore(location, proj => {
-            $owf.viewProject(proj)
+            utils.launchEditor(location, "web")
         }, err => {
             if(err === "project version mismatch, please update openworldcrafter") {
                 $owf.handleError("Update Required", "This project was created in a newer version of openworldcrafter. Please update to view it so data isn't lost.")

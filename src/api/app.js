@@ -4,6 +4,7 @@ const project = require('../project')
 const uuid = require('uuid/v4')
 const fs = require('./fileplugin')
 const projectlist = require('./projectlist.js')
+const utils = require('../utils.js')
 
 const noop = () => {}
 
@@ -148,9 +149,10 @@ class AppApiDescription extends require("./apidescription.js") {
         var proj = project.createProject(name, desc, uuid)
 
         proj.$store = new AppProjectStore(proj.info.uuid, proj, () => {
-            proj.save()
             this._getProjectList(list => list.addProjectEntry(proj.info.name, proj.info.uuid, proj.info.description))
-            $owf.viewProject(proj)
+            proj.save(true, () => {
+                utils.launchEditor(proj.info.uuid, "app")
+            })
         })
     }
 

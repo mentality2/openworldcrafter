@@ -7,6 +7,7 @@ const uuid = $native.uuid
 const path = $native.path
 const electron = $native.electron
 const projectlist = require('./projectlist.js')
+const utils = require('../utils.js')
 
 const noop = () => {}
 
@@ -155,9 +156,10 @@ class DiskApiDescription extends require("./apidescription.js") {
         }, filename => {
             var proj = project.createProject(name, desc)
             proj.$store = new DiskProjectStore(filename, proj, () => {
-                proj.save()
                 this._projectList.addProjectEntry(name, filename, desc)
-                $owf.viewProject(proj)
+                proj.save(true, () => {
+                    utils.launchEditor(filename, "disk")
+                })
             })
         })
     }

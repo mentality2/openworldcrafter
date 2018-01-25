@@ -292,10 +292,15 @@ class Project {
                 this.$_dirty = false
                 document.title = this.info.name + " - openworldcrafter"
                 this.$saveListener()
-                { (cb || noop)() }
+                ;(cb || noop)()
             }, (errmsg, button, buttonAction) => this.$saveListener(errmsg, button, buttonAction))
         }
-        else console.log("Skipping save as no changes have been made")
+        else {
+            console.log("Skipping save as no changes have been made")
+
+            // call the callback anyway
+            ;(cb || noop)()
+        }
     }
 
     isEditable() {

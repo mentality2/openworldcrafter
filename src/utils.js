@@ -211,18 +211,15 @@ function goToPage(name) {
     a.click()
 }
 
+/*
+    Changes to the editor page
+*/
+function launchEditor(file, api) {
+    goToPage(`editor.htm?file=${ encodeURIComponent(file) }&api=${ encodeURIComponent(api) }`)
+}
+
 module.exports = {
-    bytesText,
-    formatTime,
-    removeAllChildren,
-    defaultCalendar,
-    getDateField,
-    setDateField,
-    timesOfDay,
-    queryParams,
-    compareDates,
-    acceptableSubobjects,
-    compareVersions,
-    colors,
-    goToPage
+    bytesText, formatTime, removeAllChildren, defaultCalendar, getDateField,
+    setDateField, timesOfDay, queryParams, compareDates, acceptableSubobjects,
+    compareVersions, colors, goToPage, launchEditor
 }

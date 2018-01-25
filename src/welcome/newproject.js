@@ -22,7 +22,7 @@ module.exports = function() {
 
     actionBar.appendChild(cancel)
 
-    var boringButton = $owf.availableAPIs.length === 1
+    var boringButton = Object.keys($owf.availableAPIs).length === 1
     for(var methodName in $owf.availableAPIs) {
         var method = $owf.availableAPIs[methodName]
         var button = dom.button(boringButton ? undefined : method.buttonIcon, boringButton ? "Save" : method.buttonText, () => {
