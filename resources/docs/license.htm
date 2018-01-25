@@ -10,15 +10,20 @@
         <link rel="stylesheet" id="mainStylesheet" />
     </head>
 
-    <body><div>
+    <body class="website"><div>
         <script>
             var theme = localStorage["openworldcrafter.preferences.theme"] || "theme_light"
             document.getElementById("mainStylesheet").href=`../styles/${ theme }.css`
         </script>
 
-        <div class="container column center-column markdown">
-        <img src="logos/header.svg" class="docs-logo"/>
-        <h1>License</h1>
+        <header>
+            <div class="column center-column">
+                <img src="logos/header.svg" />
+                <h1>License</h1>
+            </div>
+        </header>
+
+        <main class="container column center-column markdown padding-top">
         <style type="text/css">
         /* The following code is added by mdx_elementid.py
            It was originally lifted from http://subversion.apache.org/style/site.css */
@@ -208,7 +213,7 @@
         WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
         See the License for the specific language governing permissions and
         limitations under the License.
-        </pre></div></div>
+        </pre></div></main>
 
         <script type="text/javascript">
             // sometimes the background shows up as white on the android in app

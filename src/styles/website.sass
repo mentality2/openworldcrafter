@@ -1,8 +1,23 @@
 body.website
     padding: 0
-    // the main stylesheet sets this to flex, which causes errors
-    // in the footer in Chrome
-    display: block
+
+    // if the content is too short, make the part below the footer dark
+    background-color: #333
+    &>div
+        background-color: #ccc
+
+    main
+        padding: 0 1em
+
+    header
+        padding: 0 1em
+        background-color: $foreground
+        color: $background
+        h1
+            font-size: 2.5em
+        img
+            width: 100%
+            max-width: 100% !important
 
     .main-nav
         font-size: 1.5em
@@ -11,21 +26,19 @@ body.website
     header, footer
         background-color: #333
         color: #ccc
-        padding: 1em
 
-    header .header-logo
-        margin: 0
-        max-width: 100%
-        min-width: 75%
-        width: 700px
+    footer
+        padding: 1em
+        margin-top: 1em
 
     .downloads
         text-align: center
-        margin: 1em
 
-    .downloads div
-        display: block
-        transition: opacity 400ms
+        h3
+            font-size: 1.3em
+        div
+            display: block
+            transition: opacity 400ms
 
     .download-button
         padding: 1em
@@ -54,7 +67,6 @@ body.website
     .downloads-show-linux .downloads-linux
         opacity: 1
         height: unset
-
 
     .modal-wrapper .modal, .modal-wrapper .modal-overlay
         background-color: #333
@@ -129,15 +141,6 @@ body.website
     .screenshots-show-mobile .screenshot-desktop
         display: none
 
-
-    @media screen and (max-width: 768px)
-        header h1, header p
-            margin-left: 1rem
-            margin-right: 1rem
-
-        main
-            margin: 2em 2em
-
     footer
         padding: 1em
         display: flex
@@ -156,14 +159,29 @@ body.website
         margin: 0 1em 0 0 !important
 
     &.website-homepage
-        header h1
-            font-size: 3em
-            margin-left: 1em
+        header
+            padding: 1em
+            h1
+                font-size: 3em
+                margin-left: 1em
+            img
+                margin: 0
+                max-width: 100%
+                min-width: 75%
+                width: 700px
+            p
+                font-size: 1.2em
+                margin: 1em 5em 1em 7em
 
-        header p
-            font-size: 1.2em
-            margin: 1em 5em 1em 7em
         main
             margin: 2em 5em
             h2
                 font-size: 2em
+
+        @media screen and (max-width: 768px)
+            header h1, header p
+                margin-left: 1rem
+                margin-right: 1rem
+
+            main
+                margin: 2em 2em
