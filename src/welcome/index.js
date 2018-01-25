@@ -120,7 +120,7 @@ function createProjectList(ul, searchTerm) {
 
             if(!menuEmpty) item.appendChild(more)
 
-            if($owf.availableAPIs.length > 1) {
+            if(Object.keys($owf.availableAPIs).length > 1) {
                 if(file.$getApi().buttonIcon) {
                     var iconWrapper = dom.span(undefined, "float-right")
                     var icon = dom.icon(file.$getApi().buttonIcon)
