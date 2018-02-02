@@ -1,6 +1,6 @@
 [
     {
-        "text": "Writing late at night? Dark Theme is available from the dropdown menu."
+        "text": "Writing late at night? Dark Theme is available in Settings."
     },
     {
         "text": "Do you love spreadsheets as much as I do? Probably not, but you can still use Character Sheets! They're a great way to organize data about your characters.",
@@ -10,7 +10,7 @@
         "text": "Thought of an awesome one-liner, but afraid you'll forget it? Keep it in your Snippets page."
     },
     {
-        "text": "openworldcrafter is (mostly) open source! If you'd like to contribute tutorials, documentation, bug reports, or even code,",
+        "text": "openworldcrafter is open source! If you'd like to help make it better (even if you can't code),",
         "link": ["come on over to GitHub!", "web", "https://github.com/openworldcrafter/openworldcrafter"]
     },
     {
@@ -20,5 +20,13 @@
     {
         "text": "Love openworldcrafter? Hate it? Found a bug? Want a feature?",
         "link": ["Your feedback is appreciated!", "feedback"]
+    },
+    {
+        "text": "Losing track of time? Use a timeline! It'll sort your events for you, and it even supports custom calendars.",
+        "link": ["Learn more!", "docs", "timelines_and_events"]
+    },
+    {
+        "text": "Did you know you can add headers, lists, quotes, and even tables to your notes?",
+        "link": ["Learn more!", "docs", "markdown_formatting"]
     }
 ]
