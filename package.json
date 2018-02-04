@@ -1,9 +1,9 @@
 {
   "name": "openworldcrafter",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "updateInfo": {
     "url": "https://openworldcrafter.com",
-    "message": "v3.0.1 adds snippets and the character chart, along with numerous minor improvements"
+    "message": "v4.0.0 includes many minor improvements to the UI"
   },
   "description": "The Notepad App for Writers",
   "homepage": "https://www.openworldcrafter.com/",
