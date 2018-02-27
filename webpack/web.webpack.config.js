@@ -25,6 +25,10 @@ module.exports = [
                 {
                     from: "./pages",
                     to: "pages"
+                },
+                {
+                    from: "./js/placeholder.js",
+                    to: "js/placeholder.js"
                 }
             ])
         ]
