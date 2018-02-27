@@ -201,6 +201,11 @@ const acceptableSubobjects = {
         "character",
         "timeline"
     ],
+    "event": [
+        "note",
+        "character",
+        "timeline"
+    ],
     "timeline": ["event"]
 }
 
