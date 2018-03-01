@@ -31,8 +31,20 @@ body.website
         padding: 1em
         margin-top: 1em
 
+        small
+            flex: 1 1 10em
+
     .downloads
         text-align: center
+
+        .play-badge img
+            min-width: unset !important
+            width: unset !important
+
+            // 170 / 250 * 3. Adjusts for the transparent margin aronud the image
+            height: 4.41176470588em
+            display: inline !important
+            vertical-align: middle
 
         h3
             font-size: 1.3em
@@ -143,20 +155,26 @@ body.website
 
     footer
         padding: 1em
+        padding-bottom: 0
         display: flex
         flex-wrap: wrap
+
+        .footer-logo
+            max-height: 3em
+            max-width: 100%
+            margin: 0 1em 1em 0 !important
         nav
             margin-right: 2em
+            margin-bottom: 1em
         .about-line
             color: #ccc
             display: block
             font-size: 1em
             &:hover
                 color: $accent
+        small
+            margin-bottom: 1em
 
-    .footer-logo
-        height: 3em
-        margin: 0 1em 0 0 !important
 
     &.website-homepage
         header
