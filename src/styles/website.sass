@@ -30,14 +30,20 @@ body.website
     .downloads
         text-align: center
 
-        .play-badge img
-            min-width: unset !important
-            width: unset !important
-
-            // 170 / 250 * 3. Adjusts for the transparent margin aronud the image
-            height: 4.41176470588em
-            display: inline !important
+        .play-badge
+            height: 0
+            display: inline-block
             vertical-align: middle
+
+            img
+                min-width: unset !important
+                width: unset !important
+
+                // 170 / 250 * 3. Adjusts for the transparent margin aronud the image
+                height: 4.41176470588em
+                display: inline !important
+                vertical-align: middle
+                transform: translate(0, -50%)
 
         h3
             font-size: 1.3em
