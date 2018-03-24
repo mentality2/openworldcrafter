@@ -23,17 +23,17 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
+    "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.0",
-    "copy-webpack-plugin": "^4.0.1",
-    "electron": "^1.6.11",
-    "electron-builder": "^19.20.1",
-    "node-sass": "^4.5.3",
-    "webpack": "^3.5.5"
+    "copy-webpack-plugin": "^4.5.1",
+    "electron": "^1.8.4",
+    "electron-builder": "^20.6.2",
+    "node-sass": "^4.8.3",
+    "webpack": "^4.2.0"
   },
   "dependencies": {
     "jszip": "^3.1.3",
-    "markdown-it": "^8.3.2",
+    "markdown-it": "^8.4.1",
     "markdown-it-container": "^2.0.0",
     "markdown-it-emoji": "^1.4.0",
     "uuid": "^3.1.0"
