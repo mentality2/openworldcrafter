@@ -45,6 +45,7 @@ class TreeView {
 
                     confirmDeleteText.textContent = `Are you sure you want to delete ${ deleteObject.name }`
                     if(Object.keys(deleteObject.subobjects).length) confirmDeleteText.textContent += " and anything in it?"
+                    else if(deleteObject.type === "tag") confirmDeleteText.textContent += "? This will remove the tag from all other pages."
                     else confirmDeleteText.textContent += "?"
 
                     confirmDelete.wrapper.classList.add("modal-visible")

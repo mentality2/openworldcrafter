@@ -32,6 +32,8 @@ class ProjectObject {
         this.notes = serial.notes
         this.metadata = serial.metadata || {}
         this.tags = serial.tags || []
+        // filter out tags that no longer exist
+        this.tags = this.tags.filter(tag => this.$project.tags[tag])
         this.relationships = serial.relationships || {}
 
         this.properties = serial.properties || {}
@@ -175,7 +177,31 @@ class ProjectVirtualObjects {
             type: "tagfolder",
             $project: project,
             metadata: {},
-            isEditable: no
+            isEditable: no,
+
+            removeChild: function(id) {
+                var child
+                for(var object in this.subobjects) {
+                    if(this.subobjects[object].id === id) {
+                        child = this.subobjects[object]
+                        this.subobjects.splice(object, 1)
+                    }
+                }
+
+                project.markDirty()
+                for(var object of project.getObjectsByTag(id)) {
+                    object.removeTag(id)
+                }
+                if(child) delete project.$tagMap[child.name]
+            },
+
+            addObject: function(type, name) {
+                if(type !== "tag") return
+
+                return project.getTagByName(name)
+
+                return obj
+            }
         }
 
         // snippets
@@ -214,27 +240,32 @@ class Project {
         this.info = new ProjectInfo(serial.info)
         this.$store = store
 
+
         this.$allObjects = {}
         // list of all properties used on objects
         this.$propertyList = []
         // highlight colors used in character sheets
         this.propertyColors = serial.propertyColors || {}
 
+
+        // tags must be loaded before other objects
+        this.tags = []
+        this.$tagMap = {}
+
+        this.$virtualObjects = new ProjectVirtualObjects(this)
+
+        for(var tagObj of serial.tags || []) {
+            this.tags.push(new ProjectObject(tagObj, this, this.$virtualObjects.tags))
+            this.$tagMap[tagObj.name] = tagObj.id
+        }
+
+
         this.projroot = new ProjectObject(serial.projroot, this, null)
 
         this.assets = serial.assets || {}
         this.options = serial.options
 
-        this.tags = []
-        this.$tagMap = {}
-        for(var tagObj of serial.tags || []) {
-            this.tags.push(new ProjectObject(tagObj, this, null))
-            this.$tagMap[tagObj.name] = tagObj.id
-        }
-
         this.snippets = serial.snippets || []
-
-        this.$virtualObjects = new ProjectVirtualObjects(this)
 
         this.$_dirty = false
 
@@ -326,7 +357,7 @@ class Project {
 
         var newTag = new ProjectObject({
             type: "tag", name
-        }, this, null)
+        }, this, this.$virtualObjects.tags)
         this.tags.push(newTag)
         this.$tagMap[name] = newTag.id
         return newTag

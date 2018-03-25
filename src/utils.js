@@ -206,7 +206,8 @@ const acceptableSubobjects = {
         "character",
         "timeline"
     ],
-    "timeline": ["event"]
+    "timeline": ["event"],
+    "tagfolder": ["tag"]
 }
 
 function goToPage(name) {
