@@ -3,6 +3,7 @@
 const utils = require('../utils.js')
 const uuid = require('uuid/v4')
 const thispackage = require("../../package.json")
+const magicuuids = require('../magicuuids.json')
 
 const noop = () => {}
 
@@ -171,7 +172,7 @@ class ProjectVirtualObjects {
         // tags
         this.tags = {
             // magic uuid
-            id: "919819c8-c77e-40e8-9a43-c621391a8282",
+            id: magicuuids.vobject_tags,
             name: "Tags",
             subobjects: project.tags,
             type: "tagfolder",
@@ -207,7 +208,7 @@ class ProjectVirtualObjects {
         // snippets
         this.snippets = {
             // magic uuid
-            id: "ecff73ff-2899-4077-9902-435d044c2b01",
+            id: magicuuids.vobject_snippets,
             name: "Snippets",
             subobjects: [],
             type: "snippets",
@@ -219,7 +220,7 @@ class ProjectVirtualObjects {
         // character sheet
         this.characterChart = {
             // magic uuid
-            id: "43ef5cb2-9f56-4cb2-87e1-16d55d46acc9",
+            id: magicuuids.vobject_characterchart,
             name: "Character Chart",
             subobjects: [],
             type: "characterchart",
