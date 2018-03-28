@@ -11,7 +11,7 @@ const noop = () => {}
  */
 
 class OnlineProjectStore extends require("./") {
-    constructor(projectID, readycb) {
+    constructor(projectID, readycb, errcb) {
         super()
 
         this._pid = projectID
@@ -19,7 +19,12 @@ class OnlineProjectStore extends require("./") {
         this.getProjectFile(obj => {
             this.getMeFile(me => {
                 this.editable = me.canEdit
-                readycb(new project.Project(obj, this))
+		try {
+		    var project = new project.Project(obj, this)
+                    readycb(project)
+		} catch(e) {
+		    errcb(e)
+                }
             })
         })
     }

@@ -18,6 +18,7 @@ html.style.backgroundRepeat="no-repeat"
 html.style.height = html.style.width = "100%"
 
 function removePlaceholder() {
+    console.log("Removing placeholder")
     document.body.style.removeProperty("display")
     html.style.removeProperty("background")
     html.style.removeProperty("height")
