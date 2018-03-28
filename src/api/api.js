@@ -20,8 +20,8 @@ class OnlineProjectStore extends require("./") {
             this.getMeFile(me => {
                 this.editable = me.canEdit
 		try {
-		    var project = new project.Project(obj, this)
-                    readycb(project)
+		    var proj = new project.Project(obj, this)
+                    readycb(proj)
 		} catch(e) {
 		    errcb(e)
                 }
