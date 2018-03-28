@@ -10,9 +10,6 @@ const dom = require('../dom')
 const magicuuids = require('../magicuuids')
 const utils = require('../utils.js')
 
-const theme = require('../theme.js')
-theme.setTheme()
-
 class DesktopEnvironment extends require("./index") {
     constructor() {
         super()
