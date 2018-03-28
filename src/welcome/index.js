@@ -234,6 +234,8 @@ function createPage(el) {
     }
 
     el.appendChild(main)
+
+    $placeholder.removePlaceholder()
 }
 
 module.exports = createPage

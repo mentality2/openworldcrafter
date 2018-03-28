@@ -61,10 +61,6 @@ function changeTheme(name) {
     // ?rl=a is so that the stylesheet can easily be reloaded by adding a char to the url
     if(themes[name]) link.href = "../resources/styles/" + themes[name] + "?rl=a"
 
-    link.addEventListener("load", () => {
-        $placeholder.removePlaceholder()
-    })
-
     // if StatusBar is defined, use it to set the status bar to the foreground color
     if(typeof StatusBar !== "undefined") {
         StatusBar.backgroundColorByHexString(statusbar[name] || statusbar.theme_light)

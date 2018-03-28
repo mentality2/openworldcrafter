@@ -1,6 +1,5 @@
 "use strict"
 
-const theme = require('../theme.js')
 const menu = require('../menu')
 const api = require('../api')
 const project = require('../project')
@@ -40,8 +39,6 @@ function createPage(el, proj) {
     // search bar. this is also why <html> is hidden along with <body>
     document.documentElement.style.overflow = "hidden"
     document.body.style.overflow = "hidden"
-
-    theme.setTheme()
 
     var ref = {}
 
@@ -175,6 +172,8 @@ function createPage(el, proj) {
     shortcuts.createShortcut("e", () => tabview.obj.toggleMode())
 
     el.appendChild(container)
+
+    $placeholder.removePlaceholder()
 }
 
 module.exports = createPage

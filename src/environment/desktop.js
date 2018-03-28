@@ -10,6 +10,9 @@ const dom = require('../dom')
 const magicuuids = require('../magicuuids')
 const utils = require('../utils.js')
 
+const theme = require('../theme.js')
+theme.setTheme()
+
 class DesktopEnvironment extends require("./index") {
     constructor() {
         super()
@@ -88,6 +91,9 @@ class DesktopEnvironment extends require("./index") {
 
     handleError(title, error, debug) {
         // TODO: Modal error message
+
+        $placeholder.removePlaceholder()
+
         if(!this._desktop_error_modal) {
             var modal = dom.modal("")
             modal.id = "desktop-error-modal"
