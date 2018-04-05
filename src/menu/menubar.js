@@ -26,6 +26,10 @@ class Menubar {
     addMenuItem(top, name, callback) {
         var item = dom.element("a", name)
         item.className = "menubar-top-content-link"
+
+        if(name === "Dark Theme") item.classList.add("theme-not-dark")
+        else if(name === "Light Theme") item.classList.add("theme-not-light")
+
         item.onclick = () => {
             // call the callback
             callback()
