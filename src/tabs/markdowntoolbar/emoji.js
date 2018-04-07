@@ -26,7 +26,7 @@ function createEmojiWindow(insertCallback) {
             name.value = `:${emoji}:`
         })
         button.addEventListener("click", event => {
-            insertCallback(`:${emoji}:`)
+            insertCallback(list[emoji])
             el.classList.remove("shown")
         })
 
