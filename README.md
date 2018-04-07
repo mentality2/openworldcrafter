@@ -28,7 +28,7 @@ to contribute a feature, please create an issue *before* you start working on
 it.
 
 # Copyright Notice
-Copyright 2017-2018 FlyingPiMonster <flyingpimonster@gmail.com>
+Copyright 2017-2018 FlyingPiMonster <contact@openworldcrafter.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use these files except in compliance with the License.

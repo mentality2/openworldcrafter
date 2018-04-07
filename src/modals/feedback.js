@@ -22,13 +22,13 @@ function showOopsModal(type, body) {
 
     var contents = dom.div()
     contents.appendChild(dom.span("Something went wrong, and your feedback couldn't be submitted. "))
-    var url = `mailto:openworldcrafter@gmail.com?subject=${ encodeURIComponent(type) }%20for%20openworldcrafter&body=${ encodeURIComponent(body) }`
+    var url = `mailto:contact@openworldcrafter.com?subject=${ encodeURIComponent(type) }%20for%20openworldcrafter&body=${ encodeURIComponent(body) }`
 
     var emailLink = dom.element("a", "Click here to email me directly. ")
     emailLink.addEventListener("click", () => $owf.showWebpage(url))
     contents.appendChild(emailLink)
 
-    contents.appendChild(dom.span("If that doesn't work, my email address is openworldcrafter@gmail.com."))
+    contents.appendChild(dom.span("If that doesn't work, my email address is contact@openworldcrafter.com."))
 
     modal.appendChild(contents)
     modal.show()
@@ -105,8 +105,8 @@ function createFeedbackModal() {
 
     var securitySection = dom.div(undefined, ["invisible", "no-margin-bottom"])
 
-    var emailLink = dom.element("a", "openworldcrafter@gmail.com")
-    emailLink.addEventListener("click", () => $owf.showWebpage("mailto:openworldcrafter@gmail.com"))
+    var emailLink = dom.element("a", "contact@openworldcrafter.com")
+    emailLink.addEventListener("click", () => $owf.showWebpage("mailto:contact@openworldcrafter.com"))
 
     var keyLink = dom.element("a", "https://www.openworldcrafter.com/openworldcrafter.asc")
     keyLink.addEventListener("click", () => $owf.showWebpage("https://www.openworldcrafter.com/openworldcrafter.asc"))

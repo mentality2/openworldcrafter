@@ -8,7 +8,7 @@
   "description": "The Notepad App for Writers",
   "homepage": "https://www.openworldcrafter.com/",
   "main": "js/entry.js",
-  "author": "FlyingPiMonster <flyingpimonster@gmail.com> (https://github.com/flyingpimonster)",
+  "author": "FlyingPiMonster <contact@openworldcrafter.com> (https://github.com/flyingpimonster)",
   "scripts": {
     "compile-sass": "node-sass --output-style=compressed src/styles/theme_dark.sass resources/styles/theme_dark.css; node-sass --output-style=compressed src/styles/theme_light.sass resources/styles/theme_light.css",
     "compile-icons": "./scripts/compile-icons.js",
