@@ -37,9 +37,9 @@ function createEmbedModal(insertCb) {
     modalActions.appendChild(cancel)
     modalActions.appendChild(insert)
 
-    modal.modal.appendChild(url)
-    modal.modal.appendChild(preview)
-    modal.modal.appendChild(modalActions)
+    modal.appendChild(url)
+    modal.appendChild(preview)
+    modal.appendChild(modalActions)
 
     return modal
 }

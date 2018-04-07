@@ -44,7 +44,6 @@ function createMoreMenu() {
 
     var about = dom.div("About")
     about.addEventListener("click", () => {
-        aboutModal.addToContainer()
         aboutModal.show()
     })
 
@@ -108,7 +107,6 @@ function createProjectList(ul, searchTerm) {
                     var deleteModal = deleteproject(file.$getApi(), file.location, file.name, cb => {
                         createProjectList(ul)
                     })
-                    deleteModal.addToContainer()
                     deleteModal.show()
                 }, "nobutton")
 
@@ -202,7 +200,6 @@ function createPage(el) {
 
         var loginOnline = dom.button(undefined, "Log In Online", () => {
             var deviceLoginModal = devicelogin.createDeviceLoginModal()
-            deviceLoginModal.addToContainer()
             deviceLoginModal.show()
         })
         updateMessage.appendChild(loginOnline)

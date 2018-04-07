@@ -62,9 +62,9 @@ function createModal(obj, cb) {
     char2Name.appendChild(linkSearch)
     char2.appendChild(char2Name)
 
-    modal.modal.appendChild(selectDiv)
-    modal.modal.appendChild(char1)
-    modal.modal.appendChild(char2)
+    modal.appendChild(selectDiv)
+    modal.appendChild(char1)
+    modal.appendChild(char2)
 
     var char1RoleEdit
     var char2RoleEdit

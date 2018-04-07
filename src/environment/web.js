@@ -83,7 +83,7 @@ class WebEnviroment extends require("./") {
             var errorCode = "Unknown error"
         }
 
-        var modal = dom.modal("Error")
+        var modal = dom.modal("Error", true)
 
         var paragraph = dom.div()
         var modalActions = dom.div(undefined, "modal-actions")
@@ -98,7 +98,7 @@ class WebEnviroment extends require("./") {
             case "file is not an image":
                 paragraph.textContent = "Attachments must be images."
 
-                modalActions.appendChild(dom.button(undefined, "Cancel", () => modal.wrapper.remove()))
+                modalActions.appendChild(dom.button(undefined, "Cancel", () => modal.hide()))
 
                 break
             case "no permissions on project":
@@ -126,10 +126,9 @@ class WebEnviroment extends require("./") {
                 break
         }
 
-        modal.modal.appendChild(paragraph)
-        modal.modal.appendChild(modalActions)
+        modal.appendChild(paragraph)
+        modal.appendChild(modalActions)
 
-        document.body.appendChild(modal.wrapper)
         modal.show()
     }
 

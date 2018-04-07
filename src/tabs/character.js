@@ -9,9 +9,6 @@ function createCharacterTab(object, ref) {
     common.nameEditor(object, el, ref)
     common.notes(object, el, ref)
 
-    // el.appendChild(dom.h2("Properties"))
-    // el.appendChild(dom.propertyTable(object.properties))
-
     return el
 }
 

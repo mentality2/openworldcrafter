@@ -4,21 +4,30 @@ const dom = require('../dom.js')
 
 class AttachmentViewer {
     constructor(project) {
-        this.el = dom.modal()
         this._project = project
 
-        this._img = dom.element("img")
-        this.el.modal.appendChild(this._img)
+        if(!window.$images) {
+            this._modal = dom.modal()
+            this._img = dom.element("img")
+            this._modal.appendChild(this._img)
+        }
     }
 
-    setAttachment(id) {
-        var assetInfo = this._project.getAssetInfo(id)
-        this.el.setTitle(assetInfo.name)
+    showAttachment(id) {
+        if(window.$images) {
+            // use the native plugin to show the image
+            this._project.getAssetUrl(attachment, window.$images.showImage)
+        } else {
+            // show the image in the modal
+            var assetInfo = this._project.getAssetInfo(id)
+            this._modal.setTitle(assetInfo.name)
 
-        this._img.src = ""
-        this._project.getAssetUrl(id, url => {
-            this._img.src = url
-        })
+            this._img.src = ""
+            this._project.getAssetUrl(id, url => {
+                this._img.src = url
+            })
+            this._modal.show()
+        }
     }
 }
 

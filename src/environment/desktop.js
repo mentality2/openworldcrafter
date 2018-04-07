@@ -104,10 +104,8 @@ class DesktopEnvironment extends require("./index") {
             })
             actions.appendChild(ok)
 
-            modal.modal.appendChild(text)
-            modal.modal.appendChild(actions)
-
-            modal.addToContainer()
+            modal.appendChild(text)
+            modal.appendChild(actions)
 
             this._desktop_error_modal = modal
             this._desktop_error_modal_text = text

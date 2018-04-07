@@ -120,7 +120,6 @@ function createMarkdownToolbar(editorArea, editCb, object) {
         insertRawText(editorArea, text)
         edit()
     })
-    el.appendChild(embedModal.wrapper)
 
     var linkWrapper = dom.span()
     var link = dom.button("link", undefined, event => {
@@ -177,8 +176,6 @@ function createMarkdownToolbar(editorArea, editCb, object) {
 
         linkModal.appendChild(linkSearch)
         linkModal.appendChild(linkModalActions)
-
-        linkModal.addToContainer()
     } else {
         linkSearch.classList.add("invisible")
 

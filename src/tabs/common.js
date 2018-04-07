@@ -37,10 +37,10 @@ function nameEditor(object, el, ref) {
 
         var editNameLabel = dom.element("label", "Name:")
         var editName = dom.inputText(object.name)
-        editName.onchange = () => {
+        editName.addEventListener("input", () => {
             object.name = editName.value
             object.markDirty()
-        }
+        })
 
         editNameSpan.appendChild(editNameLabel)
         editNameSpan.appendChild(editName)
@@ -69,6 +69,8 @@ function notes(object, el, ref) {
         notesText.placeholder = "Add notes here"
 
         function onEdit() {
+            object.markDirty()
+
             if(notesText.value) {
                 object.notes = notesText.value
                 markdown.rerender(notes, notesText.value, ref)
@@ -76,8 +78,6 @@ function notes(object, el, ref) {
                 notes.innerText = ""
                 delete object.notes
             }
-
-            object.markDirty()
 
             placeholderHelpCheck()
         }

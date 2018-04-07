@@ -25,64 +25,46 @@ class TreeView {
             this._toolbar = dom.div("", "toolbar")
             this._dom.appendChild(this._toolbar)
 
-            this._newObjectModal = newobject(this)
-
-            this._addButton = dom.button("add", null, event => {
+            this._addButton = dom.button("add", undefined, event => {
                 event.stopPropagation()
                 if(this._addButton.classList.contains("button-disabled")) return
 
-                this._newObjectModal.show()
+                this.showNewObjectModal()
             })
-
-            this._newObjectModal.addToContainer()
 
             this._removeButton = dom.button("remove", null, event => {
                 event.stopPropagation()
                 if(this._removeButton.classList.contains("button-disabled")) return
 
                 if(this._selected) {
+                    var confirmDelete = dom.modal("Confirm Delete", true)
                     var deleteObject = this._selected.obj
 
-                    confirmDeleteText.textContent = `Are you sure you want to delete ${ deleteObject.name }`
-                    if(Object.keys(deleteObject.subobjects).length) confirmDeleteText.textContent += " and anything in it?"
-                    else if(deleteObject.type === "tag") confirmDeleteText.textContent += "? This will remove the tag from all other pages."
-                    else confirmDeleteText.textContent += "?"
+                    var confirmDeleteText = `Are you sure you want to delete ${ deleteObject.name }`
+                    if(Object.keys(deleteObject.subobjects).length) confirmDeleteText += " and anything in it?"
+                    else if(deleteObject.type === "tag") confirmDeleteText += "? This will remove the tag from all other pages."
+                    else confirmDeleteText += "?"
 
-                    confirmDelete.wrapper.classList.add("modal-visible")
+                    confirmDelete.appendChild(dom.div(confirmDeleteText))
+
+                    confirmDelete.okCancel(event => {
+                        this._selected.obj.$parent.removeChild(this._selected.obj.id)
+                        confirmDelete.hide()
+
+                        this.refresh()
+                        this.setSelected()
+
+                        rootobj.save(true)
+
+                        event.stopPropagation()
+                    }, "Delete")
+
+                    confirmDelete.show()
                 }
             }, "button-disabled")
 
             this._toolbar.appendChild(this._addButton)
             this._toolbar.appendChild(this._removeButton)
-
-            var confirmDelete = dom.modal("Confirm Delete")
-            var confirmDeleteText = dom.div(`Are you sure you want to delete this item and anything in it?`)
-
-            var actions = dom.div("", "modal-actions")
-            var cancelAction = dom.span("Cancel", "button")
-            cancelAction.addEventListener("click", event => {
-                confirmDelete.hide()
-                event.stopPropagation()
-            })
-            var deleteAction = dom.span("Delete", "button")
-            deleteAction.addEventListener("click", event => {
-                this._selected.obj.$parent.removeChild(this._selected.obj.id)
-                confirmDelete.hide()
-
-                this.refresh()
-                this.setSelected()
-
-                rootobj.save(true)
-
-                event.stopPropagation()
-            })
-            actions.appendChild(cancelAction)
-            actions.appendChild(deleteAction)
-
-            confirmDelete.modal.appendChild(confirmDeleteText)
-            confirmDelete.modal.appendChild(actions)
-
-            confirmDelete.addToContainer()
         }
 
         this._root = rootobj
@@ -156,38 +138,45 @@ class TreeView {
 
         var arrow = dom.span(rightArrow, "padding-right-3px")
 
-        if(!Object.keys(obj.subobjects).length) {
-            arrow.classList.add("hidden")
+        function subobjectCount() {
+            return Object.keys(obj.subobjects).length
         }
-
-        arrow.addEventListener("click", event => {
-            if(arrow.textContent === downArrow) {
-                // collapse content
-                el.classList.add("treeview-item-collapsed")
-                arrow.textContent = rightArrow
-                delete this._expandedNodes[obj.id]
-            } else {
-                // expand content
+        var expand = () => {
+            if(subobjectCount()) {
                 el.classList.remove("treeview-item-collapsed")
                 arrow.textContent = downArrow
                 this._expandedNodes[obj.id] = true
             }
+        }
+        var collapse = () => {
+            el.classList.add("treeview-item-collapsed")
+            arrow.textContent = rightArrow
+            delete this._expandedNodes[obj.id]
+        }
+
+        if(!subobjectCount()) {
+            arrow.classList.add("hidden")
+        }
+
+        arrow.addEventListener("click", event => {
             event.stopPropagation()
+
+            if(arrow.textContent === downArrow) collapse()
+            else expand()
         })
         el.appendChild(arrow)
 
-        // if the object was already expanded and it still has subobjects, keep
-        // it expanded
-        if(this._expandedNodes[obj.id] && Object.keys(obj.subobjects).length) {
-            el.classList.remove("treeview-item-collapsed")
-            arrow.textContent = downArrow
+        // if the object was already expanded, keep it expanded
+        if(this._expandedNodes[obj.id]) {
+            expand()
         }
 
         var row = dom.span(obj[this._opts.prop_name])
         this._rowArray[obj.id] = row
         row.addEventListener("click", event => {
-            this.setSelected(obj, row)
             event.stopPropagation()
+            this.setSelected(obj, row)
+            expand()
         })
 
         // if the item is selected, keep it selected visually
@@ -207,7 +196,7 @@ class TreeView {
     }
 
     showNewObjectModal() {
-        this._newObjectModal.show()
+        newobject(this).show()
     }
 
     refresh() {

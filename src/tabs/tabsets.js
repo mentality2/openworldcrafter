@@ -8,6 +8,7 @@ const relationships = require('./relationships')
 const event = require('./event.js')
 const tags = require('./tags.js')
 const charactersheet = require('./charactersheet')
+const characterchart = require('./characterchart')
 const snippets = require('./snippets')
 
 function attachmentsTab(tabview, object) {
@@ -30,7 +31,7 @@ function createTabset(tabview, object, ref) {
             break
         case "character":
             tabview.addTab(name, character(object, ref))
-            tabview.addTab("Character Sheet", charactersheet.createCharacterSheetTab(object, ref), "clipboard")
+            tabview.addTab("Character Sheet", charactersheet(object, ref), "clipboard")
             tabview.addTab("Relationships", relationships(object, ref), "heart")
             break
         case "timeline":
@@ -52,7 +53,7 @@ function createTabset(tabview, object, ref) {
             tabview.addTabFunc("Trash", () => snippets.createSnippetsTrashTab(object, ref))
             break
         case "characterchart":
-            tabview.addTab(name, charactersheet.createCharacterChartTab(object, ref))
+            tabview.addTab(name, characterchart(object, ref))
             break
     }
 

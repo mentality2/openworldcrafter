@@ -5,110 +5,12 @@ const utils = require('../utils.js')
 const icons = require('../../resources/icons')
 const api = require('../api')
 const attachmentviewer = require('./attachmentviewer.js')
-
-function createUploadModal(addFilesCb) {
-    var uploadWindow = dom.modal("Upload Attachments")
-
-    var fileArray = []
-    var fileList = dom.table(["", "File", "Size"])
-    fileList.classList.add("invisible")
-
-    function reset() {
-        fileArray = []
-
-        // reset file list
-        utils.removeAllChildren(fileList)
-        fileList.appendChild(dom.tr_headers(["", "File", "Size"]))
-
-        fileList.classList.add("invisible")
-        uploadAction.classList.add("button-disabled")
-        dropzone.classList.remove("dropzone-short")
-    }
-
-    function addFiles(files) {
-        for(var file of files) {
-            fileArray.push(file)
-
-            var tr = dom.tr([
-                "",
-                file.name,
-                utils.bytesText(file.size)
-            ])
-            if(file.size > 1000000) {
-                // tr.firstChild.innerHTML = icons.warning + " Too big"
-            }
-
-            fileList.appendChild(tr)
-        }
-
-        if(fileArray.length) {
-            uploadAction.classList.remove("button-disabled")
-        }
-
-        input.value = null
-        fileList.classList.remove("invisible")
-        dropzone.classList.add("dropzone-short")
-    }
-
-    var dropzone = dom.div("", "dropzone")
-    var dropzoneInside = dom.div()
-    var input = dom.element("input", "", "no-margin-right")
-    input.type = "file"
-    input.multiple = true
-    input.accept = "image/*"
-    input.onchange = () => {
-        addFiles(input.files)
-    }
-    dropzoneInside.appendChild(dom.div("Drag & Drop Files"))
-    dropzoneInside.appendChild(dom.div("-- or --"))
-    dropzoneInside.appendChild(input)
-
-    dropzone.appendChild(dropzoneInside)
-
-    dropzone.addEventListener("drop", event => {
-        event.preventDefault()
-        if(event.dataTransfer.files) {
-            addFiles(event.dataTransfer.files)
-        }
-        dropzone.classList.remove("dropzone-active")
-    })
-    dropzone.addEventListener("dragover", event => {
-        event.preventDefault()
-    })
-    dropzone.addEventListener("dragenter", event => {
-        dropzone.classList.add("dropzone-active")
-    })
-    dropzone.addEventListener("dragleave", event => {
-        dropzone.classList.remove("dropzone-active")
-    })
-
-    var actions = dom.div("", "modal-actions")
-    var cancelAction = dom.span("Cancel", "button")
-    cancelAction.addEventListener("click", () => {
-        reset()
-        uploadWindow.wrapper.classList.remove("modal-visible")
-    })
-    var uploadAction = dom.span("Upload", ["button", "button-disabled"])
-    uploadAction.addEventListener("click", () => {
-        addFilesCb(fileArray)
-        reset()
-        uploadWindow.wrapper.classList.remove("modal-visible")
-    })
-    actions.appendChild(cancelAction)
-    actions.appendChild(uploadAction)
-
-    uploadWindow.modal.appendChild(dropzone)
-    uploadWindow.modal.appendChild(fileList)
-    uploadWindow.modal.appendChild(actions)
-
-    return uploadWindow
-}
+const uploadmodal = require("./uploadmodal.js")
 
 function createAttachmentTab(object) {
     var el = dom.span()
 
     var attachmentViewer = new attachmentviewer(object.$project)
-    el.appendChild(attachmentViewer.el.wrapper)
 
     var placeholderHelp = dom.placeholderHelp(`{$Click} {$edit}, then "Upload" to add attachments.`)
     el.appendChild(placeholderHelp)
@@ -118,6 +20,9 @@ function createAttachmentTab(object) {
         var editControls = dom.div("", ["edit-visible", "margin-top-3px"])
 
         if($owf.mobile) {
+            // on mobile, use the native image picker instead of our modal
+            // this is accomplished by using a "shadow" file input and clicking
+            // it when the upload button is clicked
             var input = dom.element("input", "", "invisible")
             input.type = "file"
             input.multiple = true
@@ -133,11 +38,8 @@ function createAttachmentTab(object) {
             el.appendChild(input)
             el.appendChild(upload)
         } else {
-            var uploadModal = createUploadModal(addFiles)
-            uploadModal.addToContainer()
-
             var upload = dom.button(null, "Upload", () => {
-                uploadModal.show()
+                uploadmodal(addFiles).show()
             })
             el.appendChild(upload)
         }
@@ -205,14 +107,7 @@ function createAttachmentTab(object) {
         }
 
         line.addEventListener("click", () => {
-            if(window.$images) {
-                // use the native plugin to show the image
-                object.$project.getAssetUrl(attachment, $images.showImage)
-            } else {
-                // display the image in a modal
-                attachmentViewer.setAttachment(attachment)
-                attachmentViewer.el.show()
-            }
+            attachmentViewer.showAttachment(attachment)
         })
 
         line.appendChild(image)

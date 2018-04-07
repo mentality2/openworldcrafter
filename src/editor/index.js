@@ -29,6 +29,7 @@ class Editable {
      }
 
      upload(file, cb) {
+         console.trace("Editable.upload() is deprecated, use Project.addAsset() instead")
          this.project.addAsset(file, cb)
      }
 }
@@ -59,7 +60,6 @@ function createPage(el, proj) {
 
     var projectInfo = projectsettings.createProjectSettingsModal(proj, ref)
     var aboutModal = about.createAboutModal()
-    aboutModal.addToContainer()
 
     function goToPage(object, ignoreHistory) {
         tree.obj.setSelected(object, ignoreHistory)
@@ -88,31 +88,14 @@ function createPage(el, proj) {
     document.body.appendChild(projectInfo.wrapper)
     document.body.appendChild(menubar)
 
-    var saveErrorModal = dom.modal("Error Saving Project")
-    document.body.appendChild(saveErrorModal.wrapper)
-
     proj.$saveListener = (errmsg, button, buttonAction) => {
         if(errmsg) {
-            utils.removeAllChildren(saveErrorModal.modal)
-
-            saveErrorModal.modal.appendChild(dom.div("Error Saving Project", "modal-title"))
+            var saveErrorModal = dom.modal("Error Saving Project", true)
             saveErrorModal.modal.appendChild(dom.div(errmsg))
-
-            var modalActions = dom.div(undefined, "modal-actions")
-            saveErrorModal.modal.appendChild(modalActions)
-
-            var cancel = dom.button(undefined, "Cancel", () => {
+            saveErrorModal.okCancel(() => {
+                if(buttonAction) buttonAction()
                 saveErrorModal.hide()
-            })
-            modalActions.appendChild(cancel)
-
-            if(button) {
-                modalActions.appendChild(dom.button(undefined, button, () => {
-                    buttonAction()
-                    saveErrorModal.hide()
-                }))
-            }
-
+            }, button)
             saveErrorModal.show()
         }
 

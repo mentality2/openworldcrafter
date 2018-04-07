@@ -15,7 +15,7 @@
     "compile-docs": "./scripts/compile-docs.js",
     "compile-web": "OWC_ORIGIN=\"\" webpack-cli --config webpack/web.webpack.config.js",
     "compile-app": "webpack-cli --config webpack/app.webpack.config.js",
-    "compile-all": "yarn run compile-sass; yarn run compile-docs; yarn run compile-icons; yarn run compile-web",
+    "compile-all": "yarn run compile-sass; yarn run compile-docs; yarn run compile-icons",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "update-server": "http-server -p 7702 -o"
