@@ -2,7 +2,7 @@
 
 const project = require('../project')
 const uuid = require('uuid/v4')
-const fs = require('./fileplugin')
+const fs = window.$native.fs
 const projectlist = require('./projectlist.js')
 const utils = require('../utils.js')
 

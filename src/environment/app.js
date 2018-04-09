@@ -3,7 +3,6 @@
 const api = require('../api/app')
 const web = require('../api/api')
 const dom = require('../dom')
-const fs = require('../api/fileplugin')
 const project = require('../project')
 const magicuuids = require('../magicuuids')
 const settings = require('../modals/settings')
