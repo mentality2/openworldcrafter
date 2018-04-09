@@ -52,7 +52,7 @@ function createPage(el, proj) {
     ref.changeProjectName = () => {
         ref.changeProjectNameInMenu()
         document.title = proj.info.name + " - openworldcrafter"
-        proj.$store.changeName()
+        proj.updateListing()
     }
 
     ref.project = proj

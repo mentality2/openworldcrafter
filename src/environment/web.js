@@ -23,27 +23,6 @@ class WebEnviroment extends require("./") {
     }
 
     /*
-        Takes a project file location as a parameter, loads the project, and then
-        calls viewProject
-    */
-    openProject(location) {
-        this.projectID = location
-        var webapi = new api(location, proj => {
-            this.viewProject(proj)
-        })
-    }
-
-    /*
-        Takes a project object as a parameter and builds an editor for it in the
-        current webpage.
-    */
-    viewProject(project) {
-        this.project = project
-
-        require("../editor")(document.body, project)
-    }
-
-    /*
         Open a new window with a documentation page
     */
     showDocs(page) {

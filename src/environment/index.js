@@ -3,6 +3,7 @@
 const settings = require('../modals/settings')
 
 require("../theme.js").setTheme()
+const project = require('../project')
 
 class Environment {
     constructor() {
@@ -48,13 +49,13 @@ class Environment {
 
             api.getProjectList(list => {
                 // tag everything with which API it came from
-                for(var item of list) {
+                for(var item of list.projects) {
                     // use a function so it doesn't get saved to JSON
                     item.$getApi = () => api
                     item.$apiName = apiName
                 }
 
-                lists.push(list)
+                lists.push(list.projects)
                 if(lists.length === Object.keys(this.availableAPIs).length) cb(aggregate())
             })
         }
@@ -81,19 +82,18 @@ class Environment {
 
 
     /*
-        Takes a project file location as a parameter, loads the project, and then
+        Takes a storage API as a parameter, loads the project, and then
         calls viewProject
     */
-    openProject(location, onerr) {
-        throw "Not Implemented: openProject"
-    }
-
-    /*
-        Takes a project object as a parameter and builds an editor for it in the
-        current webpage.
-    */
-    viewProject(project) {
-        throw "Not Implemented: viewProject"
+    openProject(storageAPI, onerr) {
+        var projectStore = new project.ProjectStore(storageAPI)
+        projectStore.getProjectFile((err, data) => {
+            if(err) onerr(err)
+            else {
+                this.project = new project.Project(data, projectStore)
+                require("../editor")(document.body, this.project)
+            }
+        })
     }
 
     /*

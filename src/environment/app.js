@@ -23,7 +23,7 @@ class AppEnvironment extends require("./index") {
         this.buildType = "app"
 
         this.availableAPIs = {
-            app: api.AppApiDescription
+            app: api
         }
 
         web.getOnlineApi(api => {
@@ -41,16 +41,6 @@ class AppEnvironment extends require("./index") {
     getSaveMethods() {
         console.trace("[DEPRECATION] Use $owf.availableAPIs instead")
         return this.availableAPIs
-    }
-
-    /*
-        Takes a project object as a parameter and builds an editor for it in the
-        current webpage.
-    */
-    viewProject(project) {
-        this.project = project
-
-        require("../editor")(document.body, project)
     }
 
     showWelcome() {

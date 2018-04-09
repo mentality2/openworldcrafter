@@ -240,6 +240,7 @@ class Project {
 
         this.info = new ProjectInfo(serial.info)
         this.$store = store
+        this.updateListing()
 
 
         this.$allObjects = {}
@@ -290,11 +291,15 @@ class Project {
     }
 
     addAsset(buffer, cb) {
-        this.$store.addAsset(buffer, id => {
+        this.$store.addAsset(buffer, (err, id) => {
+            if(err) {
+                $owf.handleError("Error uploading attachment", "Something went wrong while trying to save the attachment to the project.", err)
+                return
+            }
+
             this.assets[id] = {
                 diskid: id
             }
-
             this.markDirty()
             cb(id)
         })
@@ -322,6 +327,8 @@ class Project {
             this.info.assignSaveUuid()
             this.$store.saveProjectFile(this.serializeJSON(), () => {
                 this.$_dirty = false
+
+                this.updateListing()
                 document.title = this.info.name + " - openworldcrafter"
                 this.$saveListener()
                 ;(cb || noop)()
@@ -335,8 +342,12 @@ class Project {
         }
     }
 
+    updateListing() {
+        this.$store.updateListing(this.info.name, this.info.description)
+    }
+
     isEditable() {
-        return this.$store.editable
+        return this.$store.isEditable()
     }
 
     markDirty() {
@@ -403,12 +414,16 @@ class Project {
     }
 }
 
-function createProject(name, description, id) {
+function createProject(name, description, storageAPI, id, cb) {
     var serial = JSON.parse(JSON.stringify(require("./default.json")))
     serial.info.name = name
     serial.info.uuid = id
     serial.info.description = description
-    var proj = new Project(serial)
+
+    var store = new (require("./projectstore.js"))(storageAPI)
+    var proj = new Project(serial, store)
+    proj.save(true, cb)
+
     return proj
 }
 
@@ -417,5 +432,6 @@ module.exports = {
     ProjectObject,
     ProjectInfo,
     Author,
-    createProject
+    createProject,
+    ProjectStore: require("./projectstore.js")
 }

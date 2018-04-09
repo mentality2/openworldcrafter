@@ -15,104 +15,63 @@ function getProjectDirectory(id) {
 /*
  * For saving projects on the mobile app
  */
-class AppProjectStore extends require("./") {
-    /*
-     * If project is defined, a new project file will be created. If it is null,
-     * the existing project in the file will be loaded.
-     */
-    constructor(id, proj, readycb, errcb) {
-        super()
+class AppStorageAPI extends require("./") {
+    constructor(location, cb, mustCreate) {
+        super(location, cb, mustCreate)
+        this._dir = getProjectDirectory(location)
+        cb(undefined, this)
+    }
 
-        this._id = id
-        this._dir = getProjectDirectory(id)
-        this.editable = true
-
-        fs.readdir(this._dir)
-
-        if(proj) {
-            // this._project is the project object
-            this._project = proj
-            proj.$store = this
-            proj.markDirty()
-
-            // Create directory structure
-            fs.mkdir_safe("projects", cb => {
-                fs.mkdir_safe(this._dir, cb2 => {
-                    fs.mkdir_safe(this._dir + "media", cb3 => {
-                        readycb(proj)
-                    })
-                })
-            })
-        } else {
-            fs.readFile(this._dir + "project.json", (err, contents) => {
-                if(err) {
-                    errcb("The project file has been moved or deleted.")
-                    return
-                }
-
-                try {
-                    var proj = new project.Project(JSON.parse(contents), this)
-                } catch(e) {
-                    errcb(e)
-                }
-                this._project = proj
-                readycb(proj)
-            })
-        }
+    updateListing(name, desc) {
+        module.exports.getProjectList(list => {
+            list.addProjectEntry(name, this._location, desc)
+        })
     }
 
     getLocationString() {
         return "Saved to your device"
     }
 
-    getProjectFile(cb) {
-        cb(project.serialize())
+    getFileUrl(file, cb) {
+        fs.getURL(this._dir + file, cb)
     }
 
-    /**
-     * Saves the string given as the project file.
-     */
-    saveProjectFile(project, cb, onerr) {
-        fs.writeFile(this._dir + "project.json", project, err => {
-            if(err) onerr(err)
-            else cb()
+    isEditable() {
+        return true
+    }
+
+    /*
+    Reads from the file, raising an error if it does not exist.
+    */
+    readFile(file, cb) {
+        fs.readFile(this._dir + file, cb)
+    }
+    /*
+    Reads from the file, raising an error if it does not exist.
+    */
+    readTextFile(file, cb) {
+        fs.readFile(this._dir + file, cb)
+    }
+
+    /*
+    Writes the data to a file, creating it if it does not exist.
+    */
+    writeFile(file, data, cb) {
+        var parent = ""
+        if(file.includes("/")) parent = file.match(/(.+\/)[^\/]+$/)[1]
+        fs.mkdir_safe(this._dir + parent, err => {
+            if(err) cb(err)
+            else fs.writeFileBlob(this._dir + file, data, cb)
         })
     }
 
-    addAsset(blob, cb) {
-        var name = uuid()
-
-        fs.mkdir_safe(this._dir + "media", err => {
-            fs.writeFileBlob(this._dir + "media/" + name, blob, (err, success) => {
-                if(err) {
-                    $owf.handleError("Error", "The attachment could not be added to the project.", err)
-                } else cb(name)
-            })
-        })
-
-        return name
-    }
-
-    getAssetUrl(name, cb) {
-        fs.getURL(this._dir + "media/" + name, (err, url) => {
-            if(err) {
-                // TODO: handle
-            } else cb(url)
-        })
-    }
-
-    deleteAsset(name, cb) {
-        fs.deleteFile(this._dir + "media/" + name, cb)
-    }
-
-    changeName() {
-        module.exports.AppApiDescription._getProjectList(list => {
-            list.addProjectEntry(this._project.info.name, this._id, this._project.info.description)
-        })
+    /*
+    Deletes the file. Does nothing if it does not exist.
+    */
+    deleteFile(file, cb) {
+        fs.deleteFile(this._dir + file, cb)
     }
 }
-
-module.exports = AppProjectStore
 
 class AppApiDescription extends require("./apidescription.js") {
     constructor() {
@@ -120,6 +79,9 @@ class AppApiDescription extends require("./apidescription.js") {
 
         this.buttonText = "Save to Device"
         this.buttonIcon = "phone"
+        this.name = "app"
+
+        this.storageAPI = AppStorageAPI
     }
 
     deleteProject(location, name, cb) {
@@ -145,15 +107,9 @@ class AppApiDescription extends require("./apidescription.js") {
         })
     }
 
-    createProject(name, desc, uuid) {
-        var proj = project.createProject(name, desc, uuid)
-
-        proj.$store = new AppProjectStore(proj.info.uuid, proj, () => {
-            this._getProjectList(list => list.addProjectEntry(proj.info.name, proj.info.uuid, proj.info.description))
-            proj.save(true, () => {
-                utils.launchEditor(proj.info.uuid, "app")
-            })
-        })
+    createProject(cb) {
+        var projectID = uuid()
+        new AppProjectStore(projectID, cb, true)
     }
 
     openProject(location, onerr) {
@@ -179,7 +135,7 @@ class AppApiDescription extends require("./apidescription.js") {
         })
     }
 
-    _getProjectList(cb) {
+    getProjectList(cb) {
         if(this._projectList) cb(this._projectList)
         else {
             fs.readFile("projectlist.json", (err, data) => {
@@ -199,10 +155,6 @@ class AppApiDescription extends require("./apidescription.js") {
             })
         }
     }
-
-    getProjectList(cb) {
-        this._getProjectList(list => cb(list.projects))
-    }
 }
 
-module.exports.AppApiDescription = new AppApiDescription()
+module.exports = new AppApiDescription()

@@ -13,7 +13,7 @@ class AttachmentViewer {
         }
     }
 
-    showAttachment(id) {
+    showAttachment(attachment) {
         if(window.$images) {
             // use the native plugin to show the image
             this._project.getAssetUrl(attachment, window.$images.showImage)

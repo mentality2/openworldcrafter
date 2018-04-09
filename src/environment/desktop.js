@@ -21,7 +21,7 @@ class DesktopEnvironment extends require("./index") {
         this.showLogoInCorner = true
 
         this.availableAPIs = {
-            disk: disk.DiskApiDescription
+            disk: disk
         }
 
         web.getOnlineApi(api => {
@@ -39,16 +39,6 @@ class DesktopEnvironment extends require("./index") {
     getSaveMethods() {
         console.trace("[DEPRECATION] Use this.availableAPIs instead")
         return this.availableAPIs
-    }
-
-    /*
-        Takes a project object as a parameter and builds an editor for it in the
-        current webpage.
-    */
-    viewProject(project) {
-        this.project = project
-
-        require("../editor")(document.body, project)
     }
 
     /*
@@ -147,16 +137,13 @@ class DesktopEnvironment extends require("./index") {
         var name = "TEST PROJECT"
         var desc = "Transient project for testing purposes. Click 'Remake test.owc' on the welcome page to reset this project. You must be in dev mode to do this."
 
-        var proj = project.createProject(name, desc, magicuuids.test_project)
-        proj.$store = new disk("test.owc", proj, () => {
-            // this is bad code. we really shouldn't be accessing _projectList
-            // directly but ¯\_(ツ)_/¯
-            disk.DiskApiDescription._projectList.addProjectEntry(name, "test.owc", desc, () => {})
+        new disk.storageAPI("test.owc", (err, store) => {
+            if(err) $owf.handleError("Error creating test project", err)
 
-            proj.save(true, () => {
+            var proj = project.createProject(name, desc, store, magicuuids.test_project, () => {
                 utils.launchEditor("test.owc", "disk")
             })
-        })
+        }, "mustCreate")
     }
 
     showOpenDialog() {

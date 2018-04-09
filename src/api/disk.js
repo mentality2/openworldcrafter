@@ -11,107 +11,92 @@ const utils = require('../utils.js')
 
 const noop = () => {}
 
-class DiskProjectStore extends require("./") {
-    /*
-     * If project is defined, a new project file will be created. If it is null,
-     * the existing project in the file will be loaded.
-     */
-    constructor(file, proj, readycb, errcb) {
-        super()
+class DiskStorageAPI extends require("./") {
+    constructor(filepath, cb, mustCreate) {
+        super(filepath, cb, mustCreate)
 
-        this._file = file
-        this.editable = true
+        this._file = filepath
 
-        this.location = file
-
-        if(proj) {
-            // this._project is the project object
-            this._project = proj
-            proj.$store = this
-            proj.markDirty()
-
+        if(mustCreate) {
             this._archive = new jszip()
-
-            readycb(proj)
+            cb(undefined, this)
         } else {
-            fs.readFile(file, (err, contents) => {
+            fs.readFile(this._file, (err, contents) => {
                 if(err) {
-                    errcb("The project file has been moved or deleted.")
+                    cb("The project file has been moved or deleted.")
                     return
                 }
 
-                jszip.loadAsync(contents).then(archive => {
+                jszip.loadAsync(contents)
+                .then(archive => {
                     this._archive = archive
-                    return archive.files["project.json"].async("text")
-                    .then(file => {
-                        var proj = new project.Project(JSON.parse(file), this)
-                        this._project = proj
-                        readycb(proj)
-                    })
+                    cb(undefined, this)
                 })
-                .catch(e => {
-                    if(e === "project version mismatch, please update openworldcrafter") {
-                        $owf.handleError("Update Required", "This project was created in a newer version of openworldcrafter. Please update to view it so data isn't lost.")
-                    } else {
-                        errcb("This project file seems to be corrupt.")
-                        console.log(e)
-                    }
-                })
+                .catch(cb)
             })
         }
     }
 
+    updateListing(name, desc) {
+        module.exports.getProjectList(list => {
+            list.addProjectEntry(name, this._location, desc)
+        })
+    }
+
+    /* Get a user-facing string describing where the project is stored. */
     getLocationString() {
-        return "Saved to " + this._file
+        return `Saved to ${ this._file }`
     }
 
-    getProjectFile(cb) {
-        cb(project.serialize())
+    /*
+    Whether we can currently edit the project.
+    */
+    isEditable() {
+        return true
     }
 
-    /**
-     * Saves the string given as the project file.
-     */
-    saveProjectFile(project, cb, onerr) {
-        this._archive.file("project.json", project)
-        this.save(cb, onerr)
+    /*
+    Reads from the file, raising an error if it does not exist.
+    */
+    readFile(file, cb) {
+        // we can use nodebuffers because the disk api only works on electron
+        console.log("reading file", file);
+        this._archive.files[file].async("nodebuffer")
+        .then(data => cb(undefined, data))
+        .catch(err => cb(err))
+    }
+    /*
+    Reads from the file, raising an error if it does not exist.
+    */
+    readTextFile(file, cb) {
+        // we can use nodebuffers because the disk api only works on electron
+        this._archive.files[file].async("text")
+        .then(data => cb(undefined, data))
+        .catch(err => cb(err))
     }
 
-    addAsset(buffer, cb) {
-        var name = uuid()
-
-        this._archive.file("media/" + name, buffer)
-
-        this.save()
-
-        cb(name)
-        return name
+    /*
+    Writes the data to a file, creating it if it does not exist.
+    */
+    writeFile(file, data, cb) {
+        this._archive.file(file, data)
+        this._commit(cb)
     }
 
-    /**
-     * Returns Base64
-     */
-    getAsset(name, cb) {
-        this._archive.files["media/" + name].async("base64")
-        .then(cb)
-    }
-
-    getAssetUrl(name, cb) {
-        this._archive.files["media/" + name].async("base64")
-        .then(data => cb(`data:;base64,${data}`))
-    }
-
-    deleteAsset(name, cb) {
+    /*
+    Deletes the file. Does nothing if it does not exist.
+    */
+    deleteFile(file, cb) {
         this._archive.remove("media/" + name)
-        cb()
+        this._commit(cb)
     }
 
     /**
      * Writes the zip file to the disk.
      */
-    save(cb, onerr) {
+    _commit(cb) {
         var stream = fs.createWriteStream(this._file)
-        stream.on("close", cb || noop)
+        stream.on("close", event => cb(undefined, event))
         stream.on("error", err => {
             (onerr || noop)("The project could not be saved to this location.", "Save Elsewhere", () => {
                 // Show a save dialog to save the project elsewhere
@@ -120,7 +105,7 @@ class DiskProjectStore extends require("./") {
                     defaultPath: path.basename(this._file)
                 }, filename => {
                     this._file = filename
-                    this.save(cb, onerr)
+                    this._commit(cb)
                     $owf.addRecentProject(this._project.info.name, this._file, this._project.info.description)
                 })
             })
@@ -129,19 +114,15 @@ class DiskProjectStore extends require("./") {
         this._archive.generateNodeStream({ type: "nodebuffer", streamFiles: true })
         .pipe(stream)
     }
-
-    changeName() {
-        module.exports.DiskApiDescription._getProjectList(list => list.addProjectEntry(this._project.info.name, this._file, this._project.info.description))
-    }
 }
-
-module.exports = DiskProjectStore
 
 class DiskApiDescription extends require("./apidescription.js") {
     constructor() {
         super()
 
         this.buttonText = "Save to Computer"
+        this.storageAPI = DiskStorageAPI
+        this.name = "disk"
 
         var projectListData = JSON.parse(localStorage["openworldcrafter.recentFiles"] || "[]")
         this._projectList = new projectlist.ProjectList(projectListData, save => {
@@ -149,18 +130,12 @@ class DiskApiDescription extends require("./apidescription.js") {
         })
     }
 
-    createProject(name, desc) {
+    createProject(cb, name) {
         electron.remote.dialog.showSaveDialog({
             title: "Save Project",
             defaultPath: name + ".owc"
         }, filename => {
-            var proj = project.createProject(name, desc)
-            proj.$store = new DiskProjectStore(filename, proj, () => {
-                this._projectList.addProjectEntry(name, filename, desc)
-                proj.save(true, () => {
-                    utils.launchEditor(filename, "disk")
-                })
-            })
+            new DiskStorageAPI(filename, cb, true)
         })
     }
 
@@ -183,13 +158,9 @@ class DiskApiDescription extends require("./apidescription.js") {
         })
     }
 
-    _getProjectList(cb) {
-        cb(this._projectList)
-    }
-
     getProjectList(cb) {
-        cb(this._projectList.projects)
+        cb(this._projectList)
     }
 }
 
-module.exports.DiskApiDescription = new DiskApiDescription()
+module.exports = new DiskApiDescription()

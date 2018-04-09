@@ -167,7 +167,7 @@ class OnlineApiDescription extends require("./apidescription.js") {
     shareProject(id, cb) {
     }
 
-    _getProjectList(cb) {
+    getProjectList(cb) {
         if(this._projectList) {
             cb(this._projectList)
             return
@@ -184,10 +184,6 @@ class OnlineApiDescription extends require("./apidescription.js") {
             })
             cb(this._projectList)
         })
-    }
-
-    getProjectList(cb) {
-        this._getProjectList(list => cb(list.projects))
     }
 }
 

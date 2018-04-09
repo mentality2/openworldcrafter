@@ -191,6 +191,11 @@ function compareDates(d1, d2) {
 }
 
 const acceptableSubobjects = {
+    "projroot": [
+        "note",
+        "character",
+        "timeline"
+    ],
     "folder": [
         "note",
         "character",
@@ -207,7 +212,7 @@ const acceptableSubobjects = {
         "timeline"
     ],
     "timeline": ["event"],
-    "tagfolder": ["tag"]
+    "tagfolder": ["tag"],
 }
 
 function goToPage(name) {

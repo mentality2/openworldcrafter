@@ -33,8 +33,14 @@
 
                 $owf.onFinishLoad(() => {
                     if(params.file && params.api && $owf.availableAPIs[params.api]) {
-                        $owf.availableAPIs[params.api].openProject(params.file, err => {
-                            $owf.handleError("Error Opening Project", err)
+                        new ($owf.availableAPIs[params.api].storageAPI)(params.file, (err, storageAPI) => {
+                            if(err) {
+                                $owf.handleError("Error Loading Project", err)
+                                $owf.availableAPIs[params.api].getProjectList(list => {
+                                    list.removeProject(params.file)
+                                })
+                            }
+                            else $owf.openProject(storageAPI, err2 => $owf.handleError("Error Opening Project", err2))
                         })
                     } else {
                         $owf.handleError("Error: No Project Specified")

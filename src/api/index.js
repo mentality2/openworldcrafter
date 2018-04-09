@@ -1,68 +1,69 @@
 "use strict"
 
-class IProjectStore {
-    constructor(file, proj, readycb) {
+/*
+Handles file methods
+*/
+class StorageAPI {
+    constructor(locationDescriptor, cb, mustCreate) {
+        this._location = locationDescriptor
     }
 
-    /*
-        Gets a human-readable string explaining where the project is stored
-    */
+    /* Put the project at the top of the project listing */
+    updateListing(name, desc) {
+        throw "Not Implemented: updateListing()"
+    }
+
+    /* Get the internal string used to locate this stored project */
+    getLocation() {
+        return this._location
+    }
+
+    /* Get a user-facing string describing where the project is stored. */
     getLocationString() {
-        throw "Not Implemented: getLocationString"
+        throw "Not Implemented: getLocationString()"
     }
 
     /*
-        Gets the project file as a string
+    If files can be accessed by URLs, this function converts filenames to URLs
+    Commented out because not all APIs support it
     */
-    getProjectFile(cb) {
-        throw "Not Implemented: getProjectFile"
+    // getFileUrl() {
+    //     throw "Not Implemented: getFileUrl()"
+    // }
+
+    /*
+    Whether we can currently edit the project.
+    */
+    isEditable() {
+        throw "Not Implemented: isEditable()"
     }
 
     /*
-        Saves the project file.
+    Reads binary data from the file, raising an error if it does not exist.
     */
-    saveProjectFile(project, cb) {
-        throw "Not Implemented: saveProjectFile"
+    readFile(file, cb) {
+        throw "Not Implemented: readFile()"
+    }
+    /*
+    Reads a string from the file, raising an error if it does not exist.
+    */
+    readTextFile(file, cb) {
+        throw "Not Implemented: readTextFile()"
     }
 
     /*
-        Adds an asset, passing its ID to the callback
+    Writes the data to a file, creating it if it does not exist.
     */
-    addAsset(buffer, cb) {
-        throw "Not Implemented: addAsset"
+    writeFile(file, data, cb) {
+        throw "Not Implemented: writeFile()"
     }
 
     /*
-        Gets an asset by its ID, returning it as base64
+    Deletes the file. Does nothing if it does not exist.
     */
-    getAsset(name, cb) {
-        throw "Not Implemented: getAsset"
-    }
-
-    /*
-        Gets a URL for an asset
-    */
-    getAssetUrl(name, cb) {
-        throw "Not Implemented: getAssetUrl"
-    }
-
-    deleteAsset(name, cb) {
-        throw "Not Implemented: deleteAsset"
-    }
-
-    changeName() {
-        throw "Not Implemented: changeName()"
-    }
-
-    /*
-        Saves the project.
-
-        Update is may be periodically called with the progress, a double from
-        0-1
-    */
-    save(cb, update) {
-        throw "Not Implemented: save"
+    deleteFile(file, cb) {
+        throw "Not Implemented: deleteFile()"
     }
 }
 
-module.exports = IProjectStore
+module.exports = StorageAPI

@@ -2,6 +2,7 @@
 
 const dom = require('../dom.js')
 const project = require('../project')
+const utils = require('../utils.js')
 
 module.exports = function() {
     // "New" Modal
@@ -27,7 +28,13 @@ module.exports = function() {
         let method = $owf.availableAPIs[methodName]
         let button = dom.button(boringButton ? undefined : method.buttonIcon, boringButton ? "Save" : method.buttonText, () => {
             newProjectModal.wrapper.classList.remove("modal-visible")
-            method.createProject(name.value, desc.value)
+            method.createProject((err, storageAPI) => {
+                if(err) $owf.handleError("Error creating project", err)
+                else {
+                    var proj = project.createProject(name.value, desc.value, storageAPI)
+                    utils.launchEditor(storageAPI.getLocation(), method.name)
+                }
+            }, name.value)
         })
         actionBar.appendChild(button)
     }
