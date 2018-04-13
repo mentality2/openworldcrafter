@@ -2,26 +2,30 @@
     // makes it not centered like most images
     margin: 0 !important
     max-width: 50% !important
+    padding: 6px
 
 .docs-body-wrapper
     display: block
-
+    background-color: $foreground
 
 .docs-wrapper
     display: flex
     flex-flow: row
+    background-color: $background
 
     .docs-index
         min-width: 300px
         padding-right: 1em
+        padding-left: 1em
         position: relative
+        background-color: $foreground
+        color: $background
 
         .docs-index-inside
             max-height: 100vh
             overflow-y: auto
             position: sticky
             top: 0
-            background-color: $background
 
         a
             margin-bottom: 6px
@@ -29,21 +33,31 @@
 
     .docs-index-separator
         display: none
+        background-color: $foreground
+        margin: 0
 
     .docs
         min-width: 0
 
-        .docs-section > h1
-            position: sticky
-            // -1px for the mobile app
-            top: -1px
-            background-color: $background
+        .docs-section
+            &>*:not(h1)
+                margin-left: 1em
+                margin-right: 1em
+            &>*:last-child
+                margin-bottom: 0
+                padding-bottom: 1em
+            &>h1
+                position: sticky
+                // -1px for the mobile app
+                top: -1px
+                background-color: $foreground
+                color: $background
 
-            padding-right: 1em
-            .docs-top-link
-                position: absolute
-                right: 0
-                top: 0
+                padding-right: 1em
+                .docs-top-link
+                    position: absolute
+                    right: 0
+                    top: 0
 
 @media screen and (max-width: 700px)
     .docs-logo
@@ -56,8 +70,6 @@
             display: block
 
     .docs-index
-        margin-bottom: 1em
-
         .docs-index-section
             display: inline-block
             vertical-align: top

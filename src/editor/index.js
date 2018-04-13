@@ -91,7 +91,7 @@ function createPage(el, proj) {
     proj.$saveListener = (errmsg, button, buttonAction) => {
         if(errmsg) {
             var saveErrorModal = dom.modal("Error Saving Project", true)
-            saveErrorModal.modal.appendChild(dom.div(errmsg))
+            saveErrorModal.appendChild(dom.div(errmsg))
             saveErrorModal.okCancel(() => {
                 if(buttonAction) buttonAction()
                 saveErrorModal.hide()

@@ -14,7 +14,7 @@ class TabArea {
         this._project = project
 
         var tabrow = dom.div()
-        tabrow.classList.add("tabrow")
+        tabrow.classList.add("tabrow", "tabrow-hidden")
         this._domobj.appendChild(tabrow)
         this._tabrow = tabrow
 
@@ -90,6 +90,7 @@ class TabArea {
 
         this._tabs = []
         this._selectedIndex = 0
+        this._tabrow.classList.add("tabrow-hidden")
     }
 
     selectTab(index) {
@@ -124,6 +125,8 @@ class TabArea {
     }
 
     addTabFunc(name, contentFunction, icon) {
+        this._tabrow.classList.remove("tabrow-hidden")
+
         var selected = false
         if(this._tabs.length === 0) {
             // first tab, should be selected

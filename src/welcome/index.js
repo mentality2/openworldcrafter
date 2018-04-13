@@ -38,9 +38,9 @@ function createTip(updateMessage) {
 }
 
 function createMoreMenu() {
-    var more = dom.span(undefined, ["menu", "menu-extends-left", "double-font", "line-height-1em"])
-    var moreIcon = dom.icon("more", ["menu-button", "vertical-align-middle"])
-    var moreMenu = dom.div(undefined, ["menu-content", "line-height-1em"])
+    var more = dom.span(undefined, ["menu", "menu-extends-left"])
+    var moreIcon = dom.icon("more", ["menu-button", "vertical-align-middle", "double-font"])
+    var moreMenu = dom.div(undefined, ["menu-content"])
 
     var about = dom.div("About")
     about.addEventListener("click", () => {
@@ -144,7 +144,7 @@ function createPage(el) {
 
     // New/Open Toolbar
     // margin-top-3px to avoid clipping under the welcome bar
-    var toolbar = dom.div(undefined, ["margin-top-3px", "flexbox"])
+    var toolbar = dom.div(undefined, ["margin-top-3px", "margin-sides-half", "margin-sides-half", "flexbox"])
 
     var search = dom.span(undefined, ["flexitem-wide", "padding-right-3px"])
     var searchInput = dom.inputText(undefined, "Search Projects", "fullwidth")
@@ -173,9 +173,9 @@ function createPage(el) {
     var recentList = dom.element("ul")
     createProjectList(recentList)
 
-    var updateMessage = dom.div(undefined, ["highlighted-message", "invisible", "margin-bottom"])
+    var updateMessage = dom.div(undefined, ["highlighted-message", "invisible", "margin", "margin-sides-half"])
 
-    var header = dom.div(undefined, "welcome-menu")
+    var header = dom.div(undefined, ["welcome-menu", "margin-sides-half"])
     header.appendChild(createMoreMenu())
     header.appendChild(dom.h1("Welcome"))
     main.appendChild(header)

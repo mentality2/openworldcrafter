@@ -80,9 +80,9 @@ function createUploadModal(addFilesCb) {
     actions.appendChild(cancelAction)
     actions.appendChild(uploadAction)
 
-    uploadWindow.modal.appendChild(dropzone)
-    uploadWindow.modal.appendChild(fileList)
-    uploadWindow.modal.appendChild(actions)
+    uploadWindow.appendChild(dropzone)
+    uploadWindow.appendChild(fileList)
+    uploadWindow.appendChild(actions)
 
     return uploadWindow
 }

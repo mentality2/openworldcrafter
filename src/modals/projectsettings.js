@@ -5,29 +5,28 @@ const dom = require('../dom.js')
 const noop = () => {}
 
 function createProjectSettingsModal(project, ref) {
-    var el = dom.modal("Project Info")
+    var el = dom.modal(`${project.info.name} \u25B6 Project Info`)
 
-    var nameBar = dom.div()
-    var name = dom.span(project.info.name, "edit-invisible")
-    var nameEdit = dom.inputText(project.info.name, undefined, ["edit-visible", "inline"])
-    nameBar.appendChild(name)
-    nameBar.appendChild(nameEdit)
-    el.modal.appendChild(nameBar)
+    var nameEdit = dom.inputText(project.info.name, undefined, ["edit-visible", "fullwidth"])
+    nameEdit.addEventListener("input", () => {
+        el.setTitle(`${nameEdit.value} \u25B6 Project Info`)
+    })
+    el.appendChild(nameEdit)
 
     var desc = dom.div(project.info.description, "edit-invisible")
     var descEdit = dom.element("textarea", project.info.description, ["edit-visible", "textarea-fullwidth"])
-    el.modal.appendChild(desc)
-    el.modal.appendChild(descEdit)
+    el.appendChild(desc)
+    el.appendChild(descEdit)
 
     if(project.$store.getLocationString()) {
-        el.modal.appendChild(dom.div(project.$store.getLocationString(), "edit-invisible"))
+        el.appendChild(dom.div(project.$store.getLocationString(), "edit-invisible"))
     }
 
     if(project.isEditable()) {
         var actions = dom.div(null, "modal-actions")
 
         var edit = dom.button("edit", "Edit", () => {
-            el.modal.classList.add("editing")
+            el.wrapper.classList.add("editing")
         }, "edit-invisible")
         var cancel = dom.button(null, "Cancel", () => {
             // Reset changes and close dialog
@@ -37,13 +36,13 @@ function createProjectSettingsModal(project, ref) {
         var apply = dom.button(null, "Apply", () => {
             // Apply changes but don't close dialog
             applyChanges()
-            el.modal.classList.remove("editing")
+            el.wrapper.classList.remove("editing")
         }, "edit-visible")
         var ok = dom.button(null, "OK", () => {
             // Apply changes and close dialog
             applyChanges()
             el.hide()
-            el.modal.classList.remove("editing")
+            el.wrapper.classList.remove("editing")
         }, "edit-visible")
 
         actions.appendChild(edit)
@@ -51,17 +50,18 @@ function createProjectSettingsModal(project, ref) {
         actions.appendChild(apply)
         actions.appendChild(ok)
 
-        el.modal.appendChild(actions)
+        el.appendChild(actions)
     }
 
     function resetFields() {
-        name.value = project.info.name
-        desc.value = project.info.description
+        nameEdit.value = project.info.name
+        descEdit.value = project.info.description
+        el.setTitle(`${nameEdit.value} \u25B6 Project Info`)
     }
 
     function applyChanges() {
         if(nameEdit.value) {
-            name.textContent = project.info.name = nameEdit.value
+            project.info.name = nameEdit.value
         }
         desc.textContent = project.info.description = descEdit.value
 

@@ -9,13 +9,13 @@ module.exports = function() {
     var newProjectModal = dom.modal("New Project")
 
     var name = dom.inputText("", "Name")
-    newProjectModal.modal.appendChild(name)
+    newProjectModal.appendChild(name)
 
-    newProjectModal.modal.appendChild(dom.span("Description: "))
+    newProjectModal.appendChild(dom.span("Description: ", "no-margin-bottom"))
     var desc = dom.element("textarea", null, "textarea-fullwidth")
-    newProjectModal.modal.appendChild(desc)
+    newProjectModal.appendChild(desc)
 
-    var actionBar = dom.div(null, "modal-actions")
+    var actionBar = dom.div(undefined, "modal-actions")
 
     var cancel = dom.button("", "Cancel", () => {
         newProjectModal.wrapper.classList.remove("modal-visible")
@@ -39,7 +39,7 @@ module.exports = function() {
         actionBar.appendChild(button)
     }
 
-    newProjectModal.modal.appendChild(actionBar)
+    newProjectModal.appendChild(actionBar)
 
     return newProjectModal
 }

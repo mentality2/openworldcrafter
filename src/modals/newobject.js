@@ -24,8 +24,8 @@ function createNewObjectModal(treeview) {
     var newObjectName = dom.inputText("Untitled Item", "Item Name")
     nameRow.appendChild(newObjectName)
 
-    newObject.modal.appendChild(typeRow)
-    newObject.modal.appendChild(nameRow)
+    newObject.appendChild(typeRow)
+    newObject.appendChild(nameRow)
 
     newObject.okCancel(event => {
         event.stopPropagation()

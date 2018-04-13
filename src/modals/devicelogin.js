@@ -7,7 +7,7 @@ const noop = () => {}
 
 function createDeviceNameModal(el, password) {
     var name = dom.inputText($owf.deviceType, "Device Name")
-    el.modal.appendChild(name)
+    el.appendChild(name)
 
     var actions = dom.div(undefined, "modal-actions")
     var cancel = dom.button(undefined, "Cancel", () => { el.hide() })
@@ -66,9 +66,9 @@ module.exports.createDeviceLoginModal = function() {
     actions.appendChild(cancel)
     actions.appendChild(login)
 
-    el.modal.appendChild(email)
-    el.modal.appendChild(password)
-    el.modal.appendChild(actions)
+    el.appendChild(email)
+    el.appendChild(password)
+    el.appendChild(actions)
 
     return el
 }

@@ -7,10 +7,10 @@ const feedbackModal = require('./feedback.js')
 function createAboutModal() {
     var el = dom.modal()
 
-    var iconDiv = dom.div(undefined, "no-margin-bottom")
+    var iconDiv = el.wrapper.querySelector(".modal-title")
     iconDiv.appendChild(dom.icon("openworldcrafter_full", ["fullwidth", "height-unset", "no-fill-or-stroke", "no-margin-bottom"]))
-    el.appendChild(iconDiv)
-    el.appendChild(dom.element("small", buildinfo.getBuildString()))
+    iconDiv.appendChild(dom.element("small", buildinfo.getBuildString()))
+    iconDiv.classList.remove("invisible")
 
     var docs = dom.div(undefined, "about-line")
     docs.appendChild(dom.icon("help", ["margin-right-20px"]))

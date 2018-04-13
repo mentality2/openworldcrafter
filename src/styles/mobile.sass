@@ -77,12 +77,10 @@
         border-radius: 0
         @media all and (orientation: portrait)
             width: 100%
-            // because on desktop, it's 600px, way too large
-            min-width: unset
         @media all and (orientation: landscape)
             height: 100%
             // make sure there is a decent margin on each side
-            min-width: 75%
+            max-width: 75%
 
     // for making sure textboxes don't shrink too small, etc
     .min-height-50-vh
@@ -94,6 +92,9 @@
         padding-bottom: 2.75em
         position: relative
 
+        .tab-container
+            padding-top: 0
+
         .tabrow
             position: absolute
             bottom: 0
@@ -102,9 +103,17 @@
 
             display: flex
 
+            transition: margin-top 200ms, margin-bottom 200ms
+            &.tabrow-hidden
+                margin-top: 3em
+                margin-bottom: -3em
+
             .tabrow-button
                 border: 0
-                border-top: 3px solid $background
+                border-top: 3px solid transparent
+                svg, .svg
+                    fill: $background
+                    stroke: $background
                 margin-right: .5em
                 padding: 0 3px
                 cursor: default
@@ -131,6 +140,8 @@
     .treeview
         position: absolute
 
+        background-color: $background
+
         // make sure it shows up over everything else
         z-index: 1
 
@@ -147,6 +158,8 @@
             left: 0
             right: 0
 
+    .welcome-menu .menu .menu-content
+        font-size: 1.5em
     .menu
         .menu-content
             margin-top: 6px
@@ -202,7 +215,7 @@
                 padding-left: 9px
 
         .searchbar-overlay
-            background-color: $background
+            background-color: $foreground
             opacity: .5
             z-index: 1000
 
@@ -213,6 +226,11 @@
             height: 100%
         .searchbar-button
             float: right
+            color: $background
+            border-radius: 3px
+            svg, .svg
+                fill: $foreground
+                stroke: $foreground
         .searchbar-top
             position: absolute
             width: 100%
@@ -232,6 +250,7 @@
                 top: 50%
                 transform: translateY(-50%)
                 right: 6px
+                border-radius: 3px
 
             input
                 width: 100%

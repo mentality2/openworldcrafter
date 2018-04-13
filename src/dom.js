@@ -25,13 +25,14 @@ function element(type, contents, classes) {
 
 function modal(title, removeOnClose) {
     var wrapper = div("", "modal-wrapper")
-    var el = div("", "modal")
+    wrapper.addEventListener("click", event => event.stopPropagation())
+
+    var modalEl = div("", "modal")
 
     var titleEl = div(title, "modal-title")
-    el.appendChild(titleEl)
-    if(!title) titleEl.classList.toggle("invisible", title)
+    titleEl.classList.toggle("invisible", !title)
 
-    wrapper.appendChild(el)
+    var contentsEl = div("", "modal-contents")
 
     var overlay = div("", "modal-overlay")
     overlay.onclick = event => {
@@ -39,12 +40,14 @@ function modal(title, removeOnClose) {
         if(removeOnClose) wrapper.remove()
     }
 
-    wrapper.addEventListener("click", event => event.stopPropagation())
+    modalEl.appendChild(titleEl)
+    modalEl.appendChild(contentsEl)
 
+    wrapper.appendChild(modalEl)
     wrapper.appendChild(overlay)
     var result = {
         wrapper,
-        modal: el,
+        modal: contentsEl,
         show: function() {
             if(!wrapper.parentNode) this.addToContainer()
             wrapper.classList.add("modal-visible")
@@ -55,7 +58,7 @@ function modal(title, removeOnClose) {
         },
         setTitle: function(newTitle) {
             titleEl.textContent = newTitle
-            if(!title) titleEl.classList.toggle("invisible", title)
+            titleEl.classList.toggle("invisible", !newTitle)
         },
         addToContainer: function() {
             if(!document.getElementById("main-modal-container")) {
@@ -68,7 +71,8 @@ function modal(title, removeOnClose) {
             document.getElementById("main-modal-container").appendChild(wrapper)
         },
         appendChild: function(element) {
-            el.appendChild(element)
+            if(element.classList.contains("modal-actions")) modalEl.appendChild(element)
+            else contentsEl.appendChild(element)
         },
         okCancel: function(ok, okText, cancel, cancelText) {
             if(!okText) okText = "Ok"
@@ -79,7 +83,7 @@ function modal(title, removeOnClose) {
             actions.appendChild(button(undefined, cancelText, cancel))
             actions.appendChild(button(undefined, okText, ok))
 
-            el.appendChild(actions)
+            modalEl.appendChild(actions)
 
             return actions
         }
@@ -229,10 +233,10 @@ function placeholderHelp(text, linkDest, linkText, classes) {
                     el.appendChild(span($owf.mobile ? "tap" : "click"))
                     break
                 case "$edit":
-                    el.appendChild(button("edit", "Edit", () => {}, ["edit-button", "float-none", "cursor-normal"]))
+                    el.appendChild(button("edit", "Edit", () => {}, ["edit-button", "button-disabled", "float-none"]))
                     break
                 case "$plus":
-                    el.appendChild(button("add", undefined, () => {}, ["cursor-normal"]))
+                    el.appendChild(button("add", undefined, () => {}, ["button-disabled"]))
                     break
                 default:
                     el.appendChild(span(part))

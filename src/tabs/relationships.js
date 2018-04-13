@@ -105,7 +105,7 @@ function createModal(obj, cb) {
     }, "button-disabled")
     modalActions.appendChild(cancel)
     modalActions.appendChild(add)
-    modal.modal.appendChild(modalActions)
+    modal.appendChild(modalActions)
 
     return modal
 }

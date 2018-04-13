@@ -2,7 +2,6 @@
     position: relative
     display: inline-block
     cursor: default
-    background-color: $background
 
     .searchresults
         margin-top: 3px
@@ -10,7 +9,7 @@
         position: absolute
         z-index: 1
         background-color: $background
-        border: 1px solid $outline
+        border: 1px solid $midground
         max-height: 80vh
         overflow-y: auto
         width: 100%
@@ -19,15 +18,26 @@
             display: block
 
 .logo
-    float: right
-    font-weight: bold
+    display: none
 
 .main-menubar
+    background-color: $foreground
+    color: $background
+    padding: 3px
+    padding-left: 6px
+
+    .searchbar-top
+        background-color: $foreground
+        color: $background
+        .searchbar-box
+            color: $background
+        .searchresults
+            background-color: $foreground
+
     .menubar-top
         position: relative
         display: inline-block
         cursor: default
-        background-color: $background
 
         .menubar-top-header
             font-weight: bold
@@ -37,7 +47,7 @@
                 margin-right: 0
                 &::after
                     content: none
-            border-bottom: 3px solid $background
+            border-bottom: 3px solid transparent
             margin-right: 1em
             font-weight: bold
 
@@ -55,17 +65,19 @@
             display: none
             position: absolute
             z-index: 1
-            background-color: $background
-            border: 1px solid $outline
+            background-color: $foreground
+            border: 2px solid $midground
             min-width: 100%
+            border-radius: 6px
 
             .menubar-top-content-link
+                border-radius: 3px
                 &:hover
                     background-color: $accent
 
                 border: none
                 display: block
-                color: $foreground
+                color: $background
                 text-decoration: none
                 margin: 3px
 
@@ -81,21 +93,23 @@
         position: absolute
         z-index: 1
         background-color: $background
-        border: 1px solid $outline
+        border: 2px solid $midground
         min-width: 100%
+        border-radius: 6px
+
+        &>*
+            &:hover
+                background-color: $accent
+
+            border-radius: 3px
+            border: none
+            display: block
+            color: $foreground
+            text-decoration: none
+            margin: 3px
 
     &.menu-extends-left .menu-content
         right: 0
-
-    .menu-content > *
-        &:hover
-            background-color: $accent
-
-        border: none
-        display: block
-        color: $foreground
-        text-decoration: none
-        margin: 3px
 
     &:hover
         .menu-content

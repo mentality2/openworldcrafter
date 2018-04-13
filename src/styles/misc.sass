@@ -18,6 +18,9 @@
     user-select: none
     cursor: default
 
+    .button.button-disabled
+        opacity: 1 !important
+
 .about-line
     // -webkit-backface-visibility: hidden
     font-size: 1.5em
@@ -27,15 +30,19 @@
     &:last-child
         margin-bottom: 0 !important
 
-    span::after
-        content: "\0025B6"
-        // animate color instead of opacity because opacity causes bluriness
-        // for some strange reason
-        transition: margin-left 200ms, color 200ms
-        color: transparent
-        margin-left: 0
-        // if there's stuff after, make sure it doesn't move with the animation
-        position: absolute
+    span
+        // to make the ::after's absolute position work properly when the view
+        // is scrolled
+        position: relative
+        &::after
+            content: "\0025B6"
+            // animate color instead of opacity because opacity causes bluriness
+            // for some strange reason
+            transition: margin-left 200ms, color 200ms
+            color: transparent
+            margin-left: 0
+            // if there's stuff after, make sure it doesn't move with the animation
+            position: absolute
 
     &:hover
         color: $accent
@@ -120,40 +127,6 @@
     border: none
     outline: none
     cursor: pointer
-
-.button:not(.nobutton), input[type=submit]:not(.nobutton), button:not(.nobutton), .tag-button
-    box-shadow: 0 0 3px 0 $outline
-    box-sizing: border-box
-    border-radius: 3px
-    padding: 6px
-    margin-right: 3px
-    margin-left: 3px
-    cursor: pointer
-    display: inline-block
-
-    white-space: nowrap
-
-    background-color: $background
-    border: 1px solid $background
-    color: $foreground
-    font: inherit
-    line-height: 1em
-
-    &.button-dangerous
-        box-shadow: 0 0 3px 0 $error
-        border-color: $error
-        background-color: $error
-    &.button-disabled
-        opacity: .5
-        cursor: default
-        &:focus
-            border: 1px solid transparent
-
-    &.button-disabled.button-dangerous
-        box-shadow: 0 0 3px 0 $error
-        border: 1px solid $error
-        background-color: unset
-        opacity: unset
 
 .dropzone
     width: 100%

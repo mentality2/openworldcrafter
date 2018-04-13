@@ -1,25 +1,22 @@
 .treeview
-    border-radius: 12px
-    box-shadow: 0 0 6px 0 $outline inset
-    background-color: $background
-    margin: 6px
     padding: 6px
     padding-right: 1em
     min-width: 300px
     max-width: 300px
     padding-bottom: 3em
 
-    // to make room for the split pane gutter next to the tree view
-    margin-right: .5em
-
     overflow: auto
     // float: left
 
+    border-right: 2px solid $midground
+
     .treeview-container
+        margin-left: -.5em
+
         .treeview-item
             margin-left: 1em
             padding-left: 3px
-            border-left: 3px solid $background
+            border-left: 2px solid transparent
             cursor: default
 
             &.treeview-item-collapsed
@@ -32,8 +29,7 @@
     .toolbar
         box-sizing: border-box
         position: fixed
-        bottom: 15px
-        margin-bottom: 3px
+        bottom: 8px
 
 .treeview-item-selected
     background-color: $accent

@@ -7,38 +7,52 @@
 
         z-index: 1010
 
-        min-width: 600px
+        width: 600px
         max-width: 100vw
         max-height: 100vh
-        overflow-y: auto
+        // scrolling is done in the content div only
+        overflow: hidden
 
         position: fixed
         top: 50%
         left: 50%
         transform: translate(-50%, -50%)
 
-        box-shadow: 0 0 6px $outline
-        box-sizing: border-box
         border-radius: 12px
-        padding: 1em
-
+        // if the modal is the full width of the screen, don't round the corners
+        @media screen and (max-width: 600px)
+            border-radius: 0 !important
         background-color: $background
 
-        *:last-child
-            margin-bottom: 0
+        .modal-contents
+            padding: 1em
 
-        textarea
-            min-height: 200px
+            display: flex
+            flex-flow: column
 
-        &>*
-            margin-bottom: 1em
+            overflow-y: auto
+
+            &>*
+                margin-bottom: 1em
+            *:last-child
+                margin-bottom: 0
+
+            textarea
+                min-height: 200px
 
         .modal-title
             font-weight: bold
+            background-color: $foreground
+            color: $background
+            padding: .5em
 
         .modal-actions
             text-align: right
             vertical-align: text-bottom
+
+            background-color: $foreground
+            color: $background
+            padding: .5em
 
             // to put it at the bottom, even if the modal is too big
             margin-top: auto
@@ -47,10 +61,10 @@
             // line-height: 2.5
 
             &>*
-                margin-left: 1em
+                margin-left: .5em
 
     .modal-overlay
-        background-color: $background
+        background-color: $foreground
         opacity: .5
         z-index: 1000
 
