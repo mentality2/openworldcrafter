@@ -32,5 +32,16 @@ module.exports = [
                 }
             ])
         ]
+    },
+    // minibundle
+    {
+        entry: "./webpack/minibundle.js",
+        output: {
+            path: path.join(__dirname, "..", "dist", "web"),
+            filename: "js/minibundle.js"
+        },
+        module: {
+            rules: require("./rules.js")
+        }
     }
 ]
