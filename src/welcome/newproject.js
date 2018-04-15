@@ -27,12 +27,13 @@ module.exports = function() {
     for(let methodName in $owf.availableAPIs) {
         let method = $owf.availableAPIs[methodName]
         let button = dom.button(boringButton ? undefined : method.buttonIcon, boringButton ? "Save" : method.buttonText, () => {
-            newProjectModal.wrapper.classList.remove("modal-visible")
+            newProjectModal.hide()
             method.createProject((err, storageAPI) => {
                 if(err) $owf.handleError("Error creating project", err)
                 else {
-                    var proj = project.createProject(name.value, desc.value, storageAPI)
-                    utils.launchEditor(storageAPI.getLocation(), method.name)
+                    var proj = project.createProject(name.value, desc.value, storageAPI, undefined, () => {
+                        utils.launchEditor(storageAPI.getLocation(), method.name)
+                    })
                 }
             }, name.value)
         })

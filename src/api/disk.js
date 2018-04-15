@@ -139,25 +139,6 @@ class DiskApiDescription extends require("./apidescription.js") {
         })
     }
 
-    openProject(location, onerr) {
-        var diskapi = new DiskProjectStore(location, undefined, proj => {
-            this._projectList.addProject({
-                name: proj.info.name,
-                location,
-                desc: proj.info.description
-            })
-
-            $owf.viewProject(proj)
-        }, err => {
-            if(err === "project version mismatch, please update openworldcrafter") {
-                $owf.handleError("Update Required", "This project was created in a newer version of openworldcrafter. Please update to view it so data isn't lost.")
-            } else {
-                this._projectList.removeProject(location)
-                onerr(err)
-            }
-        })
-    }
-
     getProjectList(cb) {
         cb(this._projectList)
     }

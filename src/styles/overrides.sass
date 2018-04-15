@@ -69,7 +69,7 @@ table
     font: inherit
     line-height: 1em
 
-    transition: background-color 200ms, color 200ms
+    transition: background-color 200ms, color 200ms, opacity 200ms
 
     svg, .svg
         fill: $accent
@@ -100,12 +100,6 @@ table
     &.button-disabled
         opacity: .5
         cursor: default
-
-    &.button-disabled.button-dangerous
-        box-shadow: 0 0 3px 0 $error
-        border: 1px solid $error
-        background-color: unset
-        opacity: unset
 
 svg, .svg
     fill: $foreground

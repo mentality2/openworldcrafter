@@ -19,7 +19,15 @@ class AppStorageAPI extends require("./") {
     constructor(location, cb, mustCreate) {
         super(location, cb, mustCreate)
         this._dir = getProjectDirectory(location)
-        cb(undefined, this)
+
+        if(mustCreate) {
+            fs.mkdir_safe(this._dir, err => {
+                if(err) cb(err)
+                else cb(undefined, this)
+            })
+        } else {
+            cb(undefined, this)
+        }
     }
 
     updateListing(name, desc) {
@@ -99,7 +107,7 @@ class AppApiDescription extends require("./apidescription.js") {
                 return
             }
 
-            this._getProjectList(list => {
+            this.getProjectList(list => {
                 list.removeProject(location, then => {
                     fs.deleteDirectory(dir, cb)
                 })
@@ -109,21 +117,7 @@ class AppApiDescription extends require("./apidescription.js") {
 
     createProject(cb) {
         var projectID = uuid()
-        new AppProjectStore(projectID, cb, true)
-    }
-
-    openProject(location, onerr) {
-        var appapi = new AppProjectStore(location, undefined, proj => {
-            this._getProjectList(list => list.addProjectEntry(proj.info.name, location, proj.info.description))
-            $owf.viewProject(proj)
-        }, err => {
-            if(err === "project version mismatch, please update openworldcrafter") {
-                $owf.handleError("Update Required", "This project was created in a newer version of openworldcrafter. Please update to view it so data isn't lost.")
-            } else {
-                console.log(err)
-                onerr(err)
-            }
-        })
+        new AppStorageAPI(projectID, cb, true)
     }
 
     shareProject(id, cb) {
