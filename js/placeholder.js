@@ -31,6 +31,10 @@ function removePlaceholder() {
     html.style.removeProperty("background")
     html.style.removeProperty("height")
     html.style.removeProperty("width")
+
+    // put this here so that it shows up lower in the logs
+    console.warn("Unless you know what you're doing beyond a shadow of a doubt, DO NOT PASTE ANYTHING INTO THIS CONSOLE. Your data, your account, and even your computer could be compromised.");
+    console.warn("Did you know that openworldcrafter is open source? https://github.com/openworldcrafter/openworldcrafter");
 }
 
 var $placeholder = {
