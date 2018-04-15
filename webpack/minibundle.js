@@ -6,3 +6,4 @@
 window.$utils = require("../src/utils.js")
 window.$theme = require("../src/theme.js")
 window.$dom = require("../src/dom.js")
+window.$tabarea = require("../src/tabs/tabarea.js")
