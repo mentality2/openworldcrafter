@@ -66,6 +66,20 @@
         width: 2em
         height: 2em
 
+.password-strength
+    position: relative
+    .password-strength-text
+        opacity: .5
+        position: absolute
+        right: 0
+        padding: 5px
+        &.rejected
+            color: $error
+        &.weak
+            color: mix($error, $accent)
+        &.strong
+            color: $accent
+
 .tag-wrapper
     position: relative
     display: inline-block
