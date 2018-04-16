@@ -76,7 +76,7 @@ table
         stroke: $accent
         transition: fill 200ms, stroke 200ms
 
-    &:not(.button-disabled)
+    &:not(.button-disabled, :disabled)
         &:hover, &:focus
             background-color: $accent
             color: $background
@@ -90,16 +90,18 @@ table
         svg, .svg
             fill: $error
             stroke: $error
-        &:not(.button-disabled)
+        &:not(.button-disabled, :disabled)
             &:hover, &:focus
                 background-color: $error
                 color: $background
                 svg, .svg
                     fill: $background
                     stroke: $background
-    &.button-disabled
+    &.button-disabled, &:disabled
         opacity: .5
         cursor: default
+        // allow elements underneath to receive events
+        pointer-events: none
 
 svg, .svg
     fill: $foreground
