@@ -2,6 +2,11 @@
 
 const dom = require('./dom.js')
 
+var linkbase = "../"
+function setLinkBase(newLinkBase) {
+    linkbase = newLinkBase
+}
+
 const themeNames = {
     theme_dark: "Dark Theme",
     theme_light: "Light Theme"
@@ -44,7 +49,7 @@ function changeTheme(name) {
     if(!document.getElementById("mainStylesheet")) {
         var link = dom.element("link")
         link.rel = "stylesheet"
-        link.href = "../resources/styles/" + themes[name]
+        link.href = linkbase + "resources/styles/" + themes[name]
         link.id = "mainStylesheet"
         document.head.appendChild(link)
     } else {
@@ -53,13 +58,13 @@ function changeTheme(name) {
     if(!document.getElementById("emojiStylesheet")) {
         var emojiLink = dom.element("link")
         emojiLink.rel = "stylesheet"
-        emojiLink.href = "../resources/styles/emoji.css"
+        emojiLink.href = linkbase + "resources/styles/emoji.css"
         emojiLink.id = "emojiStylesheet"
         document.head.appendChild(emojiLink)
     }
 
     // ?rl=a is so that the stylesheet can easily be reloaded by adding a char to the url
-    if(themes[name]) link.href = "../resources/styles/" + themes[name] + "?rl=a"
+    if(themes[name]) link.href = linkbase + "resources/styles/" + themes[name] + "?rl=a"
 
     // if StatusBar is defined, use it to set the status bar to the foreground color
     if(typeof StatusBar !== "undefined") {
@@ -79,5 +84,5 @@ function getTheme() {
 }
 
 module.exports = {
-    setTheme, changeTheme, reload, themes: themeNames, getTheme
+    setTheme, changeTheme, reload, themes: themeNames, getTheme, setLinkBase
 }
