@@ -59,7 +59,7 @@ function getCsrfToken(cb, err) {
 
 function attemptLogin(cb) {
     if(localStorage["openworldcrafter.device.name"]) {
-        postResourceJson("/auth/devicelogin", {
+        postResourceJson("/api/auth/login/device", {
             device: localStorage["openworldcrafter.device.uuid"],
             token: localStorage["openworldcrafter.device.token"]
         }, (err, loginres) => {

@@ -135,7 +135,7 @@ class AppApiDescription extends require("./apidescription.js") {
             fs.readFile("projectlist.json", (err, data) => {
                 // if the file isn't found, just ignore the situation. we'll create a blank array.
                 if(err && err.code !== FileError.NOT_FOUND_ERR) {
-                    this.handleError("Error", "Error loading project list", err)
+                    $owf.handleError("Error", "Error loading project list", err)
                 } else {
                     this._projectList = new projectlist.ProjectList(JSON.parse(data || "[]"), (data, cb) => {
                         fs.writeFileJSON("projectlist.json", data, (err, success) => {

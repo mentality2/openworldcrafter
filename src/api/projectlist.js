@@ -6,10 +6,9 @@ function elipsize(str, len) {
 }
 
 class ProjectList {
-    constructor(data, save, api) {
+    constructor(data, save) {
         this.projects = data
         this._save = save
-        this._api = api
     }
 
     addProjectEntry(name, location, desc, cb) {

@@ -3,7 +3,7 @@
 const electron = $native.electron
 const path = $native.path
 const disk = require("../api/disk.js")
-const web = require('../api/api.js')
+const web = require('../api/web.js')
 const https = $native.https
 const project = require('../project')
 const dom = require('../dom')
@@ -18,27 +18,16 @@ class DesktopEnvironment extends require("./index") {
             Used to switch between webview and iframe
         */
         this.iframeTag = "webview"
-        this.showLogoInCorner = true
 
         this.availableAPIs = {
             disk: disk
         }
 
-        web.getOnlineApi(api => {
-            if(api) this.availableAPIs.web = api
+        web.checkAvailability(available => {
+            if(available) this.availableAPIs.web = new web()
 
             this._onFinishLoad()
         })
-    }
-
-    getProjectList(cb) {
-        console.trace("[DEPRECATION] Use api.getProjectList() instead")
-        this.availableAPIs[0].getProjectList(cb)
-    }
-
-    getSaveMethods() {
-        console.trace("[DEPRECATION] Use this.availableAPIs instead")
-        return this.availableAPIs
     }
 
     /*

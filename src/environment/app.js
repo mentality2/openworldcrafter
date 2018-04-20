@@ -1,7 +1,7 @@
 "use strict"
 
 const api = require('../api/app')
-const web = require('../api/api')
+const web = require('../api/web.js')
 const dom = require('../dom')
 const project = require('../project')
 const magicuuids = require('../magicuuids')
@@ -25,8 +25,8 @@ class AppEnvironment extends require("./index") {
             app: api
         }
 
-        web.getOnlineApi(api => {
-            if(api) this.availableAPIs.web = api
+        web.checkAvailability(available => {
+            if(available) this.availableAPIs.web = new web()
 
             this._onFinishLoad()
         })

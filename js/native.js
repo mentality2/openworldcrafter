@@ -1,4 +1,6 @@
-$native = {}
+"use strict"
+
+var $native = global.$native = {}
 
 $native.fs = require("fs")
 $native.path = require("path")

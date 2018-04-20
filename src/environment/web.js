@@ -1,6 +1,6 @@
 "use strict"
 
-const api = require('../api/api')
+const web = require('../api/web.js')
 const dom = require('../dom')
 
 class WebEnviroment extends require("./") {
@@ -11,36 +11,34 @@ class WebEnviroment extends require("./") {
             Used to switch between webview and iframe
         */
         this.iframeTag = "iframe"
-        this.styleDir = "/dist/resources/styles/"
+        this.styleDir = "/resources/styles/"
 
-        this.buildType = "web"
+        this.availableAPIs = {
+            web: new web()
+        }
 
         this._onFinishLoad()
-    }
-
-    getProjectList(cb) {
-
     }
 
     /*
         Open a new window with a documentation page
     */
     showDocs(page) {
-        window.open("/dist/resources/docs/index.htm#" + page, "_blank")
+        window.open("/resources/docs/index.htm#" + page, "_blank")
     }
 
     /*
         Display the license file
     */
     showLicense() {
-        window.open("/dist/resources/docs/license.htm")
+        window.open("/resources/docs/license.htm", "_blank")
     }
 
     /*
         Open a new window with the welcome page
     */
     showWelcome() {
-        window.open("/user/welcome", "_blank")
+        window.open("/pages/welcome.htm", "_blank")
     }
 
     /*
@@ -50,7 +48,15 @@ class WebEnviroment extends require("./") {
         window.open(url, "_blank")
     }
 
-    handleError(error) {
+    /*
+        Show the 'Are you sure you want to exit?' modal
+    */
+    showExitConfirmation() {
+        var res = confirm("Changes won't be saved! Are you sure you want to close?") ? undefined : true
+        return res
+    }
+
+    handleError(title, error, debug) {
         if(typeof error === "string") {
             var match = error.match(/^(\d{3}) ([\w\s]+)(?:; (.+))?$/)
             if(match) {
@@ -109,14 +115,6 @@ class WebEnviroment extends require("./") {
         modal.appendChild(modalActions)
 
         modal.show()
-    }
-
-    /*
-        Show the 'Are you sure you want to exit?' modal
-    */
-    showExitConfirmation() {
-        var res = confirm("Changes won't be saved! Are you sure you want to close?") ? undefined : true
-        return res
     }
 }
 
