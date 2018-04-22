@@ -15,7 +15,7 @@ class ApiDescription {
     //     throw "Not Implemented: shareProject"
     // }
 
-    createProject() {
+    createProject(cb, name) {
         throw "Not Implemented: createProject"
     }
 

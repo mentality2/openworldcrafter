@@ -115,6 +115,8 @@ class WebEnviroment extends require("./") {
         modal.appendChild(modalActions)
 
         modal.show()
+
+        removePlaceholder()
     }
 }
 

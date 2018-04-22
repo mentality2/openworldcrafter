@@ -11,8 +11,8 @@ const noop = () => {}
  */
 
 class WebStorageAPI extends require("./") {
-    constructor(projectid, cb, mustCreate) {
-        super()
+    constructor(projectid, cb) {
+        super(projectid, cb)
 
         this._id = projectid
 
@@ -33,7 +33,7 @@ class WebStorageAPI extends require("./") {
     If files can be accessed by URLs, this function converts filenames to URLs
     */
     getFileUrl(file, cb) {
-        return webrequest.origin + "/api/projects/" + this._id + "/files/" + encodeURIComponent(file)
+        cb(undefined, webrequest.origin + "/api/projects/" + this._id + "/files/" + encodeURIComponent(file))
     }
 
     /*
@@ -47,27 +47,27 @@ class WebStorageAPI extends require("./") {
     Reads binary data from the file, raising an error if it does not exist.
     */
     readFile(file, cb) {
-        throw "Not Implemented: readFile()"
+        webrequest.getResource(`/api/projects/${ this._id }/files/${ encodeURIComponent(file) }`, cb)
     }
     /*
     Reads a string from the file, raising an error if it does not exist.
     */
     readTextFile(file, cb) {
-        throw "Not Implemented: readTextFile()"
+        webrequest.getResource(`/api/projects/${ this._id }/files/${ encodeURIComponent(file) }`, cb)
     }
 
     /*
     Writes the data to a file, creating it if it does not exist.
     */
     writeFile(file, data, cb) {
-        throw "Not Implemented: writeFile()"
+        webrequest.putResource(`/api/projects/${ this._id }/files/${ encodeURIComponent(file) }`, data, cb)
     }
 
     /*
     Deletes the file. Does nothing if it does not exist.
     */
     deleteFile(file, cb) {
-        throw "Not Implemented: deleteFile()"
+        webrequest.deleteResource(`/api/projects/${ this._id }/files/${ encodeURIComponent(file) }`, cb)
     }
 }
 
@@ -83,17 +83,17 @@ class WebApiDescription extends require("./apidescription.js") {
     }
 
     deleteProject(location, name, cb) {
+        webrequest.deleteResource(`/api/projects/${ location }`, cb)
     }
 
-    createProject(cb) {
+    createProject(cb, name) {
+        webrequest.postForm(`/api/user/projects`, { name }, (err, res) => {
+            if(err) cb(err)
+            else new WebStorageAPI(JSON.parse(res).projectid, cb)
+        })
     }
 
     getProjectList(cb) {
-        if(this._projectList) {
-            cb(this._projectList)
-            return
-        }
-
         webrequest.getResource("/api/user/projects", (err, res) => {
             if(err) {
                 $owf.handleError("Error", "Could not get your list of projects. Maybe there is a network problem?")

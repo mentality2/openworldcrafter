@@ -12,24 +12,20 @@ function createDeviceNameModal(el, password) {
     var actions = dom.div(undefined, "modal-actions")
     var cancel = dom.button(undefined, "Cancel", () => { el.hide() })
     var login = dom.button(undefined, "Add Device", () => {
-        webrequest.postForm("/user/settings/devices/add", {
-            devicename: name.value,
+        webrequest.postForm("/api/auth/devices", {
+            name: name.value,
             password
-        }, (status, data) => {
-            if(status) {
-                console.log("result", status, data);
-                $owf.handleError("Error", "The device could not be added.", status)
+        }, (err, data) => {
+            if(err) {
+                console.log("result", err)
+                $owf.handleError("Error", "The device could not be added.", err)
             } else {
-                var credentials = JSON.parse(data)
-                console.log("credentials", credentials);
+                var credentials = JSON.parse(data).credentials
                 localStorage.setItem("openworldcrafter.device.name", credentials.name)
-                localStorage.setItem("openworldcrafter.device.uuid", credentials.uuid)
+                localStorage.setItem("openworldcrafter.device.uuid", credentials.id)
                 localStorage.setItem("openworldcrafter.device.token", credentials.token)
 
-                // now log out
-                webrequest.postForm("/logout", {}, () => {
-                    el.hide()
-                })
+                el.hide()
             }
         })
     })
@@ -40,7 +36,7 @@ function createDeviceNameModal(el, password) {
 }
 
 module.exports.createDeviceLoginModal = function() {
-    var el = dom.modal("Login")
+    var el = dom.modal("Login", true)
 
     var email = dom.inputText("", "Email")
     var password = dom.inputText("", "Password")
@@ -48,16 +44,22 @@ module.exports.createDeviceLoginModal = function() {
 
     if(process.env.NODE_ENV === "development") {
         // because I'm too lazy to type it every time
-        email.value = "dvader@deathstar.mil"
-        password.value = "luke"
+        email.value = "glados@aperturelabs.com"
+        password.value = "wheatleyisverydumb1"
     }
 
     var actions = dom.div(undefined, "modal-actions")
     var cancel = dom.button(undefined, "Cancel", () => { el.hide() })
     var login = dom.button(undefined, "Login", () => {
-        webrequest.postForm("/login", {
+        webrequest.postForm("/api/auth/login/password", {
             email: email.value, password: password.value
-        }, () => {
+        }, (err) => {
+            if(err) {
+                el.hide()
+                $owf.handleError("Error", err.err)
+                return
+            }
+
             email.remove(); password.remove(); actions.remove()
             createDeviceNameModal(el, password.value)
         })

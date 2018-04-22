@@ -2,7 +2,7 @@
 
 var csrfToken = undefined
 
-const origin = typeof process.env.OWC_ORIGIN !== "undefined" ? process.env.OWC_ORIGIN : "http://localhost:7701"
+const origin = typeof process.env.OWC_ORIGIN !== "undefined" ? process.env.OWC_ORIGIN : "http://localhost:7730"
 
 /*
  * All callbacks will be called with arguments (err, responseText)
@@ -16,7 +16,7 @@ function sendRequest(method, url, contenttype, data, cb) {
         if(request.status >= 200 && request.status < 300) {
             cb(undefined, request.responseText)
         } else {
-            cb(request.status, request.responseText)
+            cb(JSON.parse(request.responseText))
         }
     }
     request.onerror = err => {
@@ -46,12 +46,12 @@ function sendRequest(method, url, contenttype, data, cb) {
 function getCsrfToken(cb, err) {
     if(csrfToken) cb(csrfToken)
     else {
-        getResource("/csrf-token", (status, data) => {
+        getResource("/api/csrftoken", (status, data) => {
             if(status) {
                 // oops, error
                 err(status)
             } else {
-                cb(data)
+                cb(JSON.parse(data).csrftoken)
             }
         })
     }
@@ -59,7 +59,7 @@ function getCsrfToken(cb, err) {
 
 function attemptLogin(cb) {
     if(localStorage["openworldcrafter.device.name"]) {
-        postResourceJson("/api/auth/login/device", {
+        postForm("/api/auth/login/device", {
             device: localStorage["openworldcrafter.device.uuid"],
             token: localStorage["openworldcrafter.device.token"]
         }, (err, loginres) => {
@@ -73,24 +73,19 @@ function getResource(url, cb) {
     sendRequest("GET", url, undefined, undefined, cb)
 }
 
-function putResourceJsonText(url, object, cb) {
-    sendRequest("PUT", url, "application/json", object, cb)
-}
-
 function postForm(url, fields, cb) {
     var fieldarray = []
-    for(var field in fields) fieldarray.push(field + "=" + fields[field])
+    for(var field in fields || {}) fieldarray.push(encodeURIComponent(field) + "=" + encodeURIComponent(fields[field]))
     var urlencoded = fieldarray.join("&")
 
     sendRequest("POST", url, "application/x-www-form-urlencoded", urlencoded, cb)
 }
-
-function postResourceJson(url, object, cb) {
-    sendRequest("POST", url, "application/json", JSON.stringify(object), cb)
+function postResource(url, file, cb) {
+    sendRequest("POST", url, file.type, file, cb)
 }
 
-function postResourceFile(url, file, cb) {
-    sendRequest("POST", url, file.type, file, cb)
+function putResource(url, file, cb) {
+    sendRequest("PUT", url, file.type, file, cb)
 }
 
 function deleteResource(url, cb) {
@@ -98,12 +93,11 @@ function deleteResource(url, cb) {
 }
 
 module.exports = {
-    getResource,
-    putResourceJsonText,
-    postResourceJson,
-    postResourceFile,
-    postForm,
-    deleteResource,
     attemptLogin,
-    origin
+    origin,
+    getResource,
+    postForm,
+    postResource,
+    putResource,
+    deleteResource
 }
