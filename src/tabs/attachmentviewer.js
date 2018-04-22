@@ -19,11 +19,11 @@ class AttachmentViewer {
             this._project.getAssetUrl(attachment, window.$images.showImage)
         } else {
             // show the image in the modal
-            var assetInfo = this._project.getAssetInfo(id)
+            var assetInfo = this._project.getAssetInfo(attachment)
             this._modal.setTitle(assetInfo.name)
 
             this._img.src = ""
-            this._project.getAssetUrl(id, url => {
+            this._project.getAssetUrl(attachment, url => {
                 this._img.src = url
             })
             this._modal.show()
