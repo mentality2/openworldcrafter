@@ -60,7 +60,6 @@ class DiskStorageAPI extends require("./") {
     */
     readFile(file, cb) {
         // we can use nodebuffers because the disk api only works on electron
-        console.log("reading file", file);
         this._archive.files[file].async("nodebuffer")
         .then(data => cb(undefined, data))
         .catch(err => cb(err))
