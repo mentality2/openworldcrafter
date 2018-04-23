@@ -45,6 +45,15 @@
 
             textarea
                 min-height: 200px
+            &.tab-wrapper
+                // For modals that contain tab wrappers, hide the usual padding
+                // around the contents.
+                padding: 0
+                .tabrow
+                    // collapse some of the extra padding under the title
+                    margin-top: -.5em
+                    margin-bottom: 0
+                    padding-left: .75em
 
         .modal-title
             font-weight: bold
