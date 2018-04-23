@@ -161,6 +161,16 @@ function createPage(el) {
         toolbar.appendChild(open)
     }
 
+    if($owf.showUploadDialog) {
+        var upload = dom.button("", "Upload\u2026", () => {
+            $owf.showUploadDialog(() => {
+                // called if there is more than one project uploaded
+                createProjectList(recentList)
+            })
+        })
+        toolbar.appendChild(upload)
+    }
+
     var newProject = dom.button("add", "New\u2026", () => {
         newProjectModal.wrapper.classList.add("modal-visible")
     })

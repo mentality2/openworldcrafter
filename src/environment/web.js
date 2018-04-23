@@ -1,7 +1,9 @@
 "use strict"
 
 const web = require('../api/web.js')
+const webrequest = require('../api/webrequest.js')
 const dom = require('../dom')
+const utils = require('../utils.js')
 
 class WebEnviroment extends require("./") {
     constructor() {
@@ -117,6 +119,35 @@ class WebEnviroment extends require("./") {
         modal.show()
 
         removePlaceholder()
+    }
+
+    /* WEB ONLY STUFF */
+    showUploadDialog(cb) {
+        cb = cb || (() => {})
+        function upload(files) {
+            let loadProject = files.length === 1
+
+            for(var file of files) {
+                webrequest.postResource("/api/user/projects/upload", file, (err, data) => {
+                    if(err) $owf.handleError("Error Uploading Project", "The project could not be uploaded.", err)
+                    else {
+                        if(loadProject) utils.launchEditor(JSON.parse(data).projectid, "web")
+                        else cb()
+                    }
+                })
+            }
+        }
+
+        var input = dom.element("input", "", "invisible")
+        input.type = "file"
+        input.multiple = true
+        input.onchange = () => {
+            upload(input.files)
+        }
+
+        input.click()
+
+        document.body.appendChild(input)
     }
 }
 
