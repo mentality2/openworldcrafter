@@ -63,7 +63,7 @@ function attemptLogin(cb) {
             device: localStorage["openworldcrafter.device.uuid"],
             token: localStorage["openworldcrafter.device.token"]
         }, (err, loginres) => {
-            cb(err ? true : false)
+            cb(err ? false : true)
         })
     } else cb(false)
 }
