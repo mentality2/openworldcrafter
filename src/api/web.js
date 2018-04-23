@@ -84,6 +84,7 @@ class WebApiDescription extends require("./apidescription.js") {
 
     deleteProject(location, name, cb) {
         webrequest.deleteResource(`/api/projects/${ location }`, cb)
+        delete this._projectList
     }
 
     createProject(cb, name) {
@@ -91,9 +92,15 @@ class WebApiDescription extends require("./apidescription.js") {
             if(err) cb(err)
             else new WebStorageAPI(JSON.parse(res).projectid, cb)
         })
+        delete this._projectList
     }
 
     getProjectList(cb) {
+        if(this._projectList) {
+            cb(this._projectList)
+            return
+        }
+
         webrequest.getResource("/api/user/projects", (err, res) => {
             if(err) {
                 $owf.handleError("Error", "Could not get your list of projects. Maybe there is a network problem?")
