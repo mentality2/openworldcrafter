@@ -61,6 +61,14 @@ function createMoreMenu() {
     moreMenu.appendChild(settings)
     moreMenu.appendChild(documentation)
 
+    if($owf.logout) {
+        var logout = dom.div("Log Out")
+        logout.addEventListener("click", () => {
+            $owf.logout()
+        })
+        moreMenu.appendChild(logout)
+    }
+
     more.appendChild(moreIcon)
     more.appendChild(moreMenu)
 

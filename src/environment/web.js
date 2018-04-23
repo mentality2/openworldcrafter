@@ -149,6 +149,12 @@ class WebEnviroment extends require("./") {
 
         document.body.appendChild(input)
     }
+
+    logout() {
+        webrequest.postForm("/api/auth/logout", {}, () => {
+            utils.goToPage("../")
+        })
+    }
 }
 
 global.$owf = new WebEnviroment()
