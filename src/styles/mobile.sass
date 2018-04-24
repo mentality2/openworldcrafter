@@ -16,10 +16,6 @@
     .mobile-visible
         display: unset !important
 
-    .mobile-tab-title
-        display: unset !important
-        font-size: 1.2em
-
     // make scrolling smooth. Interestingly, both Android and iOS use webkit.
     -webkit-overflow-scrolling: touch
 
@@ -86,7 +82,7 @@
     .min-height-50-vh
         min-height: 50vh
 
-    .tab-wrapper
+    *:not(.modal) > .tab-wrapper
         margin-top: .2em
         margin-bottom: 0
         padding-bottom: 2.75em
@@ -94,6 +90,9 @@
 
         .tab-container
             padding-top: 0
+            .mobile-tab-title
+                display: unset !important
+                font-size: 1.2em
 
         .tabrow
             position: absolute

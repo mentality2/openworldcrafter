@@ -6,7 +6,7 @@ const buildinfo = require('../buildinfo')
 var sendDebugInfoID = 0
 
 function showThanksModal(email) {
-    var modal = dom.modal("Thanks!")
+    var modal = dom.modal("Thanks!", true, 2)
 
     if(email) {
         modal.appendChild(dom.div(`Thanks for your feedback! I'll review it and get back to you at ${ email } when I get a chance.`))
@@ -14,11 +14,16 @@ function showThanksModal(email) {
         modal.appendChild(dom.div("Thanks for your feedback! I'll review it when I get a chance and see what I can do."))
     }
 
+    var actions = dom.div("", "modal-actions")
+    var close = dom.button("", "Close", () => modal.hide())
+    actions.appendChild(close)
+    modal.appendChild(actions)
+
     modal.show()
 }
 
 function showOopsModal(type, body) {
-    var modal = dom.modal("Oops")
+    var modal = dom.modal("Oops", true, 2)
 
     var contents = dom.div()
     contents.appendChild(dom.span("Something went wrong, and your feedback couldn't be submitted. "))
@@ -31,11 +36,17 @@ function showOopsModal(type, body) {
     contents.appendChild(dom.span("If that doesn't work, my email address is contact@openworldcrafter.com."))
 
     modal.appendChild(contents)
+
+    var actions = dom.div("", "modal-actions")
+    var close = dom.button("", "Close", () => modal.hide())
+    actions.appendChild(close)
+    modal.appendChild(actions)
+
     modal.show()
 }
 
 function createFeedbackModal() {
-    var modal = dom.modal("Feedback", true)
+    var modal = dom.modal("Feedback", true, 1)
 
     var select = dom.element("select")
     var options = {

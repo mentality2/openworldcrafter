@@ -1,63 +1,33 @@
 "use strict"
 
 const dom = require('../../dom.js')
+const tabarea = require('../../tabs')
 const theme = require('../../theme.js')
 
-var tipsLabelId = 0
-
 function createSettingsModal() {
-    var el = dom.modal("Settings", true) // remove on close
+    var modal = dom.modal("Settings", true) // remove on close
 
-    // THEME
-    var themeSection = dom.div()
+    var tabs = []
 
-    var selectTheme = dom.element("select")
-    for(var themeName in theme.themes) {
-        var option = dom.element("option", theme.themes[themeName])
-        option.value = themeName
-        if(themeName === theme.getTheme()) option.selected = true
-        selectTheme.appendChild(option)
+    tabs.push(require("./general.js")())
+    if($owf.availableAPIs.web) tabs.push(require("./account.js")())
+
+    if(tabs.length === 1) {
+        modal.appendChild(tabs[0].el)
+    } else {
+        var tabArea = new tabarea.TabArea(modal.modal)
+
+        for(var tab of tabs) {
+            tabArea.addTab(tab.name, tab.el)
+        }
     }
-    selectTheme.addEventListener("change", () => {
-        console.log(selectTheme.value);
-        theme.changeTheme(selectTheme.value)
-    })
 
-    themeSection.appendChild(dom.h3("Theme"))
-    themeSection.appendChild(selectTheme)
-
-    var tipsSection = dom.div()
-    var tipsCheckbox = dom.element("input")
-    tipsCheckbox.type = "checkbox"
-    tipsCheckbox.id = `tipslabel-${ tipsLabelId ++ }`
-    var tipsLabel = dom.element("label", "Show tips on the welcome screen")
-    tipsLabel.htmlFor = tipsCheckbox.id
-    tipsCheckbox.checked = localStorage["openworldcrafter.preferences.hidetips"] !== "true"
-
-    tipsCheckbox.addEventListener("change", () => {
-        localStorage["openworldcrafter.preferences.hidetips"] = tipsCheckbox.checked ? "false" : "true"
-    })
-
-    tipsSection.appendChild(dom.h3("Tips"))
-    tipsSection.appendChild(tipsCheckbox)
-    tipsSection.appendChild(tipsLabel)
-
-    el.appendChild(themeSection)
-    el.appendChild(tipsSection)
-
-    return el
-}
-
-function addOkButton(modal) {
     var modalActions = dom.div(undefined, "modal-actions")
     modalActions.appendChild(dom.button(undefined, "Ok", () => {
         modal.hide()
     }))
     modal.appendChild(modalActions)
-}
 
-module.exports.createSettingsModal = function() {
-    var modal = createSettingsModal()
-    addOkButton(modal)
     return modal
 }
+module.exports.createSettingsModal = createSettingsModal

@@ -1,11 +1,15 @@
 .modal-wrapper
     display: none
 
+    z-index: 1000
+    &.z1
+        z-index: 1001
+    &.z2
+        z-index: 1002
+
     .modal
         display: flex
         flex-flow: column
-
-        z-index: 1010
 
         width: 600px
         max-width: 100vw
@@ -23,6 +27,9 @@
         @media screen and (max-width: 600px)
             border-radius: 0 !important
         background-color: $background
+
+        &.z2
+            z-index: 10
 
         // for some website components, like the login screen
         &.modal-main
@@ -49,9 +56,9 @@
                 // For modals that contain tab wrappers, hide the usual padding
                 // around the contents.
                 padding: 0
+                margin-top: -.5em
                 .tabrow
                     // collapse some of the extra padding under the title
-                    margin-top: -.5em
                     margin-bottom: 0
                     padding-left: .75em
 
@@ -81,7 +88,6 @@
     .modal-overlay
         background-color: $foreground
         opacity: .5
-        z-index: 1000
 
         position: fixed
         top: 0

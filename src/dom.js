@@ -23,9 +23,10 @@ function element(type, contents, classes) {
     return el
 }
 
-function modal(title, removeOnClose) {
+function modal(title, removeOnClose, level) {
     var wrapper = div("", "modal-wrapper")
     wrapper.addEventListener("click", event => event.stopPropagation())
+    if(level) wrapper.classList.add("z" + level)
 
     var modalEl = div("", "modal")
 
@@ -43,8 +44,8 @@ function modal(title, removeOnClose) {
     modalEl.appendChild(titleEl)
     modalEl.appendChild(contentsEl)
 
-    wrapper.appendChild(modalEl)
     wrapper.appendChild(overlay)
+    wrapper.appendChild(modalEl)
     var result = {
         wrapper,
         modal: contentsEl,
@@ -257,8 +258,35 @@ function placeholderHelp(text, linkDest, linkText, classes) {
     return el
 }
 
+function message(text, isError) {
+    var el = div("", isError ? "highlighted-error-message" : "highlighted-message")
+
+    function setMessage(newMessage) {
+        el.textContent = newMessage
+        if(newMessage) el.classList.remove("invisible")
+        else el.classList.add("invisible")
+    }
+
+    setMessage()
+    return { el, setMessage }
+}
+
+function hide(el) {
+    el.classList.add("invisible")
+}
+
+function show(el) {
+    el.classList.remove("invisible")
+}
+
+function removeAllChildren(domElement) {
+    while(domElement.firstChild) {
+        domElement.lastChild.remove()
+    }
+}
+
 module.exports = {
     input, button, element, span, div, h1, h2, h3, h4, h5, h6, table, hr, br, p,
     tr, tr_headers, propertyTable, modal, inputText, icon, svg, applyClasses,
-    placeholderHelp
+    placeholderHelp, message, hide, show, removeAllChildren
 }
