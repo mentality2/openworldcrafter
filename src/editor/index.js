@@ -103,8 +103,13 @@ function createPage(el, proj) {
     }
 
     document.addEventListener("pause", () => proj.save())
-    window.addEventListener("native.keyboardhide", e => document.body.classList.remove("keyboard-is-open"))
-    window.addEventListener("native.keyboardshow", e => document.body.classList.add("keyboard-is-open"))
+
+    if($owf.mobile) {
+        // enable mobile keyboard events
+        utils.mobilekeyboard()
+        window.addEventListener("keyboardclosed", e => document.body.classList.remove("keyboard-is-open"))
+        window.addEventListener("keyboardopened", e => document.body.classList.add("keyboard-is-open"))
+    }
 
     var tree = treeview.createProjectFolderView(proj, ref)
 

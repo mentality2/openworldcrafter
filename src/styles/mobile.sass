@@ -24,8 +24,9 @@
         padding: 3px
 
     &.keyboard-is-open
-        .tab-wrapper
+        *:not(.modal) > .tab-wrapper
             padding-bottom: 0
+            // hide tabrow
             .tabrow
                 display: none
 
@@ -102,7 +103,6 @@
 
             display: flex
 
-            transition: margin-top 200ms, margin-bottom 200ms
             &.tabrow-hidden
                 margin-top: 3em
                 margin-bottom: -3em
