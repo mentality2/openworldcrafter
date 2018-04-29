@@ -2,6 +2,7 @@ node_modules
 npm-debug.log
 .travis.yml
 test.owc
+yarn-error.log
 
 .DS_Store
 desktop.ini
