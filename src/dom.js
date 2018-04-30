@@ -26,7 +26,7 @@ function element(type, contents, classes) {
 function modal(title, removeOnClose, level) {
     var wrapper = div("", "modal-wrapper")
     wrapper.addEventListener("click", event => event.stopPropagation())
-    if(level) wrapper.classList.add("z" + level)
+    if(level) wrapper.style.zIndex = level
 
     var modalEl = div("", "modal")
 

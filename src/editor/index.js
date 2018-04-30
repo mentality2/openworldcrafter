@@ -78,14 +78,13 @@ function createPage(el, proj) {
     // }
 
     var menubar = menu.createMainMenubar(proj, {
-        projectInfo: projectInfo.show,
+        projectInfo: () => projectInfo.show(),
         print: () => window.print(),
         // share: (sharingModal ? sharingModal.show : undefined)
         toggleTreeView: () => tree.obj.isRevealed() ? tree.obj.conceal() : tree.obj.reveal(),
         about: () => aboutModal.show()
     }, ref)
 
-    document.body.appendChild(projectInfo.wrapper)
     document.body.appendChild(menubar)
 
     proj.$saveListener = (errmsg, button, buttonAction) => {
