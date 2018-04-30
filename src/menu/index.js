@@ -30,7 +30,6 @@ function createMainMenubar(project, callbacks, ref) {
 
     menu.addTopMenu("help", "Help")
     menu.addMenuItem("help", "About", () => {
-        console.log("About");
         callbacks.about()
     })
     // menu.addMenuLink("help", "Tutorials", "https://example.com")
