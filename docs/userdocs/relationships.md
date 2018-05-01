@@ -1,5 +1,3 @@
-# Relationships
-
 The Relationships tab keeps track of each character's relationships with other
 characters.
 

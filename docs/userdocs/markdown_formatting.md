@@ -1,5 +1,3 @@
-# Markdown Formatting
-
 The Markdown editor allows you to format your notes. You can use bold and
 italic, insert tables, lists, and bullet points, and even add emoji.
 

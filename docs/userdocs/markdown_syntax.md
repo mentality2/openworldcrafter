@@ -1,5 +1,3 @@
-# Markdown Syntax
-
 ## Bold, Underline, and Strikethrough
 
 To make text **bold,** put two asterisks or two underscores on each side. To

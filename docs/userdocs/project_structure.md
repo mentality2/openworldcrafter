@@ -1,5 +1,3 @@
-# Project Structure
-
 Each project has a tree structure, similar to the Documents folder on your
 computer. This allows you to organize your notes on your world in whatever way
 you like.

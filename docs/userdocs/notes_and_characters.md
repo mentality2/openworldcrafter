@@ -1,5 +1,3 @@
-# Notes and Characters
-
 Notes are the most basic items in a project. Use them to keep track of different
 aspects of your world. Each note can hold text, as well as other notes.
 

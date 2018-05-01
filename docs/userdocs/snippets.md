@@ -1,5 +1,3 @@
-# Snippets
-
 Snippets are great for keeping a few lines of text to use later. The Snippets
 page is at the bottom of the project overview.
 

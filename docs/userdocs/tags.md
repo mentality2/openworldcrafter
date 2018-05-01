@@ -1,5 +1,3 @@
-# Tags
-
 Tags make it easy to organize and group items in your project.
 
 To tag a page, enter Edit Mode and type the tag into the "Add Tag" box, shown

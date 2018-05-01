@@ -15,6 +15,8 @@ md.use(require("markdown-it-emoji"))
 md.use(require("markdown-it-container"), "spoiler", require("../src/markdown").spoilerArgs)
 md.use(require("markdown-it-container"), "headercontainer")
 
+const jumpToTop = ``
+
 var rootdir = path.join(__dirname, "..", "docs")
 
 var template = fs.readFileSync(path.join(__dirname, "docs_template.htm"), "utf-8")
@@ -30,7 +32,9 @@ for(var page of indexFile) {
         index += `<a href="#${ slug }">${ page }</a>`
 
         var pageContents = fs.readFileSync(path.join(rootdir, "userdocs", slug + ".md"), "utf-8")
-        docs += `<a name="${ slug }"></a><div id="docs-${ slug }" class="docs-section">${ md.render(pageContents) }</div>`
+        pageContents = pageContents.replace(/!\[(.*)\]\((.*)\)/g, `![$1](screenshots/theme_light/$2)`)
+        var htmlContents = md.render(pageContents)
+        docs += `<div id="docs-${ slug }" class="docs-section"><h1>${ page }<a href="#top" class="docs-top-link" name="${ slug }">&#9650;</a></h1>${ htmlContents }</div>`
     }
 }
 

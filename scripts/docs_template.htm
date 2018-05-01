@@ -18,6 +18,9 @@
             var theme = localStorage["openworldcrafter.preferences.theme"] || "theme_light"
             document.getElementById("mainStylesheet").href=`../styles/${ theme }.css`
         </script>
+        <noscript>
+            <link href="../styles/theme_light.css" rel="stylesheet" />
+        </noscript>
 
         <img src="logos/header.svg" class="docs-logo"/>
         <a name="top"></a>
@@ -44,17 +47,8 @@
                 var img = image.getAttribute("src")
 
                 // use screenshots from the right theme. The markdown files all use the light theme by default.
-                image.src = `screenshots/${ theme }/${ img }`
-            }
-
-            var headers = docs_container.querySelectorAll(".docs-section > h1")
-            for(var header of headers) {
-                var topLink = document.createElement("a")
-                topLink.textContent = "\u25B2"
-                topLink.classList.add("docs-top-link")
-                topLink.href = "#top"
-
-                header.appendChild(topLink)
+                // image.src = `screenshots/${ theme }/${ img }`
+                image.src = img.replace(/^screenshots\/[^\/]+\/(.*)$/, `screenshots/${ theme }/$1`)
             }
 
             // sometimes the background shows up as white on the android in app

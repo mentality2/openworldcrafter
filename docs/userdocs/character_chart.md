@@ -1,5 +1,3 @@
-# Character Chart
-
 The Character Chart is one of the most powerful organizational tools in
 openworldcrafter. It is like a mini spreadsheet in your project that keeps track
 of statistics about each character. You can access the chart from the bottom of

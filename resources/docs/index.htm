@@ -18,6 +18,9 @@
             var theme = localStorage["openworldcrafter.preferences.theme"] || "theme_light"
             document.getElementById("mainStylesheet").href=`../styles/${ theme }.css`
         </script>
+        <noscript>
+            <link href="../styles/theme_light.css" rel="stylesheet" />
+        </noscript>
 
         <img src="logos/header.svg" class="docs-logo"/>
         <a name="top"></a>
@@ -31,19 +34,18 @@
             <hr class="docs-index-separator" />
 
             <div id="docs_container" class="docs markdown">
-                <a name="project_structure"></a><div id="docs-project_structure" class="docs-section"><h1>Project Structure</h1>
-<p>Each project has a tree structure, similar to the Documents folder on your
+                <div id="docs-project_structure" class="docs-section"><h1>Project Structure<a href="#top" class="docs-top-link" name="project_structure">&#9650;</a></h1><p>Each project has a tree structure, similar to the Documents folder on your
 computer. This allows you to organize your notes on your world in whatever way
 you like.</p>
 <p>Every new project has some default folders and notes to get you started.</p>
-<p><img src="default_project_structure.png" alt="Default project structure"></p>
+<p><img src="screenshots/theme_light/default_project_structure.png" alt="Default project structure"></p>
 <p>Above is the project overview. It shows you the folders and notes in your
 project. To expand or collapse a folder, click the arrow next to it. If you're
 using the mobile app, you can access this using the button in the top left
 corner. On desktop, it is permanently shown on the left of the screen.</p>
 <p>To add an item, press the &quot;plus&quot; button at the bottom of the project overview.
 You will get a window that looks like this:</p>
-<p><img src="new_item.png" alt="New Item window"></p>
+<p><img src="screenshots/theme_light/new_item.png" alt="New Item window"></p>
 <p>Choose the type of item by clicking the dropdown box, then choose a name for the
 item. Click &quot;Add&quot; to add the item to the currently selected folder.</p>
 <p>To remove an item, simply select it and then click the &quot;minus&quot; button at the
@@ -55,25 +57,22 @@ information about your world.</p>
 <li><a href="#folders_notes_and_characters">Notes and Characters</a></li>
 <li><a href="#timelines_and_events">Timelines and Events</a></li>
 </ul>
-</div><a name="editing"></a><div id="docs-editing" class="docs-section"><h1>Editing</h1>
-<p>To enter Edit Mode, click the Edit button in the top right corner (bottom right
+</div><div id="docs-editing" class="docs-section"><h1>Editing<a href="#top" class="docs-top-link" name="editing">&#9650;</a></h1><p>To enter Edit Mode, click the Edit button in the top right corner (bottom right
 on mobile):</p>
-<p><img src="edit_button.png" alt="Edit button"></p>
+<p><img src="screenshots/theme_light/edit_button.png" alt="Edit button"></p>
 <p>Edit Mode allows you to add notes, attachments, and other details to the items
 in your project. You can also rename objects using the Name field at the top:</p>
-<p><img src="name_editor.png" alt="Name editor"></p>
+<p><img src="screenshots/theme_light/name_editor.png" alt="Name editor"></p>
 <p>To save the changes you've made, click the Save button, also in the top right
 corner:</p>
-<p><img src="save_button.png" alt="Save button"></p>
+<p><img src="screenshots/theme_light/save_button.png" alt="Save button"></p>
 <p>Remember to save your work often!</p>
-</div><a name="notes_and_characters"></a><div id="docs-notes_and_characters" class="docs-section"><h1>Notes and Characters</h1>
-<p>Notes are the most basic items in a project. Use them to keep track of different
+</div><div id="docs-notes_and_characters" class="docs-section"><h1>Notes and Characters<a href="#top" class="docs-top-link" name="notes_and_characters">&#9650;</a></h1><p>Notes are the most basic items in a project. Use them to keep track of different
 aspects of your world. Each note can hold text, as well as other notes.</p>
 <p>Characters are a special type of note that has two extra tabs:
 <a href="#relationships">Relationships</a> and <a href="#character_chart">Character Sheet</a>.
 These tools can help you keep better track of your characters.</p>
-</div><a name="markdown_formatting"></a><div id="docs-markdown_formatting" class="docs-section"><h1>Markdown Formatting</h1>
-<p>The Markdown editor allows you to format your notes. You can use bold and
+</div><div id="docs-markdown_formatting" class="docs-section"><h1>Markdown Formatting<a href="#top" class="docs-top-link" name="markdown_formatting">&#9650;</a></h1><p>The Markdown editor allows you to format your notes. You can use bold and
 italic, insert tables, lists, and bullet points, and even add emoji.</p>
 <p>This document outlines the Markdown editor toolbar. If you would like to learn
 the raw syntax, <a href="#markdown_syntax">go to the syntax documentation</a>.</p>
@@ -155,8 +154,7 @@ would like to link, and the link code will be inserted.</p>
 <h2>Embed Videos</h2>
 <p>You can embed content from Youtube and Vimeo into your notes using the Embed
 button.</p>
-</div><a name="markdown_syntax"></a><div id="docs-markdown_syntax" class="docs-section"><h1>Markdown Syntax</h1>
-<h2>Bold, Underline, and Strikethrough</h2>
+</div><div id="docs-markdown_syntax" class="docs-section"><h1>Markdown Syntax<a href="#top" class="docs-top-link" name="markdown_syntax">&#9650;</a></h1><h2>Bold, Underline, and Strikethrough</h2>
 <p>To make text <strong>bold,</strong> put two asterisks or two underscores on each side. To
 make text <em>italic,</em> put one asterisk or one underscore on each side. To add a
 <s>strikethrough</s> effect, put two tildes on each side.</p>
@@ -246,16 +244,15 @@ Everybody dies at the end!
 </code></pre>
 <blockquote class="spoiler"><p>Everybody dies at the end!</p>
 </blockquote>
-</div><a name="timelines_and_events"></a><div id="docs-timelines_and_events" class="docs-section"><h1>Timelines and Events</h1>
-<p>Timelines are a special type of folder that can store notes on events
+</div><div id="docs-timelines_and_events" class="docs-section"><h1>Timelines and Events<a href="#top" class="docs-top-link" name="timelines_and_events">&#9650;</a></h1><p>Timelines are a special type of folder that can store notes on events
 chronologically. To add an event to a timeline, click the &quot;plus&quot; button at the
 bottom of the project overview, the same way you would create any other note.</p>
 <h2>Event Editor</h2>
 <p>Every event has a date and time associated with it. This is shown at the top of
 the event's page:</p>
-<p><img src="event_date_time.png" alt="Date and time of an event (6 August 2017 13:59)"></p>
+<p><img src="screenshots/theme_light/event_date_time.png" alt="Date and time of an event (6 August 2017 13:59)"></p>
 <p>In <a href="#editing">Edit Mode</a>, you can edit the date and time:</p>
-<p><img src="event_date_time_editor.png" alt="Date and time editor"></p>
+<p><img src="screenshots/theme_light/event_date_time_editor.png" alt="Date and time editor"></p>
 <p>Use the fields given to edit the day, month, and year.</p>
 <h3>Time Editor</h3>
 <p>Below the date fields are the time fields. The dropdown box allows you to choose between All Day, Exact Time, or a time of day. An event set to Exact Time has an hour and a minute, specified in 24-hour time for simplicity.</p>
@@ -276,62 +273,57 @@ the event's page:</p>
 <li>Midnight</li>
 </ul>
 <p>If you choose one of these, it will be displayed in place of the hour and minute, like this:</p>
-<p><img src="event_at_noon.png" alt="6 August 2017 Noon"></p>
+<p><img src="screenshots/theme_light/event_at_noon.png" alt="6 August 2017 Noon"></p>
 <h2>Calendars</h2>
 <p>Timelines have an extra tab at the top called Calendar. Here, you can edit the names of the months as well as the number of days in each. This allows timelines to accommodate many alternate calendars that might appear in fantasy worlds. By default, it is set to a normal Gregorian calendar, with no leap days.</p>
-<p><img src="calendar.png" alt="Calendar"></p>
-</div><a name="attachments"></a><div id="docs-attachments" class="docs-section"><h1>Attachments</h1>
-<p>Attachments allow you to add images to your project. Attachments can be added to
+<p><img src="screenshots/theme_light/calendar.png" alt="Calendar"></p>
+</div><div id="docs-attachments" class="docs-section"><h1>Attachments<a href="#top" class="docs-top-link" name="attachments">&#9650;</a></h1><p>Attachments allow you to add images to your project. Attachments can be added to
 any item, and they have their own tab:</p>
-<p><img src="attachments_tab.png" alt="Attachments tab"></p>
+<p><img src="screenshots/theme_light/attachments_tab.png" alt="Attachments tab"></p>
 <p>To upload an attachment, enter <a href="#editing">Edit Mode</a> and click &quot;Upload&quot;. You
 will see a window that looks like this:</p>
-<p><img src="upload_window.png" alt="Upload window"></p>
+<p><img src="screenshots/theme_light/upload_window.png" alt="Upload window"></p>
 <p>You can either drag files from your desktop or folders into the blue box, or you
 can click &quot;Choose Files&quot; to find a file. You can add multiple files at once.
 When you have all the files you want to upload, click the &quot;Upload&quot; button to add
 the files to the project.</p>
 <p>You can also add titles and captions to your attachments. This is what Edit Mode
 looks like for the Attachments tab:</p>
-<p><img src="attachment_editor.png" alt="Edit attachment title and caption"></p>
+<p><img src="screenshots/theme_light/attachment_editor.png" alt="Edit attachment title and caption"></p>
 <p>When you are finished uploading, be sure to save your work.</p>
-</div><a name="relationships"></a><div id="docs-relationships" class="docs-section"><h1>Relationships</h1>
-<p>The Relationships tab keeps track of each character's relationships with other
+</div><div id="docs-relationships" class="docs-section"><h1>Relationships<a href="#top" class="docs-top-link" name="relationships">&#9650;</a></h1><p>The Relationships tab keeps track of each character's relationships with other
 characters.</p>
 <p>To add a relationship to a character, go to their Relationships tab, enter Edit
 Mode, and click &quot;Add Relationship.&quot; The following window will appear.</p>
-<p><img src="add_relationship.png" alt="Add Relationship window"></p>
+<p><img src="screenshots/theme_light/add_relationship.png" alt="Add Relationship window"></p>
 <p>You can choose a relationship from the dropdown menu, or choose &quot;other&quot; to enter
 your own. Then, use the search box to search the project for the other
 character.</p>
 <p>If the characters' roles are reversed, click &quot;Swap Roles.&quot; For
 example, the preset shown above (&quot;Brother/Sister&quot;) lists Mary Sue as the brother
 by default. &quot;Swap Roles&quot; fixes this issue.</p>
-</div><a name="tags"></a><div id="docs-tags" class="docs-section"><h1>Tags</h1>
-<p>Tags make it easy to organize and group items in your project.</p>
+</div><div id="docs-tags" class="docs-section"><h1>Tags<a href="#top" class="docs-top-link" name="tags">&#9650;</a></h1><p>Tags make it easy to organize and group items in your project.</p>
 <p>To tag a page, enter Edit Mode and type the tag into the &quot;Add Tag&quot; box, shown
 below. Make sure that you type it the same way each time (with the same
 capitalization and spelling).</p>
-<p><img src="add_tag.png" alt="Add Tag text box"></p>
+<p><img src="screenshots/theme_light/add_tag.png" alt="Add Tag text box"></p>
 <p>Each tag has its own page that is created the first time you use it. These are
 filed under &quot;Tags,&quot; underneath the divider in your project overview.</p>
-<p><img src="tags_folder.png" alt="Tags folder"></p>
+<p><img src="screenshots/theme_light/tags_folder.png" alt="Tags folder"></p>
 <p>Tag pages list every item with that tag. You can also add notes and attachments,
 just like any other page.</p>
-</div><a name="snippets"></a><div id="docs-snippets" class="docs-section"><h1>Snippets</h1>
-<p>Snippets are great for keeping a few lines of text to use later. The Snippets
+</div><div id="docs-snippets" class="docs-section"><h1>Snippets<a href="#top" class="docs-top-link" name="snippets">&#9650;</a></h1><p>Snippets are great for keeping a few lines of text to use later. The Snippets
 page is at the bottom of the project overview.</p>
 <p>To add a new snippet, go to the page and click Edit. A text box will appear at
 the top to enter your text. Make sure you click &quot;Add Snippet&quot; when you're done.</p>
-<p><img src="add_snippet.png" alt="Date and time editor"></p>
+<p><img src="screenshots/theme_light/add_snippet.png" alt="Date and time editor"></p>
 <p>All your snippets will appear below, newest on top. Clicking any snippet will
 copy it to your clipboard so you can paste it elsewhere.</p>
 <p>If you want to delete a snippet, you must be in Edit Mode. Then, click the trash
 can button in the upper right-hand corner of the snippet. Deleted snippets will
 be moved to the Trash tab, where you can either restore them or delete them
 permanently.</p>
-</div><a name="character_chart"></a><div id="docs-character_chart" class="docs-section"><h1>Character Chart</h1>
-<p>The Character Chart is one of the most powerful organizational tools in
+</div><div id="docs-character_chart" class="docs-section"><h1>Character Chart<a href="#top" class="docs-top-link" name="character_chart">&#9650;</a></h1><p>The Character Chart is one of the most powerful organizational tools in
 openworldcrafter. It is like a mini spreadsheet in your project that keeps track
 of statistics about each character. You can access the chart from the bottom of
 the project overview.</p>
@@ -339,7 +331,7 @@ the project overview.</p>
 <p>To start adding information to your chart, you will need at least one character.
 Go to their Character Sheet tab and enter Edit Mode. Click the Add Property
 button, which will bring up a window to enter a new property.</p>
-<p><img src="add_property_modal.png" alt="Add Property modal"></p>
+<p><img src="screenshots/theme_light/add_property_modal.png" alt="Add Property modal"></p>
 <p>In this window, add a name and a value for the new property. For example, if you
 want to record that Mary Sue's favorite color is green, you would type &quot;Favorite
 Color&quot; in &quot;Name&quot; and &quot;green&quot; in &quot;value.&quot; Remember that every time you use a
@@ -347,7 +339,7 @@ property name, it must be spelled and capitalized the same way.</p>
 <p>Click &quot;Add&quot; to finish adding the new property. It should now show up in the
 character sheet.</p>
 <h2>The Character Chart</h2>
-<p><img src="character_chart.png" alt="Character chart"></p>
+<p><img src="screenshots/theme_light/character_chart.png" alt="Character chart"></p>
 <p>Each character has a Character Sheet tab that shows all their properties.
 However, there is also a Character Chart page near the bottom of your project
 overview that collects all your character charts into one place. Characters are
@@ -361,7 +353,7 @@ would like to color. Choose a color from the dropdown menu that appears at the
 right of the cell. Now that value will be that color anywhere it occurs for that
 property. For example, if you had a &quot;Has Magical Powers?&quot; property, you could
 color-code &quot;Yes&quot; as green and &quot;No&quot; as red.</p>
-<p><img src="character_chart_color_coding.png" alt="Color-coding dropdown"></p>
+<p><img src="screenshots/theme_light/character_chart_color_coding.png" alt="Color-coding dropdown"></p>
 </div>
             </div>
         </div>
@@ -375,17 +367,8 @@ color-code &quot;Yes&quot; as green and &quot;No&quot; as red.</p>
                 var img = image.getAttribute("src")
 
                 // use screenshots from the right theme. The markdown files all use the light theme by default.
-                image.src = `screenshots/${ theme }/${ img }`
-            }
-
-            var headers = docs_container.querySelectorAll(".docs-section > h1")
-            for(var header of headers) {
-                var topLink = document.createElement("a")
-                topLink.textContent = "\u25B2"
-                topLink.classList.add("docs-top-link")
-                topLink.href = "#top"
-
-                header.appendChild(topLink)
+                // image.src = `screenshots/${ theme }/${ img }`
+                image.src = img.replace(/^screenshots\/[^\/]+\/(.*)$/, `screenshots/${ theme }/$1`)
             }
 
             // sometimes the background shows up as white on the android in app

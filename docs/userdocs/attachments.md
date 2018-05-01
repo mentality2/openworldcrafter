@@ -1,5 +1,3 @@
-# Attachments
-
 Attachments allow you to add images to your project. Attachments can be added to
 any item, and they have their own tab:
 

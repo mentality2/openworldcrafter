@@ -1,5 +1,3 @@
-# Timelines and Events
-
 Timelines are a special type of folder that can store notes on events
 chronologically. To add an event to a timeline, click the "plus" button at the
 bottom of the project overview, the same way you would create any other note.
