@@ -8,7 +8,7 @@ class AttachmentViewer {
 
         if(!window.$images) {
             this._modal = dom.modal()
-            this._img = dom.element("img")
+            this._img = dom.element("img", undefined, "fullwidth")
             this._modal.appendChild(this._img)
         }
     }
