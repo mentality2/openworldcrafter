@@ -229,10 +229,20 @@ function launchEditor(file, api) {
     goToPage(`editor.htm?file=${ encodeURIComponent(file) }&api=${ encodeURIComponent(api) }`)
 }
 
+function dataUrlFromBlob(blob, cb) {
+    // https://stackoverflow.com/questions/18650168/convert-blob-to-base64
+    var reader = new FileReader()
+    reader.onloadend = () => {
+        cb(reader.result)
+    }
+
+    reader.readAsDataURL(blob)
+}
+
 module.exports = {
     bytesText, formatTime, removeAllChildren, defaultCalendar, getDateField,
     setDateField, timesOfDay, queryParams, compareDates, acceptableSubobjects,
-    compareVersions, colors, goToPage, launchEditor,
+    compareVersions, colors, goToPage, launchEditor, dataUrlFromBlob,
 
     mobilekeyboard: require("./mobilekeyboard.js")
 }

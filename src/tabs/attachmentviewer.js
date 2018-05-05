@@ -1,6 +1,7 @@
 "use strict"
 
 const dom = require('../dom.js')
+const utils = require('../utils')
 
 class AttachmentViewer {
     constructor(project) {
@@ -16,7 +17,9 @@ class AttachmentViewer {
     showAttachment(attachment) {
         if(window.$images) {
             // use the native plugin to show the image
-            this._project.getAssetUrl(attachment, window.$images.showImage)
+            this._project.getAsset(attachment, (err, blob) => {
+                utils.dataUrlFromBlob(blob, window.$images.showImage)
+            })
         } else {
             // show the image in the modal
             var assetInfo = this._project.getAssetInfo(attachment)

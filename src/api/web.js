@@ -53,7 +53,7 @@ class WebStorageAPI extends require("./") {
     Reads a string from the file, raising an error if it does not exist.
     */
     readTextFile(file, cb) {
-        webrequest.getResource(`/api/projects/${ this._id }/files/${ encodeURIComponent(file) }`, cb)
+        webrequest.getTextResource(`/api/projects/${ this._id }/files/${ encodeURIComponent(file) }`, cb)
     }
 
     /*
@@ -101,7 +101,7 @@ class WebApiDescription extends require("./apidescription.js") {
             return
         }
 
-        webrequest.getResource("/api/user/projects", (err, res) => {
+        webrequest.getTextResource("/api/user/projects", (err, res) => {
             if(err) {
                 $owf.handleError("Error", "Could not get your list of projects. Maybe there is a network problem?")
                 return

@@ -58,7 +58,7 @@ class AppStorageAPI extends require("./") {
     Reads from the file, raising an error if it does not exist.
     */
     readTextFile(file, cb) {
-        fs.readFile(this._dir + file, cb)
+        fs.readTextFile(this._dir + file, cb)
     }
 
     /*
@@ -132,7 +132,7 @@ class AppApiDescription extends require("./apidescription.js") {
     getProjectList(cb) {
         if(this._projectList) cb(this._projectList)
         else {
-            fs.readFile("projectlist.json", (err, data) => {
+            fs.readTextFile("projectlist.json", (err, data) => {
                 // if the file isn't found, just ignore the situation. we'll create a blank array.
                 if(err && err.code !== FileError.NOT_FOUND_ERR) {
                     $owf.handleError("Error", "Error loading project list", err)

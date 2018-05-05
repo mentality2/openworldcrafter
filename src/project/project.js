@@ -318,6 +318,10 @@ class Project {
         this.$store.getAssetUrl(this.assets[id].diskid, cb)
     }
 
+    getAsset(id, cb) {
+        this.$store.getAsset(this.assets[id].diskid, cb)
+    }
+
     getAssetInfo(id) {
         return this.assets[id]
     }

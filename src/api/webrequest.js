@@ -6,6 +6,9 @@ const origin = typeof process.env.OWC_ORIGIN !== "undefined" ? process.env.OWC_O
 
 /*
  * All callbacks will be called with arguments (err, responseText)
+ *
+ * If a GET request, 'contenttype' is the format of the response ("blob" or "text").
+ * Otherwise, it is the Content-Type header to be sent.
  */
 
 function sendRequest(method, url, contenttype, data, cb) {
@@ -14,9 +17,9 @@ function sendRequest(method, url, contenttype, data, cb) {
 
     request.onload = () => {
         if(request.status >= 200 && request.status < 300) {
-            cb(undefined, request.responseText)
+            cb(undefined, request.response)
         } else {
-            cb(JSON.parse(request.responseText))
+            cb(JSON.parse(request.response))
         }
     }
     request.onerror = err => {
@@ -27,7 +30,13 @@ function sendRequest(method, url, contenttype, data, cb) {
         request.open(method, origin + url, true)
 
         if(csrf) request.setRequestHeader("X-CSRF-Token", csrf)
-        if(contenttype) request.setRequestHeader("Content-Type", contenttype)
+        if(method !== "GET" && contenttype) request.setRequestHeader("Content-Type", contenttype)
+
+        if(method === "GET") {
+            request.responseType = contenttype || "text"
+        } else {
+            request.responseType = "text"
+        }
 
         try {
             request.send(data)
@@ -46,7 +55,7 @@ function sendRequest(method, url, contenttype, data, cb) {
 function getCsrfToken(cb, err) {
     if(csrfToken) cb(csrfToken)
     else {
-        getResource("/api/csrftoken", (status, data) => {
+        getTextResource("/api/csrftoken", (status, data) => {
             if(status) {
                 // oops, error
                 err(status)
@@ -69,7 +78,10 @@ function attemptLogin(cb) {
 }
 
 function getResource(url, cb) {
-    sendRequest("GET", url, undefined, undefined, cb)
+    sendRequest("GET", url, "blob", undefined, cb)
+}
+function getTextResource(url, cb) {
+    sendRequest("GET", url, "text", undefined, cb)
 }
 
 function postForm(url, fields, cb) {
@@ -95,6 +107,7 @@ module.exports = {
     attemptLogin,
     origin,
     getResource,
+    getTextResource,
     postForm,
     postResource,
     putResource,

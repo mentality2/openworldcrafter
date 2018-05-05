@@ -69,7 +69,7 @@ module.exports = function() {
     // var sessionList = dom.div()
     // el.appendChild(sessionList)
 
-    webrequest.getResource("/api/user", (err, data) => {
+    webrequest.getTextResource("/api/user", (err, data) => {
         if(err) {
             error.setMessage("Could not access account settings")
             return
@@ -85,7 +85,7 @@ module.exports = function() {
     })
 
     function getDevices() {
-        webrequest.getResource("/api/auth/devices", (err, data) => {
+        webrequest.getTextResource("/api/auth/devices", (err, data) => {
             if(err) {
                 error.setMessage("Could not access account settings")
                 return
@@ -119,7 +119,7 @@ module.exports = function() {
     }
 
     // function getSessions() {
-    //     webrequest.getResource("/api/auth/sessions", (err, data) => {
+    //     webrequest.getTextResource("/api/auth/sessions", (err, data) => {
     //         dom.removeAllChildren(sessionList)
     //         sessionList.appendChild(dom.h3("Sessions"))
     //
