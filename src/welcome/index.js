@@ -152,7 +152,7 @@ function createPage(el) {
 
     // New/Open Toolbar
     // margin-top-3px to avoid clipping under the welcome bar
-    var toolbar = dom.div(undefined, ["margin-top-3px", "margin-sides-half", "margin-sides-half", "flexbox"])
+    var toolbar = dom.div(undefined, ["margin-top", "margin-sides-half", "margin-sides-half", "flexbox"])
 
     var search = dom.span(undefined, ["flexitem-wide", "padding-right-3px"])
     var searchInput = dom.inputText(undefined, "Search Projects", "fullwidth")
