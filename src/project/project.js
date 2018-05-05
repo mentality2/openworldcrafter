@@ -234,7 +234,7 @@ class ProjectVirtualObjects {
 class Project {
     constructor(serial, store) {
         console.log("Loading project from JSON", serial)
-        if(utils.compareVersions(serial.info.saveVersion, thispackage.version) > 0) {
+        if(serial.info.saveVersion && utils.compareVersions(serial.info.saveVersion, thispackage.version) > 0) {
             throw "project version mismatch, please update openworldcrafter"
         }
 
