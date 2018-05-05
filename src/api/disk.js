@@ -60,18 +60,26 @@ class DiskStorageAPI extends require("./") {
     */
     readFile(file, cb) {
         // we can use nodebuffers because the disk api only works on electron
-        this._archive.files[file].async("nodebuffer")
-        .then(data => cb(undefined, data))
-        .catch(err => cb(err))
+        var entry = this._archive.files[file]
+        if(!entry) cb({ code: "ENOENT" })
+        else {
+            entry.async("nodebuffer")
+            .then(data => cb(undefined, data))
+            .catch(err => cb(err))
+        }
     }
     /*
     Reads from the file, raising an error if it does not exist.
     */
     readTextFile(file, cb) {
-        // we can use nodebuffers because the disk api only works on electron
-        this._archive.files[file].async("text")
-        .then(data => cb(undefined, data))
-        .catch(err => cb(err))
+        var entry = this._archive.files[file]
+        if(!entry) cb({ code: "ENOENT" })
+        else {
+            // we can use nodebuffers because the disk api only works on electron
+            entry.async("text")
+            .then(data => cb(undefined, data))
+            .catch(err => cb(err))
+        }
     }
 
     /*
