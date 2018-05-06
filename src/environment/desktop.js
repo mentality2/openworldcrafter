@@ -100,9 +100,9 @@ class DesktopEnvironment extends require("./index") {
     /** DESKTOP SPECIFIC STUFF **/
 
     checkUpdate(cb) {
-        https.get('https://raw.githubusercontent.com/openworldcrafter/openworldcrafter/master/package.json', (res) => {
+        https.get('https://www.openworldcrafter.com/current.json', (res) => {
             if(res.statusCode !== 200) {
-                console.log("Cannot check for updates; fetching package.json returned " + res.statusCode)
+                console.log("Cannot check for updates; fetching current.json returned " + res.statusCode)
                 res.resume()
                 return
             }
