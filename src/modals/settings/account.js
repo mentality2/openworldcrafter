@@ -85,6 +85,7 @@ module.exports = function() {
     })
 
     function getDevices() {
+        var validDevices = 0
         webrequest.getTextResource("/api/auth/devices", (err, data) => {
             if(err) {
                 error.setMessage("Could not access account settings")
@@ -97,12 +98,13 @@ module.exports = function() {
 
             var table = dom.table(["Name", "Last Seen", ""])
             table.classList.add("fullwidth")
-            deviceList.appendChild(table)
 
             var devices = JSON.parse(data).devices
             for(let dev of devices) {
                 // for now, only show valid devices. this may change later.
                 if(dev.status !== "valid") continue
+
+                validDevices ++
 
                 var tr = dom.tr([dev.name, new Date(dev.lastseen).toDateString()])
                 if(dev.isthis) tr.classList.add("bold")
@@ -115,6 +117,9 @@ module.exports = function() {
                 }
                 table.appendChild(tr)
             }
+
+            if(validDevices) deviceList.appendChild(table)
+            else deviceList.appendChild(dom.div("No devices are authorized to access your account."))
         })
     }
 
