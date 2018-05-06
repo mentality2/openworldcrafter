@@ -43,8 +43,12 @@
         max-height: 100%
         overflow-y: auto
 
+        display: flex
+
         .tab
             display: none
             padding: 1em
-        .tab-visible
-            display: block
+            width: 100%
+            &.tab-visible
+                display: flex
+                flex-flow: column
