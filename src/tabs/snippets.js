@@ -51,13 +51,13 @@ function createSnippetsTab(object, ref, trash) {
 
     var contents = dom.div()
 
-    function createSnippetBox(snippet) {
+    function createSnippetBox(snippet, isfirst) {
         // only show trash on the trash tab, and vice versa
         if((trash && !snippet.trash) || (!trash && snippet.trash)) return
 
         var snippetBox = dom.div(undefined, "snippet")
         if(snippet.spoiler) snippetBox.classList.add("spoiler")
-        snippetBox.appendChild(dom.hr())
+        if(!isfirst) snippetBox.appendChild(dom.hr())
 
         var deleteTools = dom.div(undefined, "snippetdeletetools")
         if(trash) {
@@ -117,8 +117,10 @@ function createSnippetsTab(object, ref, trash) {
     }
 
     var snippets = object.$project.snippets
+    var isfirst = true
     for(var snippet of snippets) {
-        createSnippetBox(snippet)
+        createSnippetBox(snippet, isfirst)
+        isfirst = false
     }
 
     el.appendChild(contents)
