@@ -57,7 +57,6 @@ function createSnippetsTab(object, ref, trash) {
 
         var snippetBox = dom.div(undefined, "snippet")
         if(snippet.spoiler) snippetBox.classList.add("spoiler")
-        if(!isfirst) snippetBox.appendChild(dom.hr())
 
         var deleteTools = dom.div(undefined, "snippetdeletetools")
         if(trash) {
@@ -111,6 +110,7 @@ function createSnippetsTab(object, ref, trash) {
             // ok now remove it
             textbox.remove()
         })
+        if(!isfirst) snippetBox.appendChild(dom.hr())
 
         contents.insertBefore(snippetBox, contents.firstChild)
         placeholderHelp.classList.toggle("invisible", object.$project.snippets.length > 0)
