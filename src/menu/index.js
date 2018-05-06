@@ -32,6 +32,9 @@ function createMainMenubar(project, callbacks, ref) {
     menu.addMenuItem("help", "About", () => {
         callbacks.about()
     })
+    menu.addMenuItem("help", "Settings", () => {
+        $owf.showSettings()
+    })
     // menu.addMenuLink("help", "Tutorials", "https://example.com")
     menu.addMenuItem("help", "Documentation", () => $owf.showDocs("index"))
 
