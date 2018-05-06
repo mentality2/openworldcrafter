@@ -18,7 +18,7 @@ module.exports = function() {
     var actionBar = dom.div(undefined, "modal-actions")
 
     var cancel = dom.button("", "Cancel", () => {
-        newProjectModal.wrapper.classList.remove("modal-visible")
+        newProjectModal.hide()
     })
 
     actionBar.appendChild(cancel)

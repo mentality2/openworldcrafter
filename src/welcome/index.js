@@ -180,12 +180,11 @@ function createPage(el) {
     }
 
     var newProject = dom.button("add", "New\u2026", () => {
-        newProjectModal.wrapper.classList.add("modal-visible")
+        newProjectModal.show()
     })
     toolbar.appendChild(newProject)
 
     var newProjectModal = newproject()
-    main.appendChild(newProjectModal.wrapper)
 
     // Recent files
     var recentList = dom.element("ul")
